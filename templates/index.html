@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Odyssey — Character Sheet Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NEON ODYSSEY</h1>
+            <p class="subtitle">Character Sheet Generator</p>
+            <div class="theme-selector">
+                <label for="themeSelect">Tema:</label>
+                <select id="themeSelect" onchange="setTheme(this.value)">
+                    <option value="theme-neon">Neon Cyber</option>
+                    <option value="theme-cosmic">Cosmic Codex</option>
+                    <option value="theme-outrunner">Outrunner</option>
+                    <option value="theme-overdrive">Overdrive</option>
+                </select>
+            </div>
+        </header>
+
+        {% if error %}
+        <div class="error-banner" role="alert">{{ error }}</div>
+        {% endif %}
+
+        <!-- Sticky Navigation -->
+        <nav class="sticky-nav">
+            <a href="#section-basic">Básica</a>
+            <a href="#section-abilities">Habilidades</a>
+            <a href="#section-skills">Skills</a>
+            <a href="#section-saves">Salvación</a>
+            <a href="#section-exhaustion">Agotamiento</a>
+            <a href="#section-attacks">Ataques</a>
+            <a href="#section-factions">Facciones</a>
+            <a href="#section-magic">Objetos</a>
+            <a href="#section-equipment">Equipo</a>
+            <a href="#section-spells">Conjuros</a>
+            <a href="#section-notes">Notas</a>
+        </nav>
+
+        <form action="/generate" method="POST" id="sheetForm">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+            <!-- BASIC INFO -->
+            <details open id="section-basic">
+                <summary>Información Básica</summary>
+                <div class="section">
+                    <div class="grid-2">
+                        <label>Character Name<input type="text" name="Character Name" placeholder="Nombre del personaje" required></label>
+                        <label>Player<input type="text" name="Player" placeholder="Tu nombre"></label>
+                        <label>Class
+                            <select name="Class" id="classSelect">
+                                <option value="">— Seleccionar —</option>
+                                {% for class in game_data.classes %}
+                                <option value="{{ class.name }}">{{ class.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label>Subclass
+                            <select name="Subclass" id="subclassSelect">
+                                <option value="">— Seleccionar clase primero —</option>
+                            </select>
+                        </label>
+                        <label>Species
+                            <select name="Species">
+                                <option value="">— Seleccionar —</option>
+                                {% for species in game_data.species %}
+                                <option value="{{ species.name }}">{{ species.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label>Homeworld<input type="text" name="Homeworld" placeholder="Mundo natal"></label>
+                        <label>Level<input type="number" name="Level" placeholder="1" min="1" max="20"></label>
+                        <label>XP<input type="number" name="XP" placeholder="0" min="0"></label>
+                        <label>Size<input type="text" name="Size" placeholder="Medium"></label>
+                        <label>Speed<input type="text" name="Speed" placeholder="30 ft"></label>
+                        <label>Armor<input type="text" name="Armor" placeholder="AC"></label>
+                        <label>Initiative<input type="text" name="Initiative" placeholder="+0"></label>
+                        <label>HP Max<input type="number" name="HP Max" placeholder="0" min="0"></label>
+                        <label>HP Temp<input type="number" name="HP Temp" placeholder="0" min="0"></label>
+                        <label>HD Max<input type="text" name="HD Max" placeholder="1d8"></label>
+                        <label>HD Spent<input type="text" name="HD Spent" placeholder="0"></label>
+                        <label>Resistances<input type="text" name="Resistances" placeholder="Resistencias"></label>
+                        <label>Features and Traits<input type="text" name="Features and Traits" placeholder="Rasgos"></label>
+                    </div>
+                </div>
+            </details>
+
+            <!-- ABILITY SCORES -->
+            <details id="section-abilities">
+                <summary>Puntuaciones de Habilidad</summary>
+                <div class="section">
+                    <div class="ability-grid">
+                        <div class="ability-box">
+                            <h4>STR</h4>
+                            <label>Score<input type="number" name="Score STR" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod STR" placeholder="+0"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Save STR" value="/Off"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>DEX</h4>
+                            <label>Score<input type="number" name="Score DEX" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod DEX" placeholder="+0"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Save DEX" value="/Off"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>CON</h4>
+                            <label>Score<input type="number" name="Score CON" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod CON" placeholder="+0"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Save CON" value="/Off"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>INT</h4>
+                            <label>Score<input type="number" name="Score INT" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod INT" placeholder="+0"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Save INT" value="/Off"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>WIS</h4>
+                            <label>Score<input type="number" name="Score WIS" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod WIS" placeholder="+0"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Save WIS" value="/Off"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>CHA</h4>
+                            <label>Score<input type="number" name="Score CHA" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod CHA" placeholder="+0"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Save CHA" value="/Off"> Save Prof</label>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- SKILLS -->
+            <details id="section-skills">
+                <summary>Habilidades (Skills)</summary>
+                <div class="section">
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Skills" value="/Off"> Acrobatics</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 1" value="/Off"> Animal Handling</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 2" value="/Off"> Arcana</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 3" value="/Off"> Athletics</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 4" value="/Off"> Deception</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 5" value="/Off"> History</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 6" value="/Off"> Insight</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 7" value="/Off"> Intimidation</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 8" value="/Off"> Investigation</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 9" value="/Off"> Medicine</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 10" value="/Off"> Nature</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 11" value="/Off"> Perception</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 12" value="/Off"> Performance</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 13" value="/Off"> Persuasion</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 14" value="/Off"> Religion</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 15" value="/Off"> Sleight of Hand</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 16" value="/Off"> Stealth</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 17" value="/Off"> Survival</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 18" value="/Off"> Technology</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Skills 19" value="/Off"> Piloting</label>
+                    </div>
+                    <label style="margin-top:12px;display:block;">Skill Notes<input type="text" name="Skill" placeholder="Notas de habilidades"></label>
+                </div>
+            </details>
+
+            <!-- SAVING THROWS / DEATH SAVES -->
+            <details id="section-saves">
+                <summary>Tiradas de Salvación y Muerte</summary>
+                <div class="section">
+                    <div class="grid-2">
+                        <label class="checkbox-label"><input type="checkbox" name="Ability Save" value="/Off"> Ability Save Prof</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 1" value="/Off"> Ability Save 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 2" value="/Off"> Ability Save 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 3" value="/Off"> Ability Save 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 4" value="/Off"> Ability Save 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 5" value="/Off"> Ability Save 6</label>
+                    </div>
+                    <h4 style="margin-top:16px;">Death Saves</h4>
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 1" value="/Off"> Success 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 2" value="/Off"> Success 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 3" value="/Off"> Success 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 4" value="/Off"> Fail 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 5" value="/Off"> Fail 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 6" value="/Off"> Fail 3</label>
+                    </div>
+                    <label class="checkbox-label" style="margin-top:12px;"><input type="checkbox" name="Heroic Inspiration" value="/Off"> Heroic Inspiration</label>
+                </div>
+            </details>
+
+            <!-- EXHAUSTION -->
+            <details id="section-exhaustion">
+                <summary>Agotamiento (Exhaustion)</summary>
+                <div class="section">
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 1" value="/Off"> Level 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 2" value="/Off"> Level 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 3" value="/Off"> Level 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 4" value="/Off"> Level 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 5" value="/Off"> Level 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 6" value="/Off"> Level 6</label>
+                    </div>
+                </div>
+            </details>
+
+            <!-- ATTACKS -->
+            <details id="section-attacks">
+                <summary>Ataques</summary>
+                <div class="section">
+                    <div id="attacks-container">
+                        <!-- 10 attack slots generated by JS -->
+                    </div>
+                </div>
+            </details>
+
+            <!-- FACTIONS -->
+            <details id="section-factions">
+                <summary>Facciones</summary>
+                <div class="section">
+                    <div id="factions-container">
+                        <!-- 11 faction slots generated by JS -->
+                    </div>
+                </div>
+            </details>
+
+            <!-- MAGIC ITEMS -->
+            <details id="section-magic">
+                <summary>Objetos Mágicos</summary>
+                <div class="section">
+                    <div id="magic-items-container">
+                        <!-- 5 magic item slots -->
+                    </div>
+                    <h4 style="margin-top:16px;">Attunement</h4>
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 1" value="/Off"> Slot 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 2" value="/Off"> Slot 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 3" value="/Off"> Slot 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 4" value="/Off"> Slot 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 5" value="/Off"> Slot 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 6" value="/Off"> Slot 6</label>
+                    </div>
+                </div>
+            </details>
+
+            <!-- EQUIPMENT & PROFICIENCIES -->
+            <details id="section-equipment">
+                <summary>Equipamiento y Competencias</summary>
+                <div class="section">
+                    <label>Equipment<input type="text" name="Equipment" placeholder="Objetos que llevas"></label>
+                    <label>Languages
+                        <select name="Languages" multiple size="4">
+                            {% for lang in game_data.languages %}
+                            <option value="{{ lang }}">{{ lang }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>Feats and Professions<input type="text" name="Feats and Professions" placeholder="Dotes y profesiones"></label>
+                    <label>Weapon Proficiencies<input type="text" name="Weapon Proficiencies" placeholder="Armas"></label>
+                    <label>Tool Proficiencies<input type="text" name="Tool Proficiencies" placeholder="Herramientas"></label>
+                    <label>Vehicle Proficiencies<input type="text" name="Vehicle Proficiencies" placeholder="Vehículos"></label>
+                    <label>Lifestyle<input type="text" name="Lifestyle" placeholder="Estilo de vida"></label>
+                    <h4 style="margin-top:16px;">Armor Proficiencies</h4>
+                    <div class="grid-2">
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 1" value="/Off"> Light</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 2" value="/Off"> Medium</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 3" value="/Off"> Heavy</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 4" value="/Off"> Shields</label>
+                    </div>
+                </div>
+            </details>
+
+            <!-- SPELLCASTING -->
+            <details id="section-spells">
+                <summary>Conjuros</summary>
+                <div class="section">
+                    <div class="grid-3">
+                        <label>Spell Attack Bonus<input type="text" name="Spell Attack Bonus" placeholder="+0"></label>
+                        <label>Spell Save DC<input type="text" name="Spell Save DC" placeholder="10"></label>
+                        <label>Spellcasting Modifier<input type="text" name="Spellcasting Modifier" placeholder="+0"></label>
+                    </div>
+                    <label class="checkbox-label" style="margin-top:8px;"><input type="checkbox" name="Spellcasting Ability 1" value="/Off"> Spellcasting Ability</label>
+                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 2" value="/Off"> Ability 2</label>
+                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 3" value="/Off"> Ability 3</label>
+
+                    <h4 style="margin-top:16px;">Spell Slots</h4>
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 1" value="/Off"> Slot 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 2" value="/Off"> Slot 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 3" value="/Off"> Slot 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 4" value="/Off"> Slot 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 5" value="/Off"> Slot 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 6" value="/Off"> Slot 6</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 7" value="/Off"> Slot 7</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 9" value="/Off"> Slot 9</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 10" value="/Off"> Slot 10</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 11" value="/Off"> Slot 11</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 13" value="/Off"> Slot 13</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 14" value="/Off"> Slot 14</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 15" value="/Off"> Slot 15</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 16" value="/Off"> Slot 16</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 17" value="/Off"> Slot 17</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 18" value="/Off"> Slot 18</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 19" value="/Off"> Slot 19</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 20" value="/Off"> Slot 20</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 25" value="/Off"> Slot 25</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 26" value="/Off"> Slot 26</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 27" value="/Off"> Slot 27</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 28" value="/Off"> Slot 28</label>
+                    </div>
+
+                    <h4 style="margin-top:16px;">Spells</h4>
+                    <div id="spells-container">
+                        <!-- 32 spell slots generated by JS -->
+                    </div>
+                </div>
+            </details>
+
+            <!-- NOTES -->
+            <details id="section-notes">
+                <summary>Notas</summary>
+                <div class="section">
+                    <label>Notes<textarea name="Notes" rows="4" placeholder="Notas del personaje"></textarea></label>
+                    <label>Galactic Notes<textarea name="Galactic Notes" rows="4" placeholder="Notas galacticas"></textarea></label>
+                </div>
+            </details>
+
+            <div class="submit-section">
+                <button type="submit" class="btn-generate" id="submitBtn">GENERAR PDF</button>
+                <button type="button" class="btn-clear" id="clearDraft">Limpiar borrador</button>
+                <span id="draftIndicator" class="draft-indicator"></span>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        // ===== THEME SWITCHER =====
+        function setTheme(themeName) {
+            document.body.className = themeName;
+            localStorage.setItem('neonOdysseyTheme', themeName);
+        }
+
+        // Restore saved theme on load
+        (function() {
+            const savedTheme = localStorage.getItem('neonOdysseyTheme');
+            if (savedTheme) {
+                document.body.className = savedTheme;
+                const themeSelect = document.getElementById('themeSelect');
+                if (themeSelect) themeSelect.value = savedTheme;
+            }
+        })();
+
+        // Generate attack slots
+        const attacksContainer = document.getElementById('attacks-container');
+        for (let i = 0; i < 10; i++) {
+            const suffix = i === 0 ? '' : ` ${i}`;
+            const suffix1 = i === 0 ? ' 1' : ` ${i+1}`;
+            attacksContainer.innerHTML += `
+                <div class="attack-row">
+                    <h5>Ataque ${i+1}</h5>
+                    <div class="grid-4">
+                        <label>Name<input type="text" name="Attack Name${suffix}" placeholder="Nombre"></label>
+                        <label>Bonus<input type="text" name="Attack Bonus${suffix}" placeholder="+0"></label>
+                        <label>Damage<input type="text" name="Attack Damage${suffix}" placeholder="1d8"></label>
+                        <label>Notes<input type="text" name="Attack Notes${suffix}" placeholder="Notas"></label>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate faction slots
+        const factionsContainer = document.getElementById('factions-container');
+        for (let i = 0; i < 12; i++) {
+            const suffix = i === 0 ? '' : ` ${i}`;
+            const suffix1 = i === 0 ? ' 1' : ` ${i+1}`;
+            factionsContainer.innerHTML += `
+                <div class="faction-row">
+                    <div class="grid-2">
+                        <label>Faction Name<input type="text" name="Faction${suffix}" placeholder="Facción"></label>
+                        <label>Score<input type="number" name="Faction Score${suffix}" placeholder="0"></label>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate magic item slots
+        const magicItemsContainer = document.getElementById('magic-items-container');
+        for (let i = 0; i < 6; i++) {
+            const suffix = i === 0 ? '' : ` ${i}`;
+            const suffix1 = i === 0 ? ' 1' : ` ${i+1}`;
+            magicItemsContainer.innerHTML += `
+                <label>Magic Item ${i+1}<input type="text" name="Magic Item${suffix}" placeholder="Objeto mágico"></label>
+            `;
+        }
+
+        // Generate spell slots
+        const spellsContainer = document.getElementById('spells-container');
+        for (let i = 0; i < 32; i++) {
+            const suffix = i === 0 ? ' 1' : ` ${i+1}`;
+            const suffix1 = i === 0 ? ' 1' : ` ${i+1}`;
+            spellsContainer.innerHTML += `
+                <div class="spell-row">
+                    <h5>Spell ${i+1}</h5>
+                    <div class="grid-4">
+                        <label>Name<input type="text" name="Spell Name${suffix}" placeholder="Nombre"></label>
+                        <label>Level<input type="text" name="Spell Level${suffix}" placeholder="0"></label>
+                        <label>Casting Time<input type="text" name="Spell Casting Time${suffix}" placeholder="1 action"></label>
+                        <label>Range<input type="text" name="Spell Range${suffix}" placeholder="60 ft"></label>
+                        <label>Features<input type="text" name="Spell Features${suffix}" placeholder="Efectos"></label>
+                        <label>School<input type="text" name="Spell School${suffix}" placeholder="Evocación"></label>
+                        <label>Notes<input type="text" name="Spell Notes${suffix}" placeholder="Notas"></label>
+                        <label>Page<input type="text" name="Spell Page${suffix}" placeholder="Pág."></label>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== DYNAMIC SUBCLASS DROPDOWN =====
+        const subclasses = {{ game_data.subclasses | tojson }};
+        const classSelect = document.getElementById('classSelect');
+        const subclassSelect = document.getElementById('subclassSelect');
+
+        function updateSubclasses() {
+            const selectedClass = classSelect.value;
+            subclassSelect.innerHTML = '<option value="">— Seleccionar —</option>';
+            if (selectedClass && subclasses[selectedClass]) {
+                subclasses[selectedClass].forEach(sub => {
+                    const opt = document.createElement('option');
+                    opt.value = sub;
+                    opt.textContent = sub;
+                    subclassSelect.appendChild(opt);
+                });
+            } else {
+                subclassSelect.innerHTML = '<option value="">— Seleccionar clase primero —</option>';
+            }
+        }
+        classSelect.addEventListener('change', updateSubclasses);
+
+        // ===== UX IMPROVEMENTS =====
+
+        const DRAFT_KEY = 'neonOdysseyDraft';
+        const form = document.getElementById('sheetForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const draftIndicator = document.getElementById('draftIndicator');
+
+        // --- Auto-save / Draft ---
+        function saveDraft() {
+            const formData = new FormData(form);
+            const data = {};
+            for (const [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+            showDraftIndicator();
+        }
+
+        function loadDraft() {
+            const saved = localStorage.getItem(DRAFT_KEY);
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+
+                // Uncheck all checkboxes first
+                form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                });
+
+                // Restore values
+                for (const [key, value] of Object.entries(data)) {
+                    const elements = form.querySelectorAll(`[name="${CSS.escape(key)}"]`);
+                    elements.forEach(el => {
+                        if (el.type === 'checkbox') {
+                            el.checked = true;
+                        } else {
+                            el.value = value;
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error('Error loading draft:', e);
+            }
+        }
+
+        function clearDraft() {
+            localStorage.removeItem(DRAFT_KEY);
+            form.reset();
+            // Uncheck all checkboxes after reset
+            form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            showDraftIndicator('Borrador limpiado');
+        }
+
+        let draftTimeout;
+        function showDraftIndicator(text) {
+            const msg = text || 'Borrador guardado';
+            draftIndicator.textContent = msg;
+            draftIndicator.classList.add('visible');
+            clearTimeout(draftTimeout);
+            draftTimeout = setTimeout(() => {
+                draftIndicator.classList.remove('visible');
+            }, 2000);
+        }
+
+        // --- Loading Indicator ---
+        form.addEventListener('submit', function(e) {
+            // Validate before showing loading
+            const charName = form.querySelector('[name="Character Name"]');
+            if (!charName.value.trim()) {
+                e.preventDefault();
+                charName.classList.add('invalid');
+                charName.focus();
+                charName.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'GENERANDO...';
+            submitBtn.classList.add('loading');
+        });
+
+        // --- Validation Feedback ---
+        function validateField(field) {
+            if (field.hasAttribute('required')) {
+                if (field.value.trim() === '') {
+                    field.classList.add('invalid');
+                    field.classList.remove('valid');
+                } else {
+                    field.classList.add('valid');
+                    field.classList.remove('invalid');
+                }
+            } else if (field.value.trim() !== '') {
+                field.classList.add('valid');
+                field.classList.remove('invalid');
+            } else {
+                field.classList.remove('valid', 'invalid');
+            }
+        }
+
+        form.addEventListener('input', function(e) {
+            const field = e.target;
+            if (field.tagName === 'INPUT' || field.tagName === 'TEXTAREA') {
+                validateField(field);
+            }
+        });
+
+        form.addEventListener('blur', function(e) {
+            const field = e.target;
+            if (field.tagName === 'INPUT' || field.tagName === 'TEXTAREA') {
+                validateField(field);
+            }
+        }, true);
+
+        // --- Debounce utility ---
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        // --- Initialize ---
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDraft();
+
+            // Auto-save on input (debounced)
+            form.addEventListener('input', debounce(saveDraft, 300));
+
+            // Clear draft button
+            const clearBtn = document.getElementById('clearDraft');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', clearDraft);
+            }
+
+            // Smooth scroll for sticky nav links
+            document.querySelectorAll('.sticky-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Open the details if it's closed
+                        if (!target.hasAttribute('open')) {
+                            target.setAttribute('open', '');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

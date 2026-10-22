@@ -1,0 +1,327 @@
+{
+  "classes": [
+    {
+      "name": "Cryptist",
+      "primary_ability": "Intelligence or Charisma",
+      "hit_die": "D8",
+      "saving_throws": ["Wisdom", "Primary Ability"],
+      "skill_proficiencies": ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Perception", "Religion"],
+      "weapon_proficiencies": "Simple weapons",
+      "armor_training": "Light armor",
+      "description": "Occult researchers who uncover hidden truths to wield forbidden magic."
+    },
+    {
+      "name": "Disciple",
+      "primary_ability": "Dexterity and Wisdom",
+      "hit_die": "D8",
+      "saving_throws": ["Strength", "Dexterity"],
+      "skill_proficiencies": ["Acrobatics", "Arcana", "Athletics", "History", "Insight", "Investigation", "Religion", "Stealth"],
+      "weapon_proficiencies": "Simple weapons and Martial weapons with Light property",
+      "armor_training": "None",
+      "description": "Philosophical warriors who channel Essence through body and soul."
+    },
+    {
+      "name": "Enforcer",
+      "primary_ability": "Strength and Charisma",
+      "hit_die": "D10",
+      "saving_throws": ["Wisdom", "Charisma"],
+      "skill_proficiencies": ["Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion", "Technology"],
+      "weapon_proficiencies": "Simple and Martial weapons",
+      "armor_training": "Light, Medium, Heavy armor and Shields",
+      "description": "Warriors defined by personal codes, imbued with cosmic power."
+    },
+    {
+      "name": "Esper",
+      "primary_ability": "Intelligence or Charisma",
+      "hit_die": "D6",
+      "saving_throws": ["Constitution", "Primary Ability"],
+      "skill_proficiencies": ["Arcana", "Deception", "History", "Insight", "Intimidation", "Investigation", "Persuasion"],
+      "weapon_proficiencies": "Simple weapons",
+      "armor_training": "None",
+      "description": "Psychic beings who harness psionic force to manipulate reality."
+    },
+    {
+      "name": "Gridrunner",
+      "primary_ability": "Intelligence",
+      "hit_die": "D6",
+      "saving_throws": ["Intelligence", "Wisdom"],
+      "skill_proficiencies": ["Arcana", "Computers", "History", "Insight", "Investigation", "Medicine", "Nature", "Religion", "Technology"],
+      "weapon_proficiencies": "Simple weapons",
+      "tool_proficiencies": "Spiking Deck",
+      "armor_training": "None",
+      "description": "Technomancers who code spells into the Hypergrid."
+    },
+    {
+      "name": "Icon",
+      "primary_ability": "Charisma",
+      "hit_die": "D8",
+      "saving_throws": ["Dexterity", "Charisma"],
+      "skill_proficiencies": "Choose any 3 skills",
+      "weapon_proficiencies": "Simple weapons",
+      "tool_proficiencies": "Artist's Supplies or 3 Musician's Instruments",
+      "armor_training": "Light armor",
+      "description": "Living voices of the Stardust Rhapsody who perform melodic magic."
+    },
+    {
+      "name": "Juggernaut",
+      "primary_ability": "Strength",
+      "hit_die": "D12",
+      "saving_throws": ["Strength", "Constitution"],
+      "skill_proficiencies": ["Athletics", "History", "Intimidation", "Medicine", "Perception", "Survival"],
+      "weapon_proficiencies": "Simple and Martial weapons",
+      "armor_training": "Light and Medium armor and Shields",
+      "description": "Unstoppable forces of momentum and raw power."
+    },
+    {
+      "name": "Machinist",
+      "primary_ability": "Intelligence",
+      "hit_die": "D8",
+      "saving_throws": ["Intelligence", "Constitution"],
+      "skill_proficiencies": ["Computers", "Investigation", "Medicine", "Perception", "Technology"],
+      "weapon_proficiencies": "Simple weapons",
+      "tool_proficiencies": "Tinker's Tools",
+      "armor_training": "Light armor",
+      "description": "Inventors who create and upgrade technological devices."
+    },
+    {
+      "name": "Oracle",
+      "primary_ability": "Wisdom",
+      "hit_die": "D8",
+      "saving_throws": ["Wisdom", "Charisma"],
+      "skill_proficiencies": ["History", "Insight", "Medicine", "Persuasion", "Religion"],
+      "weapon_proficiencies": "Simple weapons",
+      "armor_training": "Light armor",
+      "description": "Diviners who channel cosmic symbols to see the future."
+    },
+    {
+      "name": "Primalist",
+      "primary_ability": "Wisdom",
+      "hit_die": "D8",
+      "saving_throws": ["Intelligence", "Wisdom"],
+      "skill_proficiencies": ["Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Survival"],
+      "weapon_proficiencies": "Simple weapons",
+      "armor_training": "Light armor",
+      "description": "Channels primal power of nature and beasts."
+    },
+    {
+      "name": "Scoundrel",
+      "primary_ability": "Dexterity",
+      "hit_die": "D8",
+      "saving_throws": ["Dexterity", "Intelligence"],
+      "skill_proficiencies": ["Acrobatics", "Athletics", "Computers", "Deception", "Insight", "Investigation", "Perception", "Persuasion", "Sleight of Hand", "Stealth"],
+      "weapon_proficiencies": "Simple weapons",
+      "armor_training": "Light armor",
+      "description": "Cunning rogues who thrive in the shadows."
+    },
+    {
+      "name": "Soldier",
+      "primary_ability": "Strength or Dexterity",
+      "hit_die": "D10",
+      "saving_throws": ["Strength", "Constitution"],
+      "skill_proficiencies": ["Acrobatics", "Athletics", "History", "Insight", "Intimidation", "Medicine", "Perception", "Survival"],
+      "weapon_proficiencies": "Simple and Martial weapons",
+      "armor_training": "Light, Medium, Heavy armor and Shields",
+      "description": "Battle-hardened warriors with adaptive combat training."
+    },
+    {
+      "name": "Tracer",
+      "primary_ability": "Dexterity and Wisdom",
+      "hit_die": "D10",
+      "saving_throws": ["Strength", "Dexterity"],
+      "skill_proficiencies": ["Animal Handling", "Athletics", "Insight", "Investigation", "Perception", "Stealth", "Survival"],
+      "weapon_proficiencies": "Simple and Martial weapons",
+      "armor_training": "Light and Medium armor",
+      "description": "Hunters and trackers with primal instincts."
+    },
+    {
+      "name": "Worldspeaker",
+      "primary_ability": "Wisdom",
+      "hit_die": "D8",
+      "saving_throws": ["Wisdom", "Charisma"],
+      "skill_proficiencies": ["Arcana", "History", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"],
+      "weapon_proficiencies": "Simple weapons",
+      "armor_training": "Light armor",
+      "description": "Conduits of living world souls, harnessing planetary power."
+    }
+  ],
+  "subclasses": {
+    "Cryptist": ["Cacophonous", "Shadowtongue", "Deepsworn", "Primeval"],
+    "Disciple": ["Anomaly", "Ghostframe"],
+    "Enforcer": ["Arbiter", "Supersprite"],
+    "Esper": ["Riftwalker", "Abyssal Parasite"],
+    "Gridrunner": ["Arc-Mage", "Hardlight Racer"],
+    "Icon": ["Headbanger", "Remix"],
+    "Juggernaut": ["Rampager", "Scrapper"],
+    "Machinist": ["Gravgunner", "Riveter"],
+    "Oracle": ["Harmonious", "Stargazer", "Dreamer"],
+    "Primalist": ["Primal Shaman", "Wildheart"],
+    "Scoundrel": ["Infiltrator", "Smuggler"],
+    "Soldier": ["Veteran", "Commando"],
+    "Tracer": ["Bloodhound", "Powertech"],
+    "Worldspeaker": ["Planetary", "Elemental"]
+  },
+  "species": [
+    {
+      "name": "Amanite",
+      "creature_type": "Humanoid",
+      "size": "Small",
+      "speed": 30,
+      "traits": ["Darkvision 60ft", "Fungal Resistance (Acid/Poison)", "Mycelium Senses", "Spore Casting"]
+    },
+    {
+      "name": "Anitron",
+      "creature_type": "Construct",
+      "size": "Medium or Small",
+      "speed": 30,
+      "traits": ["Anitron Design (Battle/Diplomacy/etc)", "Integrated Tool", "Specialized Programming"]
+    },
+    {
+      "name": "Glowblin",
+      "creature_type": "Humanoid",
+      "size": "Small",
+      "speed": 30,
+      "traits": ["Dazzle", "Emotional Spectrum", "Light Emission"]
+    },
+    {
+      "name": "Gorgonite",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Darkvision 60ft", "Gorgon's Gaze", "Venomous Resistance"]
+    },
+    {
+      "name": "Laika",
+      "creature_type": "Humanoid",
+      "size": "Medium or Small",
+      "speed": 30,
+      "traits": ["Bite (1d8 Piercing)", "Keen Senses", "Laika Lineage"]
+    },
+    {
+      "name": "Murexian",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Amphibious", "Cold Resistance", "Darkvision 120ft", "Evolutionary Adaptation"]
+    },
+    {
+      "name": "Nematoan",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Amphibious", "Four-Armed", "Gourmand of Variety", "Tongue Lash"]
+    },
+    {
+      "name": "Nilari",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Breath Weapon (Void)", "Darkvision 60ft", "Void Resistance"]
+    },
+    {
+      "name": "Oozoid",
+      "creature_type": "Ooze",
+      "size": "Medium or Small",
+      "speed": 30,
+      "traits": ["Acid Resistance", "Amorphous", "Elastic Lunge", "Malleable Reach"]
+    },
+    {
+      "name": "Raizo",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Fury of the Tempest", "Storm Magic", "Tempest Resistance"]
+    },
+    {
+      "name": "Rangor",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Burrowing", "Claws", "Momentum", "Thick Hide"]
+    },
+    {
+      "name": "Saurian",
+      "creature_type": "Humanoid",
+      "size": "Medium or Small",
+      "speed": 30,
+      "traits": ["Ancestral Memory", "Harmonious Conduit", "Saurian Lineage"]
+    },
+    {
+      "name": "Solari",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Radiant Resistance", "Solar Rebirth", "Inner Light"]
+    },
+    {
+      "name": "Stardust Human",
+      "creature_type": "Humanoid",
+      "size": "Medium or Small",
+      "speed": 30,
+      "traits": ["Harmonic Control", "Adaptable", "Versatile"]
+    },
+    {
+      "name": "Tekal",
+      "creature_type": "Construct",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Crystalline Resilience", "Durable Construction", "Photosynthesis"]
+    },
+    {
+      "name": "Yaungu",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Blizzard Cunning", "Cold Resistance", "Thick Fur"]
+    },
+    {
+      "name": "Zamani",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Desert Adaptation", "Fire Resistance", "Temporal Insight"]
+    },
+    {
+      "name": "Zorbrak",
+      "creature_type": "Humanoid",
+      "size": "Medium",
+      "speed": 30,
+      "traits": ["Climb Speed", "Darkvision 60ft", "Fearless", "Scythe Arms"]
+    }
+  ],
+  "languages": [
+    "Common", "Common Sign Language", "Smuggler's Slang", "Hadalic", "Sideric",
+    "Pixlish", "Dissonant", "Ryliath", "Lyric", "SIGNAL", "Clysmic",
+    "Solari", "Astrovega", "Astronian", "Bortuun", "Boru", "Volcar",
+    "Magmari", "Clawderan", "Raizo", "Jozza", "Murexian", "Selash",
+    "Saurian", "Tekal", "Zoic", "Yoggoth", "Marsoom", "Zeticulan",
+    "Anitron", "Isotron", "Morlith", "Bitling", "Navili", "Flambego",
+    "Glowblin", "Poggle", "Chroma", "Sethreen", "Amanite", "Gorgonite",
+    "Pakku", "Shensaati", "Zamani", "Shensi", "Sleema", "Greeble",
+    "Nematoan", "Sleemese", "Oozoid", "Zephursa", "Aetheron", "Rangor",
+    "Uthen", "Benthos", "Nilari", "Promean", "Skettik", "Zorbrak",
+    "Ossik", "Zartoga", "Selash"
+  ],
+  "homeworld_feats": [
+    {"name": "Adamant Origin", "prerequisite": "Rocky Homeworld"},
+    {"name": "Blazing Origin", "prerequisite": "Scorching Homeworld"},
+    {"name": "Brilliant Origin", "prerequisite": "Luminous or Starry Homeworld"},
+    {"name": "Flourishing Origin", "prerequisite": "Harmonic, Idyllic, or Verdant Homeworld"},
+    {"name": "Corrosive Origin", "prerequisite": "Acidic, Radioactive, or Toxic Homeworld"},
+    {"name": "Frozen Origin", "prerequisite": "Frozen Homeworld"},
+    {"name": "Stormborn Origin", "prerequisite": "Stormy Homeworld"},
+    {"name": "Void-Touched Origin", "prerequisite": "Void-Exposed Homeworld"}
+  ],
+  "factions": [
+    "The Harmony", "The Discordant", "Cacophony", "The Hypergrid",
+    "Arcadia", "The Eldest", "Stardust Rhapsody", "Criminal Underworld",
+    "Galactic Government", "Free Traders", "The Church", "Rebel Alliance"
+  ],
+  "skills": [
+    "Acrobatics", "Animal Handling", "Arcana", "Athletics", "Computers",
+    "Deception", "History", "Insight", "Intimidation", "Investigation",
+    "Medicine", "Nature", "Perception", "Performance", "Persuasion",
+    "Religion", "Sleight of Hand", "Stealth", "Survival", "Technology"
+  ],
+  "armor_proficiencies": ["Light", "Medium", "Heavy", "Shields"],
+  "weapon_proficiencies": ["Simple", "Martial"]
+}
