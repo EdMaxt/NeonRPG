@@ -84,15 +84,20 @@ def _validate_character_name(name: str) -> str | None:
 def index():
     """Render the main character sheet form."""
     logger.debug("Serving index page")
+    return render_template("index.html")
+
+
+@app.context_processor
+def inject_game_data():
+    """Always make game data available to every template."""
     game_data_path = os.path.join(BASE_DIR, "game_data.json")
-    game_data = {}
     if os.path.isfile(game_data_path):
         try:
             with open(game_data_path, "r", encoding="utf-8") as f:
-                game_data = json.load(f)
+                return {"game_data": json.load(f)}
         except (json.JSONDecodeError, OSError) as exc:
             logger.warning("Failed to load game_data.json: %s", exc)
-    return render_template("index.html", game_data=game_data)
+    return {"game_data": {}}
 
 
 @app.route("/health")
