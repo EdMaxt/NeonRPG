@@ -263,44 +263,60 @@
                             {% endfor %}
                         </select>
                     </label>
-                    <label>Feats and Professions
-                        <select name="Feats and Professions" multiple size="5">
+                    <div class="field-block">
+                        <span class="field-label">Feats and Professions</span>
+                        <div class="checkbox-table">
                             {% for feat in game_data.get('homeworld_feats', []) %}
-                            <option value="{{ feat.name }}">{{ feat.name }} — {{ feat.prerequisite }}</option>
+                            <label class="checkbox-label" title="{{ feat.prerequisite }}">
+                                <input type="checkbox" name="Feats and Professions" value="{{ feat.name }}">
+                                <span class="cb-text">{{ feat.name }}</span>
+                            </label>
                             {% endfor %}
-                        </select>
-                    </label>
-                    <label>Weapon Proficiencies
-                        <select name="Weapon Proficiencies" multiple size="5">
-                            <optgroup label="Simple Melee">
+                        </div>
+                    </div>
+                    <div class="field-block">
+                        <span class="field-label">Weapon Proficiencies</span>
+                        <div class="weapon-group">
+                            <h5>Simple Melee</h5>
+                            <div class="checkbox-table">
                                 {% for wpn in game_data.get('weapons', {}).get('simple_melee', []) %}
-                                <option value="{{ wpn }}">{{ wpn }}</option>
+                                <label class="checkbox-label"><input type="checkbox" name="Weapon Proficiencies" value="{{ wpn }}"><span class="cb-text">{{ wpn }}</span></label>
                                 {% endfor %}
-                            </optgroup>
-                            <optgroup label="Simple Ranged">
+                            </div>
+                        </div>
+                        <div class="weapon-group">
+                            <h5>Simple Ranged</h5>
+                            <div class="checkbox-table">
                                 {% for wpn in game_data.get('weapons', {}).get('simple_ranged', []) %}
-                                <option value="{{ wpn }}">{{ wpn }}</option>
+                                <label class="checkbox-label"><input type="checkbox" name="Weapon Proficiencies" value="{{ wpn }}"><span class="cb-text">{{ wpn }}</span></label>
                                 {% endfor %}
-                            </optgroup>
-                            <optgroup label="Martial Melee">
+                            </div>
+                        </div>
+                        <div class="weapon-group">
+                            <h5>Martial Melee</h5>
+                            <div class="checkbox-table">
                                 {% for wpn in game_data.get('weapons', {}).get('martial_melee', []) %}
-                                <option value="{{ wpn }}">{{ wpn }}</option>
+                                <label class="checkbox-label"><input type="checkbox" name="Weapon Proficiencies" value="{{ wpn }}"><span class="cb-text">{{ wpn }}</span></label>
                                 {% endfor %}
-                            </optgroup>
-                            <optgroup label="Martial Ranged">
+                            </div>
+                        </div>
+                        <div class="weapon-group">
+                            <h5>Martial Ranged</h5>
+                            <div class="checkbox-table">
                                 {% for wpn in game_data.get('weapons', {}).get('martial_ranged', []) %}
-                                <option value="{{ wpn }}">{{ wpn }}</option>
+                                <label class="checkbox-label"><input type="checkbox" name="Weapon Proficiencies" value="{{ wpn }}"><span class="cb-text">{{ wpn }}</span></label>
                                 {% endfor %}
-                            </optgroup>
-                        </select>
-                    </label>
-                    <label>Tool Proficiencies
-                        <select name="Tool Proficiencies" multiple size="5">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-block">
+                        <span class="field-label">Tool Proficiencies</span>
+                        <div class="checkbox-table">
                             {% for tool in game_data.get('tools', []) %}
-                            <option value="{{ tool }}">{{ tool }}</option>
+                            <label class="checkbox-label"><input type="checkbox" name="Tool Proficiencies" value="{{ tool }}"><span class="cb-text">{{ tool }}</span></label>
                             {% endfor %}
-                        </select>
-                    </label>
+                        </div>
+                    </div>
                     <label>Lifestyle
                         <select name="Lifestyle">
                             <option value="">— Seleccionar —</option>
@@ -527,11 +543,21 @@
 
         // --- Auto-save / Draft ---
         function saveDraft() {
-            const formData = new FormData(form);
             const data = {};
-            for (const [key, value] of formData.entries()) {
-                data[key] = value;
-            }
+            // Group checked checkboxes by name (multi-value aware)
+            form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                if (!cb.checked || !cb.name) return;
+                if (!data[cb.name]) data[cb.name] = [];
+                data[cb.name].push(cb.value);
+            });
+            // Single-value fields
+            form.querySelectorAll('input:not([type="checkbox"]), select:not([multiple]), textarea').forEach(el => {
+                if (el.name) data[el.name] = el.value;
+            });
+            // Multi-selects
+            form.querySelectorAll('select[multiple]').forEach(el => {
+                if (el.name) data[el.name] = Array.from(el.selectedOptions).map(o => o.value).filter(Boolean);
+            });
             localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
             showDraftIndicator();
         }
@@ -542,22 +568,32 @@
             try {
                 const data = JSON.parse(saved);
 
-                // Uncheck all checkboxes first
-                form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                    cb.checked = false;
+                // Reset all checkboxes and multi-selects first
+                form.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+                form.querySelectorAll('select[multiple]').forEach(sel => {
+                    Array.from(sel.options).forEach(o => { o.selected = false; });
                 });
 
-                // Restore values
                 for (const [key, value] of Object.entries(data)) {
                     const elements = form.querySelectorAll(`[name="${CSS.escape(key)}"]`);
+                    if (!elements.length) continue;
+                    const values = Array.isArray(value) ? value : [value];
                     elements.forEach(el => {
                         if (el.type === 'checkbox') {
-                            el.checked = true;
+                            el.checked = values.includes(el.value);
+                        } else if (el.tagName === 'SELECT' && el.multiple) {
+                            Array.from(el.options).forEach(opt => {
+                                opt.selected = values.includes(opt.value);
+                            });
                         } else {
-                            el.value = value;
+                            el.value = values[0];
                         }
                     });
                 }
+
+                // Refresh dynamic panels after restoring values
+                if (typeof updateSubclasses === 'function') updateSubclasses();
+                if (typeof updateHomeworldInfo === 'function') updateHomeworldInfo();
             } catch (e) {
                 console.error('Error loading draft:', e);
             }
