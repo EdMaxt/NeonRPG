@@ -72,7 +72,15 @@
                                 {% endfor %}
                             </select>
                         </label>
-                        <label>Homeworld<input type="text" name="Homeworld" placeholder="Mundo natal"></label>
+                        <label>Homeworld
+                            <select name="Homeworld" id="homeworldSelect">
+                                <option value="">— Seleccionar —</option>
+                                {% for w in game_data.get('worlds', []) %}
+                                <option value="{{ w.name }}">{{ w.name }} ({{ w.tags | join(', ') }})</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <div id="homeworldInfo" class="homeworld-info"></div>
                         <label>Level<input type="number" name="Level" placeholder="1" min="1" max="20"></label>
                         <label>XP<input type="number" name="XP" placeholder="0" min="0"></label>
                         <label>Size<input type="text" name="Size" placeholder="Medium"></label>
@@ -255,11 +263,52 @@
                             {% endfor %}
                         </select>
                     </label>
-                    <label>Feats and Professions<input type="text" name="Feats and Professions" placeholder="Dotes y profesiones"></label>
-                    <label>Weapon Proficiencies<input type="text" name="Weapon Proficiencies" placeholder="Armas"></label>
-                    <label>Tool Proficiencies<input type="text" name="Tool Proficiencies" placeholder="Herramientas"></label>
-                    <label>Vehicle Proficiencies<input type="text" name="Vehicle Proficiencies" placeholder="Vehículos"></label>
-                    <label>Lifestyle<input type="text" name="Lifestyle" placeholder="Estilo de vida"></label>
+                    <label>Feats and Professions
+                        <select name="Feats and Professions" multiple size="5">
+                            {% for feat in game_data.get('homeworld_feats', []) %}
+                            <option value="{{ feat.name }}">{{ feat.name }} — {{ feat.prerequisite }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>Weapon Proficiencies
+                        <select name="Weapon Proficiencies" multiple size="5">
+                            <optgroup label="Simple Melee">
+                                {% for wpn in game_data.get('weapons', {}).get('simple_melee', []) %}
+                                <option value="{{ wpn }}">{{ wpn }}</option>
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="Simple Ranged">
+                                {% for wpn in game_data.get('weapons', {}).get('simple_ranged', []) %}
+                                <option value="{{ wpn }}">{{ wpn }}</option>
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="Martial Melee">
+                                {% for wpn in game_data.get('weapons', {}).get('martial_melee', []) %}
+                                <option value="{{ wpn }}">{{ wpn }}</option>
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="Martial Ranged">
+                                {% for wpn in game_data.get('weapons', {}).get('martial_ranged', []) %}
+                                <option value="{{ wpn }}">{{ wpn }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                    </label>
+                    <label>Tool Proficiencies
+                        <select name="Tool Proficiencies" multiple size="5">
+                            {% for tool in game_data.get('tools', []) %}
+                            <option value="{{ tool }}">{{ tool }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>Lifestyle
+                        <select name="Lifestyle">
+                            <option value="">— Seleccionar —</option>
+                            {% for ls in game_data.get('lifestyles', []) %}
+                            <option value="{{ ls }}">{{ ls }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
                     <h4 style="margin-top:16px;">Armor Proficiencies</h4>
                     <div class="grid-2">
                         <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 1" value="/Off"> Light</label>
@@ -371,13 +420,22 @@
 
         // Generate faction slots
         const factionsContainer = document.getElementById('factions-container');
+        const factionNames = {{ game_data.get('factions', []) | tojson }};
+        const factionList = document.createElement('datalist');
+        factionList.id = 'factionList';
+        factionNames.forEach(f => {
+            const o = document.createElement('option');
+            o.value = f;
+            factionList.appendChild(o);
+        });
+        factionsContainer.appendChild(factionList);
+
         for (let i = 0; i < 12; i++) {
             const suffix = i === 0 ? '' : ` ${i}`;
-            const suffix1 = i === 0 ? ' 1' : ` ${i+1}`;
             factionsContainer.innerHTML += `
                 <div class="faction-row">
                     <div class="grid-2">
-                        <label>Faction Name<input type="text" name="Faction${suffix}" placeholder="Facción"></label>
+                        <label>Faction Name<input type="text" name="Faction${suffix}" list="factionList" placeholder="Facción"></label>
                         <label>Score<input type="number" name="Faction Score${suffix}" placeholder="0"></label>
                     </div>
                 </div>
@@ -436,6 +494,29 @@
             }
         }
         classSelect.addEventListener('change', updateSubclasses);
+
+        // ===== HOMEWORLD INFO PANEL =====
+        const worlds = {{ game_data.get('worlds', []) | tojson }};
+        const homeworldSelect = document.getElementById('homeworldSelect');
+        const homeworldInfo = document.getElementById('homeworldInfo');
+
+        function updateHomeworldInfo() {
+            const name = homeworldSelect.value;
+            const w = worlds.find(x => x.name === name);
+            if (!w) {
+                homeworldInfo.innerHTML = '';
+                homeworldInfo.classList.remove('visible');
+                return;
+            }
+            homeworldInfo.innerHTML = `
+                <strong>${w.name}</strong>
+                <span class="hw-tags">${w.tags.join(' · ')}</span>
+                <span class="hw-detail">Homeworld of: ${w.homeworld_of}</span>
+                <span class="hw-detail">Faction: ${w.faction}</span>
+            `;
+            homeworldInfo.classList.add('visible');
+        }
+        if (homeworldSelect) homeworldSelect.addEventListener('change', updateHomeworldInfo);
 
         // ===== UX IMPROVEMENTS =====
 

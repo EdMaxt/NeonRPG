@@ -139,15 +139,29 @@ def generate():
 
     # --- Build output PDF ---------------------------------------------------
     writer = PdfWriter(clone_from=reader)
-    form_data = request.form.to_dict()
+    form_data = request.form.to_dict(flat=False)
+
+    # Multi-select fields arrive as lists; join them for the single-line PDF fields
+    MULTI_SELECT_FIELDS = {
+        "Languages",
+        "Feats and Professions",
+        "Weapon Proficiencies",
+        "Tool Proficiencies",
+    }
+    flat_data = {}
+    for key, values in form_data.items():
+        if key in MULTI_SELECT_FIELDS and isinstance(values, list):
+            flat_data[key] = ", ".join(v for v in values if v)
+        else:
+            flat_data[key] = values[0] if values else ""
 
     # Translate ability score field names to match PDF template
     for html_name, pdf_name in ABILITY_SCORE_MAP.items():
-        if html_name in form_data:
-            form_data[pdf_name] = form_data.pop(html_name)
+        if html_name in flat_data:
+            flat_data[pdf_name] = flat_data.pop(html_name)
 
     for page in writer.pages:
-        writer.update_page_form_field_values(page, form_data)
+        writer.update_page_form_field_values(page, flat_data)
 
     # Set NeedAppearances so viewers regenerate field appearances
     if "/AcroForm" in writer._root_object:

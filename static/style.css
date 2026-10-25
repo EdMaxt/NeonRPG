@@ -263,6 +263,47 @@ select[multiple] option:hover {
     background: rgba(0, 240, 255, 0.15);
 }
 
+select[multiple] optgroup {
+    color: var(--accent3);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.homeworld-info {
+    display: none;
+    grid-column: 1 / -1;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.homeworld-info.visible {
+    display: block;
+}
+
+.homeworld-info strong {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent);
+    font-size: 1rem;
+    margin-right: 12px;
+}
+
+.homeworld-info .hw-tags {
+    display: inline-block;
+    color: var(--accent3);
+    font-weight: 600;
+    margin-right: 12px;
+}
+
+.homeworld-info .hw-detail {
+    display: block;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
 input:focus,
 textarea:focus {
     outline: none;
