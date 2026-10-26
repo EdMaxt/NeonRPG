@@ -304,6 +304,82 @@ select[multiple] optgroup {
     margin-top: 4px;
 }
 
+/* ===== Auto-calculation ===== */
+.autocalc-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 16px;
+    padding: 6px 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.autocalc-toggle:hover {
+    border-color: var(--accent);
+    box-shadow: var(--glow);
+}
+
+.autocalc-toggle input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.autocalc-badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 12px;
+}
+
+.autocalc-badge .ac-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.autocalc-badge strong {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    color: var(--accent3);
+}
+
+input.autocalc-locked {
+    color: var(--accent3);
+    font-weight: 600;
+    background: rgba(251, 191, 36, 0.06);
+    border-color: var(--accent3);
+    cursor: not-allowed;
+}
+
+input.autocalc-locked:focus {
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+}
+
+@media (max-width: 768px) {
+    .autocalc-toggle {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+}
+
 /* ===== Checkbox Tables (3 columns) ===== */
 .field-block {
     margin-bottom: 16px;

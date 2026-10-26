@@ -19,6 +19,10 @@
                     <option value="theme-outrunner">Outrunner</option>
                     <option value="theme-overdrive">Overdrive</option>
                 </select>
+                <label class="autocalc-toggle" for="autocalcToggle">
+                    <input type="checkbox" id="autocalcToggle" checked>
+                    <span>Cálculo automático</span>
+                </label>
             </div>
         </header>
 
@@ -82,12 +86,16 @@
                         </label>
                         <div id="homeworldInfo" class="homeworld-info"></div>
                         <label>Level<input type="number" name="Level" placeholder="1" min="1" max="20"></label>
+                        <div class="autocalc-badge" id="profBonusBadge" title="Proficiency Bonus — calculado desde el nivel">
+                            <span class="ac-label">Proficiency Bonus</span>
+                            <strong id="profBonusValue">+2</strong>
+                        </div>
                         <label>XP<input type="number" name="XP" placeholder="0" min="0"></label>
                         <label>Size<input type="text" name="Size" placeholder="Medium"></label>
                         <label>Speed<input type="text" name="Speed" placeholder="30 ft"></label>
                         <label>Armor<input type="text" name="Armor" placeholder="AC"></label>
-                        <label>Initiative<input type="text" name="Initiative" placeholder="+0"></label>
-                        <label>HP Max<input type="number" name="HP Max" placeholder="0" min="0"></label>
+                        <label>Initiative<input type="text" name="Initiative" placeholder="+0" data-autocalc="initiative"></label>
+                        <label>HP Max<input type="number" name="HP Max" placeholder="0" min="0" data-autocalc="hp"></label>
                         <label>HP Temp<input type="number" name="HP Temp" placeholder="0" min="0"></label>
                         <label>HD Max<input type="text" name="HD Max" placeholder="1d8"></label>
                         <label>HD Spent<input type="text" name="HD Spent" placeholder="0"></label>
@@ -105,37 +113,37 @@
                         <div class="ability-box">
                             <h4>STR</h4>
                             <label>Score<input type="number" name="Score STR" placeholder="10"></label>
-                            <label>Mod<input type="text" name="Mod STR" placeholder="+0"></label>
+                            <label>Mod<input type="text" name="Mod STR" placeholder="+0" data-autocalc="mod" data-from="Score STR"></label>
                             <label class="checkbox-label"><input type="checkbox" name="Save STR" value="/Off"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>DEX</h4>
                             <label>Score<input type="number" name="Score DEX" placeholder="10"></label>
-                            <label>Mod<input type="text" name="Mod DEX" placeholder="+0"></label>
+                            <label>Mod<input type="text" name="Mod DEX" placeholder="+0" data-autocalc="mod" data-from="Score DEX"></label>
                             <label class="checkbox-label"><input type="checkbox" name="Save DEX" value="/Off"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>CON</h4>
                             <label>Score<input type="number" name="Score CON" placeholder="10"></label>
-                            <label>Mod<input type="text" name="Mod CON" placeholder="+0"></label>
+                            <label>Mod<input type="text" name="Mod CON" placeholder="+0" data-autocalc="mod" data-from="Score CON"></label>
                             <label class="checkbox-label"><input type="checkbox" name="Save CON" value="/Off"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>INT</h4>
                             <label>Score<input type="number" name="Score INT" placeholder="10"></label>
-                            <label>Mod<input type="text" name="Mod INT" placeholder="+0"></label>
+                            <label>Mod<input type="text" name="Mod INT" placeholder="+0" data-autocalc="mod" data-from="Score INT"></label>
                             <label class="checkbox-label"><input type="checkbox" name="Save INT" value="/Off"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>WIS</h4>
                             <label>Score<input type="number" name="Score WIS" placeholder="10"></label>
-                            <label>Mod<input type="text" name="Mod WIS" placeholder="+0"></label>
+                            <label>Mod<input type="text" name="Mod WIS" placeholder="+0" data-autocalc="mod" data-from="Score WIS"></label>
                             <label class="checkbox-label"><input type="checkbox" name="Save WIS" value="/Off"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>CHA</h4>
                             <label>Score<input type="number" name="Score CHA" placeholder="10"></label>
-                            <label>Mod<input type="text" name="Mod CHA" placeholder="+0"></label>
+                            <label>Mod<input type="text" name="Mod CHA" placeholder="+0" data-autocalc="mod" data-from="Score CHA"></label>
                             <label class="checkbox-label"><input type="checkbox" name="Save CHA" value="/Off"> Save Prof</label>
                         </div>
                     </div>
@@ -346,9 +354,9 @@
                 <summary>Conjuros</summary>
                 <div class="section">
                     <div class="grid-3">
-                        <label>Spell Attack Bonus<input type="text" name="Spell Attack Bonus" placeholder="+0"></label>
-                        <label>Spell Save DC<input type="text" name="Spell Save DC" placeholder="10"></label>
-                        <label>Spellcasting Modifier<input type="text" name="Spellcasting Modifier" placeholder="+0"></label>
+                        <label>Spell Attack Bonus<input type="text" name="Spell Attack Bonus" placeholder="+0" data-autocalc="spell-atk" title="Proficiency Bonus + Spellcasting Modifier"></label>
+                        <label>Spell Save DC<input type="text" name="Spell Save DC" placeholder="10" data-autocalc="spell-dc" title="8 + Proficiency Bonus + Spellcasting Modifier"></label>
+                        <label>Spellcasting Modifier<input type="text" name="Spellcasting Modifier" placeholder="+0" data-autocalc-src="casting-mod" title="El modifier de tu habilidad de conjuro (INT/WIS/CHA)"></label>
                     </div>
                     <label class="checkbox-label" style="margin-top:8px;"><input type="checkbox" name="Spellcasting Ability 1" value="/Off"> Spellcasting Ability</label>
                     <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 2" value="/Off"> Ability 2</label>
@@ -495,6 +503,141 @@
                 </div>
             `;
         }
+
+        // ===== AUTO-CALCULATION =====
+        const gameDataClasses = {{ game_data.get('classes', []) | tojson }};
+
+        const AutoCalc = {
+            enabled: true,
+
+            /** D&D 5e ability modifier from score */
+            mod(score) {
+                const s = parseInt(score, 10);
+                if (isNaN(s)) return '';
+                const m = Math.floor((s - 10) / 2);
+                return (m >= 0 ? '+' : '') + m;
+            },
+
+            /** Proficiency bonus from character level */
+            proficiency(level) {
+                const l = parseInt(level, 10);
+                if (isNaN(l) || l < 1) return 0;
+                if (l <= 4) return 2;
+                if (l <= 8) return 3;
+                if (l <= 12) return 4;
+                if (l <= 16) return 5;
+                return 6;
+            },
+
+            /** Parse a signed modifier string ("+3", "-1") into a number */
+            num(val) {
+                if (val === null || val === undefined || val === '') return null;
+                const n = parseInt(String(val).replace('+', ''), 10);
+                return isNaN(n) ? null : n;
+            },
+
+            field(name) {
+                return document.querySelector(`[name="${CSS.escape(name)}"]`);
+            },
+
+            /** Hit die faces from a string like "D10" */
+            hitDie(hitDieStr) {
+                const m = /D(\d+)/i.exec(hitDieStr || '');
+                if (!m) return null;
+                const faces = parseInt(m[1], 10);
+                return { max: faces, avg: Math.floor((faces + 1) / 2) };
+            },
+
+            classHitDie() {
+                const cls = document.getElementById('classSelect');
+                const name = cls ? cls.value : '';
+                if (!name) return null;
+                const found = gameDataClasses.find(c => c.name === name);
+                return found ? this.hitDie(found.hit_die) : null;
+            },
+
+            recalc() {
+                const levelEl = this.field('Level');
+                const level = parseInt(levelEl ? levelEl.value : '', 10);
+                const pb = this.proficiency(levelEl ? levelEl.value : '');
+
+                if (!this.enabled) {
+                    this.setFieldsEditable(true);
+                    return;
+                }
+                this.setFieldsEditable(false);
+
+                // 1) Ability modifiers <- scores
+                document.querySelectorAll('[data-autocalc="mod"]').forEach(el => {
+                    const src = this.field(el.getAttribute('data-from'));
+                    el.value = src ? this.mod(src.value) : '';
+                });
+
+                // 2) Initiative <- DEX modifier
+                const dexModEl = this.field('Mod DEX');
+                const initEl = document.querySelector('[data-autocalc="initiative"]');
+                if (dexModEl && initEl) initEl.value = dexModEl.value;
+
+                // 3) Proficiency bonus badge
+                const pbEl = document.getElementById('profBonusValue');
+                if (pbEl) pbEl.textContent = '+' + pb;
+
+                // 4) Spell attack bonus / save DC
+                const castEl = document.querySelector('[data-autocalc-src="casting-mod"]');
+                const castMod = this.num(castEl ? castEl.value : '') || 0;
+                const atkEl = document.querySelector('[data-autocalc="spell-atk"]');
+                const dcEl = document.querySelector('[data-autocalc="spell-dc"]');
+                if (atkEl) {
+                    const total = pb + castMod;
+                    atkEl.value = (total >= 0 ? '+' : '') + total;
+                }
+                if (dcEl) dcEl.value = String(8 + pb + castMod);
+
+                // 5) HP Max <- class hit die + CON modifier (average rolls)
+                const hpEl = document.querySelector('[data-autocalc="hp"]');
+                const conModEl = this.field('Mod CON');
+                const hd = this.classHitDie();
+                if (hpEl && hd && !isNaN(level) && level >= 1) {
+                    const conMod = this.num(conModEl ? conModEl.value : '') || 0;
+                    const hp = hd.max + conMod + (level - 1) * (hd.avg + conMod);
+                    hpEl.value = String(Math.max(1, hp));
+                } else if (hpEl && !hd) {
+                    hpEl.value = '';
+                }
+            },
+
+            setFieldsEditable(editable) {
+                document.querySelectorAll('[data-autocalc]').forEach(el => {
+                    el.readOnly = !editable;
+                    el.classList.toggle('autocalc-locked', !editable);
+                });
+            }
+        };
+
+        // Wire up triggers
+        const autocalcToggle = document.getElementById('autocalcToggle');
+        if (autocalcToggle) {
+            const savedAuto = localStorage.getItem('neonOdysseyAutoCalc');
+            if (savedAuto !== null) AutoCalc.enabled = savedAuto === '1';
+            autocalcToggle.checked = AutoCalc.enabled;
+            autocalcToggle.addEventListener('change', () => {
+                AutoCalc.enabled = autocalcToggle.checked;
+                localStorage.setItem('neonOdysseyAutoCalc', autocalcToggle.checked ? '1' : '0');
+                AutoCalc.recalc();
+            });
+        }
+
+        // Recompute on any relevant input
+        document.getElementById('sheetForm').addEventListener('input', (e) => {
+            const t = e.target;
+            if (t.matches('[data-from], [name="Level"], [name="Score STR"], [name="Score DEX"], [name="Score CON"], [name="Score INT"], [name="Score WIS"], [name="Score CHA"], [data-autocalc-src="casting-mod"]')) {
+                AutoCalc.recalc();
+            }
+        });
+        document.getElementById('classSelect').addEventListener('change', () => AutoCalc.recalc());
+
+        // Initial run
+        AutoCalc.recalc();
 
         // ===== DYNAMIC SUBCLASS DROPDOWN =====
         const subclasses = {{ game_data.get('subclasses', {}) | tojson }};
