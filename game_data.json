@@ -1186,5 +1186,266 @@
         "Khora"
       ]
     }
-  ]
+  ],
+  "class_proficiencies": {
+    "Cryptist": {
+      "saves": [
+        "WIS"
+      ],
+      "saves_note": "+ Primary Ability",
+      "skill_choose": 2,
+      "skill_options": [
+        "Arcana",
+        "Deception",
+        "History",
+        "Intimidation",
+        "Investigation",
+        "Nature",
+        "Perception",
+        "Religion"
+      ]
+    },
+    "Disciple": {
+      "saves": [
+        "STR",
+        "DEX"
+      ],
+      "saves_note": "",
+      "skill_choose": 2,
+      "skill_options": [
+        "Acrobatics",
+        "Arcana",
+        "Athletics",
+        "History",
+        "Insight",
+        "Investigation",
+        "Religion",
+        "Stealth"
+      ]
+    },
+    "Enforcer": {
+      "saves": [
+        "WIS",
+        "CHA"
+      ],
+      "saves_note": "",
+      "skill_choose": 2,
+      "skill_options": [
+        "Athletics",
+        "Insight",
+        "Intimidation",
+        "Medicine",
+        "Persuasion",
+        "Religion",
+        "Technology"
+      ]
+    },
+    "Esper": {
+      "saves": [
+        "CON"
+      ],
+      "saves_note": "+ Primary Ability",
+      "skill_choose": 2,
+      "skill_options": [
+        "Arcana",
+        "Deception",
+        "History",
+        "Insight",
+        "Intimidation",
+        "Investigation",
+        "Persuasion"
+      ]
+    },
+    "Gridrunner": {
+      "saves": [
+        "INT",
+        "WIS"
+      ],
+      "saves_note": "",
+      "skill_choose": 2,
+      "skill_options": [
+        "Arcana",
+        "Computers",
+        "History",
+        "Insight",
+        "Investigation",
+        "Medicine",
+        "Nature",
+        "Religion",
+        "Technology"
+      ]
+    },
+    "Icon": {
+      "saves": [
+        "DEX",
+        "CHA"
+      ],
+      "saves_note": "",
+      "skill_choose": 3,
+      "skill_options": [],
+      "skill_any": true
+    },
+    "Juggernaut": {
+      "saves": [
+        "STR",
+        "CON"
+      ],
+      "saves_note": "",
+      "skill_choose": 2,
+      "skill_options": [
+        "Athletics",
+        "History",
+        "Intimidation",
+        "Medicine",
+        "Perception",
+        "Survival"
+      ]
+    },
+    "Machinist": {
+      "saves": [
+        "CON",
+        "INT"
+      ],
+      "saves_note": "",
+      "skill_choose": 2,
+      "skill_options": [
+        "Arcana",
+        "Computers",
+        "History",
+        "Investigation",
+        "Medicine",
+        "Nature",
+        "Perception",
+        "Sleight of Hand",
+        "Technology"
+      ]
+    },
+    "Oracle": {
+      "saves": [
+        "WIS",
+        "CHA"
+      ],
+      "saves_note": "",
+      "skill_choose": 2,
+      "skill_options": [
+        "History",
+        "Insight",
+        "Medicine",
+        "Persuasion",
+        "Religion"
+      ]
+    },
+    "Primalist": {
+      "saves": [
+        "INT",
+        "WIS"
+      ],
+      "saves_note": "",
+      "skill_choose": 2,
+      "skill_options": [
+        "Arcana",
+        "Animal Handling",
+        "Insight",
+        "Medicine",
+        "Nature",
+        "Perception",
+        "Religion",
+        "Survival"
+      ]
+    },
+    "Scoundrel": {
+      "saves": [
+        "DEX",
+        "INT"
+      ],
+      "saves_note": "",
+      "skill_choose": 4,
+      "skill_options": [
+        "Acrobatics",
+        "Athletics",
+        "Computers",
+        "Deception",
+        "Insight",
+        "Intimidation",
+        "Investigation",
+        "Perception",
+        "Persuasion",
+        "Sleight of Hand",
+        "Stealth",
+        "Technology"
+      ]
+    },
+    "Soldier": {
+      "saves": [
+        "STR",
+        "CON"
+      ],
+      "saves_note": "",
+      "skill_choose": 2,
+      "skill_options": [
+        "Acrobatics",
+        "Athletics",
+        "History",
+        "Insight",
+        "Intimidation",
+        "Medicine",
+        "Persuasion",
+        "Perception",
+        "Stealth",
+        "Survival"
+      ]
+    },
+    "Tracer": {
+      "saves": [
+        "STR",
+        "DEX"
+      ],
+      "saves_note": "",
+      "skill_choose": 3,
+      "skill_options": [
+        "Animal Handling",
+        "Athletics",
+        "History",
+        "Insight",
+        "Investigation",
+        "Nature",
+        "Perception",
+        "Stealth",
+        "Survival"
+      ]
+    }
+  },
+  "armor_types": [
+    {
+      "name": "Unarmored",
+      "base": 10,
+      "dex": true,
+      "dex_cap": null
+    },
+    {
+      "name": "Light Armor",
+      "base": 11,
+      "dex": true,
+      "dex_cap": null
+    },
+    {
+      "name": "Medium Armor Vest",
+      "base": 13,
+      "dex": true,
+      "dex_cap": 2
+    },
+    {
+      "name": "Medium Armor Suit",
+      "base": 14,
+      "dex": true,
+      "dex_cap": 2
+    },
+    {
+      "name": "Heavy Armor",
+      "base": 16,
+      "dex": false,
+      "dex_cap": null
+    }
+  ],
+  "shield_bonus": 2
 }

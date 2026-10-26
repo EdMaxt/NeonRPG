@@ -93,8 +93,17 @@
                         <label>XP<input type="number" name="XP" placeholder="0" min="0"></label>
                         <label>Size<input type="text" name="Size" placeholder="Medium"></label>
                         <label>Speed<input type="text" name="Speed" placeholder="30 ft"></label>
-                        <label>Armor<input type="text" name="Armor" placeholder="AC"></label>
+                        <label>Armor Type
+                            <select name="Armor Type" id="armorTypeSelect">
+                                <option value="">— Seleccionar —</option>
+                                {% for a in game_data.get('armor_types', []) %}
+                                <option value="{{ a.name }}">{{ a.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label>Armor Class<input type="text" name="Armor" placeholder="10" data-autocalc="ac" title="Base armor + DEX modifier (+ shield)"></label>
                         <label>Initiative<input type="text" name="Initiative" placeholder="+0" data-autocalc="initiative"></label>
+                        <label class="checkbox-label"><input type="checkbox" id="shieldCheck" name="Shield" value="/Yes"> Shield (+2 AC)</label>
                         <label>HP Max<input type="number" name="HP Max" placeholder="0" min="0" data-autocalc="hp"></label>
                         <label>HP Temp<input type="number" name="HP Temp" placeholder="0" min="0"></label>
                         <label>HD Max<input type="text" name="HD Max" placeholder="1d8"></label>
@@ -490,6 +499,9 @@
 
         // ===== AUTO-CALCULATION =====
         const gameDataClasses = {{ game_data.get('classes', []) | tojson }};
+        const gameDataProficiencies = {{ game_data.get('class_proficiencies', {}) | tojson }};
+        const gameDataArmor = {{ game_data.get('armor_types', []) | tojson }};
+        const gameDataShieldBonus = {{ game_data.get('shield_bonus', 2) | int }};
 
         const AutoCalc = {
             enabled: true,
@@ -598,6 +610,26 @@
                 } else if (hpEl && !hd) {
                     hpEl.value = '';
                 }
+
+                // 6) Armor Class <- armor type + DEX modifier + shield
+                const acEl = document.querySelector('[data-autocalc="ac"]');
+                const armorSel = document.getElementById('armorTypeSelect');
+                const armorName = armorSel ? armorSel.value : '';
+                const armor = gameDataArmor.find(a => a.name === armorName);
+                const shieldEl = document.getElementById('shieldCheck');
+                if (acEl && armor) {
+                    const dexMod = this.num(dexModEl ? dexModEl.value : '') || 0;
+                    let ac = armor.base;
+                    if (armor.dex) {
+                        const cap = armor.dex_cap;
+                        const dexPart = cap === null || cap === undefined ? dexMod : Math.min(dexMod, cap);
+                        ac += dexPart;
+                    }
+                    if (shieldEl && shieldEl.checked) ac += gameDataShieldBonus;
+                    acEl.value = String(ac);
+                } else if (acEl) {
+                    acEl.value = '';
+                }
             },
 
             setFieldsEditable(editable) {
@@ -607,6 +639,40 @@
                 });
             }
         };
+
+        // --- Apply class proficiencies (saves auto-check + skill options) ---
+        function applyClassProficiencies() {
+            const cls = document.getElementById('classSelect');
+            const name = cls ? cls.value : '';
+            const prof = name ? gameDataProficiencies[name] : null;
+
+            // 1) Auto-check saving throw proficiencies from the class
+            const saveMap = {
+                STR: 'Ability Save STR', DEX: 'Ability Save DEX', CON: 'Ability Save CON',
+                INT: 'Ability Save INT', WIS: 'Ability Save WIS', CHA: 'Ability Save CHA'
+            };
+            const saves = prof ? prof.saves : [];
+            Object.values(saveMap).forEach(fieldName => {
+                const cb = document.querySelector(`[name="${fieldName}"]`);
+                if (!cb) return;
+                const ability = Object.keys(saveMap).find(k => saveMap[k] === fieldName);
+                cb.checked = saves.includes(ability);
+                cb.classList.toggle('autoset', saves.includes(ability));
+            });
+
+            // 2) Highlight the skills this class can choose from
+            const options = (prof && prof.skill_options) ? prof.skill_options : [];
+            const anySkill = prof && prof.skill_any;
+            const hasClass = !!prof;
+            document.querySelectorAll('[name^="Skills"]').forEach(cb => {
+                const label = cb.closest('label');
+                if (!label) return;
+                const skillName = label.textContent.trim();
+                const isOption = anySkill ? true : options.includes(skillName);
+                label.classList.toggle('skill-option', hasClass && isOption && options.length > 0);
+                label.classList.toggle('skill-locked', hasClass && !isOption && options.length > 0);
+            });
+        }
 
         // Wire up triggers
         const autocalcToggle = document.getElementById('autocalcToggle');
@@ -628,7 +694,16 @@
                 AutoCalc.recalc();
             }
         });
-        document.getElementById('classSelect').addEventListener('change', () => AutoCalc.recalc());
+        document.getElementById('classSelect').addEventListener('change', () => {
+            applyClassProficiencies();
+            AutoCalc.recalc();
+        });
+
+        // Armor type / shield changes trigger an AC recalc
+        const armorSel = document.getElementById('armorTypeSelect');
+        if (armorSel) armorSel.addEventListener('change', () => AutoCalc.recalc());
+        const shieldCb = document.getElementById('shieldCheck');
+        if (shieldCb) shieldCb.addEventListener('change', () => AutoCalc.recalc());
 
         // Save proficiency checkboxes trigger a recalc
         document.querySelectorAll('[name^="Ability Save"]').forEach(cb => {
@@ -636,6 +711,7 @@
         });
 
         // Initial run
+        applyClassProficiencies();
         AutoCalc.recalc();
 
         // ===== DYNAMIC SUBCLASS DROPDOWN =====

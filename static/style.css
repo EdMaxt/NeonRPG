@@ -373,6 +373,42 @@ input.autocalc-locked:focus {
     box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
 }
 
+/* Skill options available for the selected class */
+.grid-3 > .checkbox-label.skill-option {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.grid-3 > .checkbox-label.skill-option::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 6px;
+    box-shadow: var(--glow);
+}
+
+.grid-3 > .checkbox-label.skill-locked {
+    opacity: 0.45;
+}
+
+/* Auto-set indicator on save proficiency checkboxes */
+input[type="checkbox"].autoset {
+    outline: 2px solid var(--accent3);
+    outline-offset: 1px;
+    border-radius: 2px;
+}
+
+.autoset-hint {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--accent3);
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+}
+
 @media (max-width: 768px) {
     .autocalc-toggle {
         margin-left: 0;
