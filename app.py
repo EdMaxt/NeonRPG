@@ -54,23 +54,31 @@ TEMPLATE_PDF = os.path.join(BASE_DIR, "template.pdf")
 
 MAX_NAME_LENGTH = 64
 
-# Mapping from HTML field names to PDF template field names for ability scores
+# Mapping from HTML field names to PDF template field names.
+# The template numbers the non-STR abilities (DEX=1, CON=2, INT=3, WIS=4, CHA=5).
 ABILITY_SCORE_MAP = {
     "Score DEX": "Score STR 1",
     "Mod DEX": "Mod STR 1",
     "Save DEX": "Save STR 1",
+    "Ability Save DEX": "Ability Save 1",
     "Score CON": "Score STR 2",
     "Mod CON": "Mod STR 2",
     "Save CON": "Save STR 2",
+    "Ability Save CON": "Ability Save 2",
     "Score INT": "Score STR 3",
     "Mod INT": "Mod STR 3",
     "Save INT": "Save STR 3",
+    "Ability Save INT": "Ability Save 3",
     "Score WIS": "Score STR 4",
     "Mod WIS": "Mod STR 4",
     "Save WIS": "Save STR 4",
+    "Ability Save WIS": "Ability Save 4",
     "Score CHA": "Score STR 5",
     "Mod CHA": "Mod STR 5",
     "Save CHA": "Save STR 5",
+    "Ability Save CHA": "Ability Save 5",
+    # STR maps to the un-suffixed "Ability Save" field
+    "Ability Save STR": "Ability Save",
 }
 
 

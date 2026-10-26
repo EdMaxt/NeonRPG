@@ -114,37 +114,43 @@
                             <h4>STR</h4>
                             <label>Score<input type="number" name="Score STR" placeholder="10"></label>
                             <label>Mod<input type="text" name="Mod STR" placeholder="+0" data-autocalc="mod" data-from="Score STR"></label>
-                            <label class="checkbox-label"><input type="checkbox" name="Save STR" value="/Off"> Save Prof</label>
+                            <label>Save<input type="text" name="Save STR" placeholder="+0" data-autocalc="save" data-mod="Mod STR" data-prof="Ability Save STR"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save STR" value="/Yes"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>DEX</h4>
                             <label>Score<input type="number" name="Score DEX" placeholder="10"></label>
                             <label>Mod<input type="text" name="Mod DEX" placeholder="+0" data-autocalc="mod" data-from="Score DEX"></label>
-                            <label class="checkbox-label"><input type="checkbox" name="Save DEX" value="/Off"> Save Prof</label>
+                            <label>Save<input type="text" name="Save DEX" placeholder="+0" data-autocalc="save" data-mod="Mod DEX" data-prof="Ability Save DEX"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save DEX" value="/Yes"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>CON</h4>
                             <label>Score<input type="number" name="Score CON" placeholder="10"></label>
                             <label>Mod<input type="text" name="Mod CON" placeholder="+0" data-autocalc="mod" data-from="Score CON"></label>
-                            <label class="checkbox-label"><input type="checkbox" name="Save CON" value="/Off"> Save Prof</label>
+                            <label>Save<input type="text" name="Save CON" placeholder="+0" data-autocalc="save" data-mod="Mod CON" data-prof="Ability Save CON"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save CON" value="/Yes"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>INT</h4>
                             <label>Score<input type="number" name="Score INT" placeholder="10"></label>
                             <label>Mod<input type="text" name="Mod INT" placeholder="+0" data-autocalc="mod" data-from="Score INT"></label>
-                            <label class="checkbox-label"><input type="checkbox" name="Save INT" value="/Off"> Save Prof</label>
+                            <label>Save<input type="text" name="Save INT" placeholder="+0" data-autocalc="save" data-mod="Mod INT" data-prof="Ability Save INT"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save INT" value="/Yes"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>WIS</h4>
                             <label>Score<input type="number" name="Score WIS" placeholder="10"></label>
                             <label>Mod<input type="text" name="Mod WIS" placeholder="+0" data-autocalc="mod" data-from="Score WIS"></label>
-                            <label class="checkbox-label"><input type="checkbox" name="Save WIS" value="/Off"> Save Prof</label>
+                            <label>Save<input type="text" name="Save WIS" placeholder="+0" data-autocalc="save" data-mod="Mod WIS" data-prof="Ability Save WIS"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save WIS" value="/Yes"> Save Prof</label>
                         </div>
                         <div class="ability-box">
                             <h4>CHA</h4>
                             <label>Score<input type="number" name="Score CHA" placeholder="10"></label>
                             <label>Mod<input type="text" name="Mod CHA" placeholder="+0" data-autocalc="mod" data-from="Score CHA"></label>
-                            <label class="checkbox-label"><input type="checkbox" name="Save CHA" value="/Off"> Save Prof</label>
+                            <label>Save<input type="text" name="Save CHA" placeholder="+0" data-autocalc="save" data-mod="Mod CHA" data-prof="Ability Save CHA"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save CHA" value="/Yes"> Save Prof</label>
                         </div>
                     </div>
                 </div>
@@ -155,26 +161,12 @@
                 <summary>Habilidades (Skills)</summary>
                 <div class="section">
                     <div class="grid-3">
-                        <label class="checkbox-label"><input type="checkbox" name="Skills" value="/Off"> Acrobatics</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 1" value="/Off"> Animal Handling</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 2" value="/Off"> Arcana</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 3" value="/Off"> Athletics</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 4" value="/Off"> Deception</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 5" value="/Off"> History</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 6" value="/Off"> Insight</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 7" value="/Off"> Intimidation</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 8" value="/Off"> Investigation</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 9" value="/Off"> Medicine</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 10" value="/Off"> Nature</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 11" value="/Off"> Perception</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 12" value="/Off"> Performance</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 13" value="/Off"> Persuasion</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 14" value="/Off"> Religion</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 15" value="/Off"> Sleight of Hand</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 16" value="/Off"> Stealth</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 17" value="/Off"> Survival</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 18" value="/Off"> Technology</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Skills 19" value="/Off"> Piloting</label>
+                        {% for skill in game_data.get('skills', []) %}
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="{{ 'Skills' if loop.first else 'Skills ' ~ loop.index0 }}" value="/Yes">
+                            {{ skill }}
+                        </label>
+                        {% endfor %}
                     </div>
                     <label style="margin-top:12px;display:block;">Skill Notes<input type="text" name="Skill" placeholder="Notas de habilidades"></label>
                 </div>
@@ -184,24 +176,16 @@
             <details id="section-saves">
                 <summary>Tiradas de Salvación y Muerte</summary>
                 <div class="section">
-                    <div class="grid-2">
-                        <label class="checkbox-label"><input type="checkbox" name="Ability Save" value="/Off"> Ability Save Prof</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 1" value="/Off"> Ability Save 2</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 2" value="/Off"> Ability Save 3</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 3" value="/Off"> Ability Save 4</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 4" value="/Off"> Ability Save 5</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Ability Save 5" value="/Off"> Ability Save 6</label>
-                    </div>
-                    <h4 style="margin-top:16px;">Death Saves</h4>
+                    <h4 style="margin-top:0;">Death Saves</h4>
                     <div class="grid-3">
-                        <label class="checkbox-label"><input type="checkbox" name="Death Save 1" value="/Off"> Success 1</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Death Save 2" value="/Off"> Success 2</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Death Save 3" value="/Off"> Success 3</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Death Save 4" value="/Off"> Fail 1</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Death Save 5" value="/Off"> Fail 2</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Death Save 6" value="/Off"> Fail 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 1" value="/Yes"> Success 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 2" value="/Yes"> Success 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 3" value="/Yes"> Success 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 4" value="/Yes"> Fail 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 5" value="/Yes"> Fail 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 6" value="/Yes"> Fail 3</label>
                     </div>
-                    <label class="checkbox-label" style="margin-top:12px;"><input type="checkbox" name="Heroic Inspiration" value="/Off"> Heroic Inspiration</label>
+                    <label class="checkbox-label" style="margin-top:12px;"><input type="checkbox" name="Heroic Inspiration" value="/Yes"> Heroic Inspiration</label>
                 </div>
             </details>
 
@@ -210,12 +194,12 @@
                 <summary>Agotamiento (Exhaustion)</summary>
                 <div class="section">
                     <div class="grid-3">
-                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 1" value="/Off"> Level 1</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 2" value="/Off"> Level 2</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 3" value="/Off"> Level 3</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 4" value="/Off"> Level 4</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 5" value="/Off"> Level 5</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 6" value="/Off"> Level 6</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 1" value="/Yes"> Level 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 2" value="/Yes"> Level 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 3" value="/Yes"> Level 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 4" value="/Yes"> Level 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 5" value="/Yes"> Level 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 6" value="/Yes"> Level 6</label>
                     </div>
                 </div>
             </details>
@@ -249,12 +233,12 @@
                     </div>
                     <h4 style="margin-top:16px;">Attunement</h4>
                     <div class="grid-3">
-                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 1" value="/Off"> Slot 1</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 2" value="/Off"> Slot 2</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 3" value="/Off"> Slot 3</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 4" value="/Off"> Slot 4</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 5" value="/Off"> Slot 5</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 6" value="/Off"> Slot 6</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 1" value="/Yes"> Slot 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 2" value="/Yes"> Slot 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 3" value="/Yes"> Slot 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 4" value="/Yes"> Slot 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 5" value="/Yes"> Slot 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 6" value="/Yes"> Slot 6</label>
                     </div>
                 </div>
             </details>
@@ -341,10 +325,10 @@
                     </label>
                     <h4 style="margin-top:16px;">Armor Proficiencies</h4>
                     <div class="grid-2">
-                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 1" value="/Off"> Light</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 2" value="/Off"> Medium</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 3" value="/Off"> Heavy</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 4" value="/Off"> Shields</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 1" value="/Yes"> Light</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 2" value="/Yes"> Medium</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 3" value="/Yes"> Heavy</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 4" value="/Yes"> Shields</label>
                     </div>
                 </div>
             </details>
@@ -358,34 +342,34 @@
                         <label>Spell Save DC<input type="text" name="Spell Save DC" placeholder="10" data-autocalc="spell-dc" title="8 + Proficiency Bonus + Spellcasting Modifier"></label>
                         <label>Spellcasting Modifier<input type="text" name="Spellcasting Modifier" placeholder="+0" data-autocalc-src="casting-mod" title="El modifier de tu habilidad de conjuro (INT/WIS/CHA)"></label>
                     </div>
-                    <label class="checkbox-label" style="margin-top:8px;"><input type="checkbox" name="Spellcasting Ability 1" value="/Off"> Spellcasting Ability</label>
-                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 2" value="/Off"> Ability 2</label>
-                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 3" value="/Off"> Ability 3</label>
+                    <label class="checkbox-label" style="margin-top:8px;"><input type="checkbox" name="Spellcasting Ability 1" value="/Yes"> Spellcasting Ability</label>
+                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 2" value="/Yes"> Ability 2</label>
+                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 3" value="/Yes"> Ability 3</label>
 
                     <h4 style="margin-top:16px;">Spell Slots</h4>
                     <div class="grid-3">
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 1" value="/Off"> Slot 1</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 2" value="/Off"> Slot 2</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 3" value="/Off"> Slot 3</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 4" value="/Off"> Slot 4</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 5" value="/Off"> Slot 5</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 6" value="/Off"> Slot 6</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 7" value="/Off"> Slot 7</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 9" value="/Off"> Slot 9</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 10" value="/Off"> Slot 10</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 11" value="/Off"> Slot 11</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 13" value="/Off"> Slot 13</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 14" value="/Off"> Slot 14</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 15" value="/Off"> Slot 15</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 16" value="/Off"> Slot 16</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 17" value="/Off"> Slot 17</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 18" value="/Off"> Slot 18</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 19" value="/Off"> Slot 19</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 20" value="/Off"> Slot 20</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 25" value="/Off"> Slot 25</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 26" value="/Off"> Slot 26</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 27" value="/Off"> Slot 27</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 28" value="/Off"> Slot 28</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 1" value="/Yes"> Slot 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 2" value="/Yes"> Slot 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 3" value="/Yes"> Slot 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 4" value="/Yes"> Slot 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 5" value="/Yes"> Slot 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 6" value="/Yes"> Slot 6</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 7" value="/Yes"> Slot 7</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 9" value="/Yes"> Slot 9</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 10" value="/Yes"> Slot 10</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 11" value="/Yes"> Slot 11</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 13" value="/Yes"> Slot 13</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 14" value="/Yes"> Slot 14</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 15" value="/Yes"> Slot 15</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 16" value="/Yes"> Slot 16</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 17" value="/Yes"> Slot 17</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 18" value="/Yes"> Slot 18</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 19" value="/Yes"> Slot 19</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 20" value="/Yes"> Slot 20</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 25" value="/Yes"> Slot 25</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 26" value="/Yes"> Slot 26</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 27" value="/Yes"> Slot 27</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 28" value="/Yes"> Slot 28</label>
                     </div>
 
                     <h4 style="margin-top:16px;">Spells</h4>
@@ -573,6 +557,16 @@
                     el.value = src ? this.mod(src.value) : '';
                 });
 
+                // 1b) Saving throw bonuses <- ability mod + PB (if proficient)
+                document.querySelectorAll('[data-autocalc="save"]').forEach(el => {
+                    const modEl = this.field(el.getAttribute('data-mod'));
+                    const profEl = this.field(el.getAttribute('data-prof'));
+                    const mod = this.num(modEl ? modEl.value : '') || 0;
+                    const prof = (profEl && profEl.checked) ? pb : 0;
+                    const total = mod + prof;
+                    el.value = (total >= 0 ? '+' : '') + total;
+                });
+
                 // 2) Initiative <- DEX modifier
                 const dexModEl = this.field('Mod DEX');
                 const initEl = document.querySelector('[data-autocalc="initiative"]');
@@ -635,6 +629,11 @@
             }
         });
         document.getElementById('classSelect').addEventListener('change', () => AutoCalc.recalc());
+
+        // Save proficiency checkboxes trigger a recalc
+        document.querySelectorAll('[name^="Ability Save"]').forEach(cb => {
+            cb.addEventListener('change', () => AutoCalc.recalc());
+        });
 
         // Initial run
         AutoCalc.recalc();
