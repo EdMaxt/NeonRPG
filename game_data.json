@@ -10,164 +10,1181 @@
     "note": "Worldspeaker is a Primalist subclass in v1.1 (was a class in v0.1.0). 13 classes total."
   },
   "classes": [
-    {"name": "Cryptist", "primary_ability": "Intelligence or Charisma", "hit_die": "D8", "description": "An Occultist Who Unlocks Power from Cosmic Secrets"},
-    {"name": "Disciple", "primary_ability": "Dexterity and Wisdom", "hit_die": "D8", "description": "A Martial Adept Who Balances Body and Soul"},
-    {"name": "Enforcer", "primary_ability": "Strength and Charisma", "hit_die": "D10", "description": "A Resolute Champion Empowered by Conviction"},
-    {"name": "Esper", "primary_ability": "Intelligence or Charisma", "hit_die": "D6", "description": "An Awakened Conduit of Psychic Force"},
-    {"name": "Gridrunner", "primary_ability": "Intelligence", "hit_die": "D6", "description": "A Code-Savvy Technomancer"},
-    {"name": "Icon", "primary_ability": "Charisma", "hit_die": "D8", "description": "An Uplifting Embodiment of the Song of Existence"},
-    {"name": "Juggernaut", "primary_ability": "Strength", "hit_die": "D12", "description": "An Unstoppable Hulk of Kinetic Might"},
-    {"name": "Machinist", "primary_ability": "Intelligence", "hit_die": "D8", "description": "An Ingenious Builder of Mechanical Marvels"},
-    {"name": "Oracle", "primary_ability": "Wisdom", "hit_die": "D8", "description": "A Chosen Seer and Speaker of Cosmic Forces"},
-    {"name": "Primalist", "primary_ability": "Wisdom", "hit_die": "D8", "description": "A Wild Mystic Who Calls Primordial Power"},
-    {"name": "Scoundrel", "primary_ability": "Dexterity", "hit_die": "D8", "description": "A Cunning Opportunist Who Fights Dirty"},
-    {"name": "Soldier", "primary_ability": "Strength or Dexterity", "hit_die": "D10", "description": "A Battlefield Specialist Trained for War"},
-    {"name": "Tracer", "primary_ability": "Dexterity and Wisdom", "hit_die": "D10", "description": "A Relentless Hunter Driven by Primal Instinct"}
+    {
+      "name": "Cryptist",
+      "primary_ability": "Intelligence or Charisma",
+      "hit_die": "D8",
+      "description": "An Occultist Who Unlocks Power from Cosmic Secrets"
+    },
+    {
+      "name": "Disciple",
+      "primary_ability": "Dexterity and Wisdom",
+      "hit_die": "D8",
+      "description": "A Martial Adept Who Balances Body and Soul"
+    },
+    {
+      "name": "Enforcer",
+      "primary_ability": "Strength and Charisma",
+      "hit_die": "D10",
+      "description": "A Resolute Champion Empowered by Conviction"
+    },
+    {
+      "name": "Esper",
+      "primary_ability": "Intelligence or Charisma",
+      "hit_die": "D6",
+      "description": "An Awakened Conduit of Psychic Force"
+    },
+    {
+      "name": "Gridrunner",
+      "primary_ability": "Intelligence",
+      "hit_die": "D6",
+      "description": "A Code-Savvy Technomancer"
+    },
+    {
+      "name": "Icon",
+      "primary_ability": "Charisma",
+      "hit_die": "D8",
+      "description": "An Uplifting Embodiment of the Song of Existence"
+    },
+    {
+      "name": "Juggernaut",
+      "primary_ability": "Strength",
+      "hit_die": "D12",
+      "description": "An Unstoppable Hulk of Kinetic Might"
+    },
+    {
+      "name": "Machinist",
+      "primary_ability": "Intelligence",
+      "hit_die": "D8",
+      "description": "An Ingenious Builder of Mechanical Marvels"
+    },
+    {
+      "name": "Oracle",
+      "primary_ability": "Wisdom",
+      "hit_die": "D8",
+      "description": "A Chosen Seer and Speaker of Cosmic Forces"
+    },
+    {
+      "name": "Primalist",
+      "primary_ability": "Wisdom",
+      "hit_die": "D8",
+      "description": "A Wild Mystic Who Calls Primordial Power"
+    },
+    {
+      "name": "Scoundrel",
+      "primary_ability": "Dexterity",
+      "hit_die": "D8",
+      "description": "A Cunning Opportunist Who Fights Dirty"
+    },
+    {
+      "name": "Soldier",
+      "primary_ability": "Strength or Dexterity",
+      "hit_die": "D10",
+      "description": "A Battlefield Specialist Trained for War"
+    },
+    {
+      "name": "Tracer",
+      "primary_ability": "Dexterity and Wisdom",
+      "hit_die": "D10",
+      "description": "A Relentless Hunter Driven by Primal Instinct"
+    }
   ],
   "subclasses": {
-    "Cryptist": ["Cacophonous", "Shadowtongue", "Deepsworn", "Primeval"],
-    "Disciple": ["Godhand", "Symmetric", "Anomaly", "Ghostframe"],
-    "Enforcer": ["Cyberguard", "Renegade", "Arbiter", "Supersprite"],
-    "Esper": ["Psychonaut", "Warhead", "Riftwalker", "Symbiote"],
-    "Gridrunner": ["Hypercoder", "Virus", "Arc-Mage", "Cybertronic"],
-    "Icon": ["Holostar", "Remix", "Headbanger", "Souljammer"],
-    "Juggernaut": ["Rampager", "Scrapper", "Eternal", "Mutant"],
-    "Machinist": ["Gravgunner", "Riveter", "Boomdoctor", "Botnik"],
-    "Oracle": ["Harmonious", "Stargazer", "Dreamer", "Voidcaller"],
-    "Primalist": ["Splicer", "Worldspeaker", "Hivemind", "Xenotrainer"],
-    "Scoundrel": ["Operative", "Quickdraw", "Chem Boss", "Echo"],
-    "Soldier": ["Commando", "Trooper", "Exomech", "Nanomedic"],
-    "Tracer": ["Bloodhound", "Powertech", "Protostalker", "X-Agent"]
+    "Cryptist": [
+      "Cacophonous",
+      "Shadowtongue",
+      "Deepsworn",
+      "Primeval"
+    ],
+    "Disciple": [
+      "Godhand",
+      "Symmetric",
+      "Anomaly",
+      "Ghostframe"
+    ],
+    "Enforcer": [
+      "Cyberguard",
+      "Renegade",
+      "Arbiter",
+      "Supersprite"
+    ],
+    "Esper": [
+      "Psychonaut",
+      "Warhead",
+      "Riftwalker",
+      "Symbiote"
+    ],
+    "Gridrunner": [
+      "Hypercoder",
+      "Virus",
+      "Arc-Mage",
+      "Cybertronic"
+    ],
+    "Icon": [
+      "Holostar",
+      "Remix",
+      "Headbanger",
+      "Souljammer"
+    ],
+    "Juggernaut": [
+      "Rampager",
+      "Scrapper",
+      "Eternal",
+      "Mutant"
+    ],
+    "Machinist": [
+      "Gravgunner",
+      "Riveter",
+      "Boomdoctor",
+      "Botnik"
+    ],
+    "Oracle": [
+      "Harmonious",
+      "Stargazer",
+      "Dreamer",
+      "Voidcaller"
+    ],
+    "Primalist": [
+      "Splicer",
+      "Worldspeaker",
+      "Hivemind",
+      "Xenotrainer"
+    ],
+    "Scoundrel": [
+      "Operative",
+      "Quickdraw",
+      "Chem Boss",
+      "Echo"
+    ],
+    "Soldier": [
+      "Commando",
+      "Trooper",
+      "Exomech",
+      "Nanomedic"
+    ],
+    "Tracer": [
+      "Bloodhound",
+      "Powertech",
+      "Protostalker",
+      "X-Agent"
+    ]
   },
   "species": [
-    {"name": "Aetheron", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Aetheric Lock", "Architect's Blessing", "Tireless Core", "Unyielding Density"]},
-    {"name": "Amanite", "size": "Small", "speed": 30, "source": "Outrunner", "traits": ["Darkvision 60ft", "Fungal Resistance", "Mycelium Senses", "Spore Casting", "Spore Puff"]},
-    {"name": "Anitron", "size": "Medium or Small", "speed": 30, "source": "Outrunner", "traits": ["Anitron Design", "Integrated Tool", "Specialized Programming"]},
-    {"name": "Benthos", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Bitling", "size": "Small", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Clawderan", "size": "Medium or Small", "speed": 35, "source": "Outrunner", "traits": ["Battle Ready", "Darkvision 60ft", "Eager Advance", "Paragon's Blessing", "Limber Musculature"]},
-    {"name": "Cygnian", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Dathu", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Flambego", "size": "Small", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Glowblin", "size": "Small", "speed": 30, "source": "Outrunner", "traits": ["Dazzle", "Emotional Spectrum", "Light Emission"]},
-    {"name": "Gorgonite", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Darkvision 60ft", "Gorgon's Gaze", "Venomous Resistance"]},
-    {"name": "Greeble", "size": "Small", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Isotron", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Jenovan", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Jozza", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Aquatic", "Bloodhunt", "Darkvision 60ft", "Frenzied Fury", "Ignore Pain", "Violent Delight"]},
-    {"name": "Laika", "size": "Medium or Small", "speed": 30, "source": "Outrunner", "traits": ["Bite (1d8 Piercing)", "Keen Senses", "Laika Lineage", "Pack Minded"]},
-    {"name": "Marsoom", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Motlien", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Murexian", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Amphibious", "Cold Resistance", "Darkvision 120ft", "Evolutionary Adaptation"]},
-    {"name": "Navili", "size": "Small", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Nematoan", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Amphibious", "Four-Armed", "Gourmand of Variety", "Tongue Lash"]},
-    {"name": "Nilari", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Breath Weapon (Void)", "Darkvision 60ft", "Void Resistance"]},
-    {"name": "Oculok", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Oozoid", "size": "Medium or Small", "speed": 30, "source": "Outrunner", "traits": ["Acid Resistance", "Amorphous", "Elastic Lunge", "Malleable Reach"]},
-    {"name": "Pakku", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Poggle", "size": "Small", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Raizo", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Fury of the Tempest", "Storm Magic", "Tempest Resistance"]},
-    {"name": "Rangor", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Burrowing", "Claws", "Momentum", "Thick Hide"]},
-    {"name": "Saurian", "size": "Medium or Small", "speed": 30, "source": "Outrunner", "traits": ["Ancestral Memory", "Harmonious Conduit", "Saurian Lineage"]},
-    {"name": "Skettik", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Solari", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Radiant Resistance", "Solar Rebirth", "Inner Light"]},
-    {"name": "Stardust Human", "size": "Medium or Small", "speed": 30, "source": "Outrunner", "traits": ["Harmonic Control", "Adaptable", "Versatile"]},
-    {"name": "Tekal", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Crystalline Resilience", "Durable Construction", "Photosynthesis"]},
-    {"name": "Terminox", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Varg", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Volcar", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Yaungu", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Blizzard Cunning", "Cold Resistance", "Thick Fur"]},
-    {"name": "Yoggoth", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Zamani", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Desert Adaptation", "Fire Resistance", "Temporal Insight"]},
-    {"name": "Zephursa", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Zeticulan", "size": "Medium", "speed": 30, "source": "Overdrive", "traits": []},
-    {"name": "Zorbrak", "size": "Medium", "speed": 30, "source": "Outrunner", "traits": ["Climb Speed", "Darkvision 60ft", "Fearless", "Scythe Arms"]}
+    {
+      "name": "Aetheron",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Aetheric Lock",
+        "Architect's Blessing",
+        "Tireless Core",
+        "Unyielding Density"
+      ]
+    },
+    {
+      "name": "Amanite",
+      "size": "Small",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Darkvision 60ft",
+        "Fungal Resistance",
+        "Mycelium Senses",
+        "Spore Casting",
+        "Spore Puff"
+      ]
+    },
+    {
+      "name": "Anitron",
+      "size": "Medium or Small",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Anitron Design",
+        "Integrated Tool",
+        "Specialized Programming"
+      ]
+    },
+    {
+      "name": "Benthos",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Bitling",
+      "size": "Small",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Clawderan",
+      "size": "Medium or Small",
+      "speed": 35,
+      "source": "Outrunner",
+      "traits": [
+        "Battle Ready",
+        "Darkvision 60ft",
+        "Eager Advance",
+        "Paragon's Blessing",
+        "Limber Musculature"
+      ]
+    },
+    {
+      "name": "Cygnian",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Dathu",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Flambego",
+      "size": "Small",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Glowblin",
+      "size": "Small",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Dazzle",
+        "Emotional Spectrum",
+        "Light Emission"
+      ]
+    },
+    {
+      "name": "Gorgonite",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Darkvision 60ft",
+        "Gorgon's Gaze",
+        "Venomous Resistance"
+      ]
+    },
+    {
+      "name": "Greeble",
+      "size": "Small",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Isotron",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Jenovan",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Jozza",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Aquatic",
+        "Bloodhunt",
+        "Darkvision 60ft",
+        "Frenzied Fury",
+        "Ignore Pain",
+        "Violent Delight"
+      ]
+    },
+    {
+      "name": "Laika",
+      "size": "Medium or Small",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Bite (1d8 Piercing)",
+        "Keen Senses",
+        "Laika Lineage",
+        "Pack Minded"
+      ]
+    },
+    {
+      "name": "Marsoom",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Motlien",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Murexian",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Amphibious",
+        "Cold Resistance",
+        "Darkvision 120ft",
+        "Evolutionary Adaptation"
+      ]
+    },
+    {
+      "name": "Navili",
+      "size": "Small",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Nematoan",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Amphibious",
+        "Four-Armed",
+        "Gourmand of Variety",
+        "Tongue Lash"
+      ]
+    },
+    {
+      "name": "Nilari",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Breath Weapon (Void)",
+        "Darkvision 60ft",
+        "Void Resistance"
+      ]
+    },
+    {
+      "name": "Oculok",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Oozoid",
+      "size": "Medium or Small",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Acid Resistance",
+        "Amorphous",
+        "Elastic Lunge",
+        "Malleable Reach"
+      ]
+    },
+    {
+      "name": "Pakku",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Poggle",
+      "size": "Small",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Raizo",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Fury of the Tempest",
+        "Storm Magic",
+        "Tempest Resistance"
+      ]
+    },
+    {
+      "name": "Rangor",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Burrowing",
+        "Claws",
+        "Momentum",
+        "Thick Hide"
+      ]
+    },
+    {
+      "name": "Saurian",
+      "size": "Medium or Small",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Ancestral Memory",
+        "Harmonious Conduit",
+        "Saurian Lineage"
+      ]
+    },
+    {
+      "name": "Skettik",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Solari",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Radiant Resistance",
+        "Solar Rebirth",
+        "Inner Light"
+      ]
+    },
+    {
+      "name": "Stardust Human",
+      "size": "Medium or Small",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Harmonic Control",
+        "Adaptable",
+        "Versatile"
+      ]
+    },
+    {
+      "name": "Tekal",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Crystalline Resilience",
+        "Durable Construction",
+        "Photosynthesis"
+      ]
+    },
+    {
+      "name": "Terminox",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Varg",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Volcar",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Yaungu",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Blizzard Cunning",
+        "Cold Resistance",
+        "Thick Fur"
+      ]
+    },
+    {
+      "name": "Yoggoth",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Zamani",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Desert Adaptation",
+        "Fire Resistance",
+        "Temporal Insight"
+      ]
+    },
+    {
+      "name": "Zephursa",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Zeticulan",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Overdrive",
+      "traits": []
+    },
+    {
+      "name": "Zorbrak",
+      "size": "Medium",
+      "speed": 30,
+      "source": "Outrunner",
+      "traits": [
+        "Climb Speed",
+        "Darkvision 60ft",
+        "Fearless",
+        "Scythe Arms"
+      ]
+    }
   ],
   "worlds": [
-    {"name": "Adonia", "tags": ["Idyllic", "Luminous"], "homeworld_of": "Solari", "faction": "Solar Federation"},
-    {"name": "Astrovega", "tags": ["Oceanic", "Technological", "Toxic"], "homeworld_of": "Laika", "faction": "Solar Federation / Argonauts"},
-    {"name": "Bortuun", "tags": ["Frigid", "Oceanic", "Rocky"], "homeworld_of": "Yaungu", "faction": "Cavalon Empire"},
-    {"name": "Cabaret", "tags": ["Scorching", "Thrill"], "homeworld_of": "Motlien", "faction": "Discordant (Thrill)"},
-    {"name": "Caldoa", "tags": ["Oceanic", "Rocky", "Scorching", "Verdant"], "homeworld_of": "Volcar", "faction": "Void Dominium"},
-    {"name": "Cicero Prime", "tags": ["Instinct", "Rocky"], "homeworld_of": "Dathu", "faction": "Discordant (Instinct)"},
-    {"name": "Ferrox", "tags": ["Acidic", "Radioactive", "Rocky"], "homeworld_of": "—", "faction": "Chemtek Revolution"},
-    {"name": "Goro", "tags": ["Rocky", "Storming"], "homeworld_of": "Raizo, Clawderan", "faction": "Kuzai Syndicate"},
-    {"name": "K'Thar", "tags": ["Psychic", "Rocky", "Scorching"], "homeworld_of": "Yoggoth", "faction": "Polaris Society"},
-    {"name": "Kharabis", "tags": ["Eldritch", "Oceanic"], "homeworld_of": "Jozza, Murexian", "faction": "Church of Karkosa / Solar Federation"},
-    {"name": "Krayta", "tags": ["Harmonic", "Scorching", "Verdant"], "homeworld_of": "Saurian, Tekal", "faction": "Saurok Dynasty"},
-    {"name": "Lythora", "tags": ["Harmonic", "Luminous"], "homeworld_of": "—", "faction": "Saurok Dynasty"},
-    {"name": "Mavros", "tags": ["Psychic", "Rocky"], "homeworld_of": "Zeticulan, Marsoom", "faction": "Neutral"},
-    {"name": "Megadyne", "tags": ["Progress", "Technological"], "homeworld_of": "Anitron, Isotron, Terminox", "faction": "Discordant (Progress)"},
-    {"name": "Morzebe", "tags": ["Acidic", "Radioactive", "Rocky"], "homeworld_of": "Oculok", "faction": "—"},
-    {"name": "Neo-Edifex", "tags": ["Technological", "Toxic"], "homeworld_of": "—", "faction": "Nexus Consortium / Chemtek Revolution / Solar Federation"},
-    {"name": "Noxilus", "tags": ["Entropy", "Shadowy"], "homeworld_of": "Varg", "faction": "Discordant (Entropy)"},
-    {"name": "Polygonia", "tags": ["Any"], "homeworld_of": "Navili, Bitling", "faction": "Arcadia"},
-    {"name": "Prismara", "tags": ["Idyllic", "Luminous", "Oceanic"], "homeworld_of": "Glowblin, Poggle, Flambego", "faction": "—"},
-    {"name": "Sethreen", "tags": ["Toxic", "Verdant"], "homeworld_of": "Gorgonite, Amanite, Pakku", "faction": "Solar Federation"},
-    {"name": "Shensaati", "tags": ["Scorching", "Temporal"], "homeworld_of": "Zamani", "faction": "Cavalon Empire"},
-    {"name": "Sleema", "tags": ["Acidic", "Toxic"], "homeworld_of": "Nematoan, Greeble", "faction": "Cavalon Empire"},
-    {"name": "Tibbulus", "tags": ["Acidic", "Airy"], "homeworld_of": "Oozoid, Zephursa", "faction": "Cavalon Empire"},
-    {"name": "Titan IX", "tags": ["Rocky", "Space"], "homeworld_of": "Aetheron, Rangor", "faction": "Grimnir Company"},
-    {"name": "Uthen", "tags": ["Idyllic", "Rocky", "Verdant"], "homeworld_of": "—", "faction": "Cavalon Empire"},
-    {"name": "Uulzoth", "tags": ["Eldritch", "Oceanic", "Temporal"], "homeworld_of": "—", "faction": "Eldest"},
-    {"name": "Val'Shai", "tags": ["Psychic", "Shadowy"], "homeworld_of": "Benthos, Nilari", "faction": "Wyrmways"},
-    {"name": "Viridar", "tags": ["Toxic", "Verdant"], "homeworld_of": "—", "faction": "Saurok Dynasty / Nexus Consortium"},
-    {"name": "Vulx", "tags": ["Deathly", "Verdant"], "homeworld_of": "Skettik, Zorbrak", "faction": "—"},
-    {"name": "Zartoga", "tags": ["Space", "Storming"], "homeworld_of": "—", "faction": "Bloodfleet"}
+    {
+      "name": "Adonia",
+      "tags": [
+        "Idyllic",
+        "Luminous"
+      ],
+      "homeworld_of": "Solari",
+      "faction": "Solar Federation"
+    },
+    {
+      "name": "Astrovega",
+      "tags": [
+        "Oceanic",
+        "Technological",
+        "Toxic"
+      ],
+      "homeworld_of": "Laika",
+      "faction": "Solar Federation / Argonauts"
+    },
+    {
+      "name": "Bortuun",
+      "tags": [
+        "Frigid",
+        "Oceanic",
+        "Rocky"
+      ],
+      "homeworld_of": "Yaungu",
+      "faction": "Cavalon Empire"
+    },
+    {
+      "name": "Cabaret",
+      "tags": [
+        "Scorching",
+        "Thrill"
+      ],
+      "homeworld_of": "Motlien",
+      "faction": "Discordant (Thrill)"
+    },
+    {
+      "name": "Caldoa",
+      "tags": [
+        "Oceanic",
+        "Rocky",
+        "Scorching",
+        "Verdant"
+      ],
+      "homeworld_of": "Volcar",
+      "faction": "Void Dominium"
+    },
+    {
+      "name": "Cicero Prime",
+      "tags": [
+        "Instinct",
+        "Rocky"
+      ],
+      "homeworld_of": "Dathu",
+      "faction": "Discordant (Instinct)"
+    },
+    {
+      "name": "Ferrox",
+      "tags": [
+        "Acidic",
+        "Radioactive",
+        "Rocky"
+      ],
+      "homeworld_of": "—",
+      "faction": "Chemtek Revolution"
+    },
+    {
+      "name": "Goro",
+      "tags": [
+        "Rocky",
+        "Storming"
+      ],
+      "homeworld_of": "Raizo, Clawderan",
+      "faction": "Kuzai Syndicate"
+    },
+    {
+      "name": "K'Thar",
+      "tags": [
+        "Psychic",
+        "Rocky",
+        "Scorching"
+      ],
+      "homeworld_of": "Yoggoth",
+      "faction": "Polaris Society"
+    },
+    {
+      "name": "Kharabis",
+      "tags": [
+        "Eldritch",
+        "Oceanic"
+      ],
+      "homeworld_of": "Jozza, Murexian",
+      "faction": "Church of Karkosa / Solar Federation"
+    },
+    {
+      "name": "Krayta",
+      "tags": [
+        "Harmonic",
+        "Scorching",
+        "Verdant"
+      ],
+      "homeworld_of": "Saurian, Tekal",
+      "faction": "Saurok Dynasty"
+    },
+    {
+      "name": "Lythora",
+      "tags": [
+        "Harmonic",
+        "Luminous"
+      ],
+      "homeworld_of": "—",
+      "faction": "Saurok Dynasty"
+    },
+    {
+      "name": "Mavros",
+      "tags": [
+        "Psychic",
+        "Rocky"
+      ],
+      "homeworld_of": "Zeticulan, Marsoom",
+      "faction": "Neutral"
+    },
+    {
+      "name": "Megadyne",
+      "tags": [
+        "Progress",
+        "Technological"
+      ],
+      "homeworld_of": "Anitron, Isotron, Terminox",
+      "faction": "Discordant (Progress)"
+    },
+    {
+      "name": "Morzebe",
+      "tags": [
+        "Acidic",
+        "Radioactive",
+        "Rocky"
+      ],
+      "homeworld_of": "Oculok",
+      "faction": "—"
+    },
+    {
+      "name": "Neo-Edifex",
+      "tags": [
+        "Technological",
+        "Toxic"
+      ],
+      "homeworld_of": "—",
+      "faction": "Nexus Consortium / Chemtek Revolution / Solar Federation"
+    },
+    {
+      "name": "Noxilus",
+      "tags": [
+        "Entropy",
+        "Shadowy"
+      ],
+      "homeworld_of": "Varg",
+      "faction": "Discordant (Entropy)"
+    },
+    {
+      "name": "Polygonia",
+      "tags": [
+        "Any"
+      ],
+      "homeworld_of": "Navili, Bitling",
+      "faction": "Arcadia"
+    },
+    {
+      "name": "Prismara",
+      "tags": [
+        "Idyllic",
+        "Luminous",
+        "Oceanic"
+      ],
+      "homeworld_of": "Glowblin, Poggle, Flambego",
+      "faction": "—"
+    },
+    {
+      "name": "Sethreen",
+      "tags": [
+        "Toxic",
+        "Verdant"
+      ],
+      "homeworld_of": "Gorgonite, Amanite, Pakku",
+      "faction": "Solar Federation"
+    },
+    {
+      "name": "Shensaati",
+      "tags": [
+        "Scorching",
+        "Temporal"
+      ],
+      "homeworld_of": "Zamani",
+      "faction": "Cavalon Empire"
+    },
+    {
+      "name": "Sleema",
+      "tags": [
+        "Acidic",
+        "Toxic"
+      ],
+      "homeworld_of": "Nematoan, Greeble",
+      "faction": "Cavalon Empire"
+    },
+    {
+      "name": "Tibbulus",
+      "tags": [
+        "Acidic",
+        "Airy"
+      ],
+      "homeworld_of": "Oozoid, Zephursa",
+      "faction": "Cavalon Empire"
+    },
+    {
+      "name": "Titan IX",
+      "tags": [
+        "Rocky",
+        "Space"
+      ],
+      "homeworld_of": "Aetheron, Rangor",
+      "faction": "Grimnir Company"
+    },
+    {
+      "name": "Uthen",
+      "tags": [
+        "Idyllic",
+        "Rocky",
+        "Verdant"
+      ],
+      "homeworld_of": "—",
+      "faction": "Cavalon Empire"
+    },
+    {
+      "name": "Uulzoth",
+      "tags": [
+        "Eldritch",
+        "Oceanic",
+        "Temporal"
+      ],
+      "homeworld_of": "—",
+      "faction": "Eldest"
+    },
+    {
+      "name": "Val'Shai",
+      "tags": [
+        "Psychic",
+        "Shadowy"
+      ],
+      "homeworld_of": "Benthos, Nilari",
+      "faction": "Wyrmways"
+    },
+    {
+      "name": "Viridar",
+      "tags": [
+        "Toxic",
+        "Verdant"
+      ],
+      "homeworld_of": "—",
+      "faction": "Saurok Dynasty / Nexus Consortium"
+    },
+    {
+      "name": "Vulx",
+      "tags": [
+        "Deathly",
+        "Verdant"
+      ],
+      "homeworld_of": "Skettik, Zorbrak",
+      "faction": "—"
+    },
+    {
+      "name": "Zartoga",
+      "tags": [
+        "Space",
+        "Storming"
+      ],
+      "homeworld_of": "—",
+      "faction": "Bloodfleet"
+    }
   ],
   "factions": [
-    "Argonauts", "Bloodfleet", "Cavalon Empire", "Chemtek Revolution",
-    "Church of Karkosa", "Grimnir Company", "Kuzai Syndicate", "Nexus Consortium",
-    "Polaris Society", "Saurok Dynasty", "Solar Federation", "Void Dominium"
+    "Argonauts",
+    "Bloodfleet",
+    "Cavalon Empire",
+    "Chemtek Revolution",
+    "Church of Karkosa",
+    "Grimnir Company",
+    "Kuzai Syndicate",
+    "Nexus Consortium",
+    "Polaris Society",
+    "Saurok Dynasty",
+    "Solar Federation",
+    "Void Dominium"
   ],
   "homeworld_feats": [
-    {"name": "Adamant Origin", "prerequisite": "Rocky Homeworld"},
-    {"name": "Airy Origin", "prerequisite": "Airy Homeworld"},
-    {"name": "Aquatic Origin", "prerequisite": "Oceanic Homeworld"},
-    {"name": "Blazing Origin", "prerequisite": "Scorching Homeworld"},
-    {"name": "Brilliant Origin", "prerequisite": "Luminous or Starry Homeworld"},
-    {"name": "Corrosive Origin", "prerequisite": "Acidic, Radioactive, or Toxic Homeworld"},
-    {"name": "Cosmic Origin", "prerequisite": "Starry or Temporal Homeworld"},
-    {"name": "Discordant Origin", "prerequisite": "Discordant Homeworld"},
-    {"name": "Flourishing Origin", "prerequisite": "Harmonic, Idyllic, or Verdant Homeworld"},
-    {"name": "Frozen Origin", "prerequisite": "Frigid Homeworld"},
-    {"name": "Mind Origin", "prerequisite": "Psychic Homeworld"},
-    {"name": "Space Origin", "prerequisite": "Space Homeworld"},
-    {"name": "Technologic Origin", "prerequisite": "Technological Homeworld"},
-    {"name": "Tenebrous Origin", "prerequisite": "Shadowy or Deathly Homeworld"}
+    {
+      "name": "Adamant Origin",
+      "prerequisite": "Rocky Homeworld"
+    },
+    {
+      "name": "Airy Origin",
+      "prerequisite": "Airy Homeworld"
+    },
+    {
+      "name": "Aquatic Origin",
+      "prerequisite": "Oceanic Homeworld"
+    },
+    {
+      "name": "Blazing Origin",
+      "prerequisite": "Scorching Homeworld"
+    },
+    {
+      "name": "Brilliant Origin",
+      "prerequisite": "Luminous or Starry Homeworld"
+    },
+    {
+      "name": "Corrosive Origin",
+      "prerequisite": "Acidic, Radioactive, or Toxic Homeworld"
+    },
+    {
+      "name": "Cosmic Origin",
+      "prerequisite": "Starry or Temporal Homeworld"
+    },
+    {
+      "name": "Discordant Origin",
+      "prerequisite": "Discordant Homeworld"
+    },
+    {
+      "name": "Flourishing Origin",
+      "prerequisite": "Harmonic, Idyllic, or Verdant Homeworld"
+    },
+    {
+      "name": "Frozen Origin",
+      "prerequisite": "Frigid Homeworld"
+    },
+    {
+      "name": "Mind Origin",
+      "prerequisite": "Psychic Homeworld"
+    },
+    {
+      "name": "Space Origin",
+      "prerequisite": "Space Homeworld"
+    },
+    {
+      "name": "Technologic Origin",
+      "prerequisite": "Technological Homeworld"
+    },
+    {
+      "name": "Tenebrous Origin",
+      "prerequisite": "Shadowy or Deathly Homeworld"
+    }
   ],
   "languages": [
-    "Common", "Common Sign Language", "Smuggler's Slang", "Hadalic", "Sideric",
-    "Pixlish", "Dissonant", "Ryliath", "Lyric", "SIGNAL", "Clysmic",
-    "Solari", "Promean", "Astronian", "Bortuun", "Boru", "Volcar",
-    "Magmari", "Clawderan", "Raizo", "Jozza", "Murexian", "Selash",
-    "Saurian", "Tekal", "Zoic", "Yoggoth", "Marsoom", "Zeticulan",
-    "Anitron", "Isotron", "Terminox", "Morlith", "Bitling", "Navili",
-    "Flambego", "Glowblin", "Poggle", "Chroma", "Sethreen", "Amanite",
-    "Gorgonite", "Pakku", "Shensaati", "Zamani", "Shensi", "Sleema",
-    "Greeble", "Nematoan", "Oozoid", "Zephursa", "Aetheron", "Rangor",
-    "Uthen", "Benthos", "Nilari", "Skettik", "Zorbrak",
-    "Ossik", "Zartoga", "Dathu", "Motlien", "Cygnian", "Jenovan", "Oculok", "Varg"
+    "Common",
+    "Common Sign Language",
+    "Smuggler's Slang",
+    "Hadalic",
+    "Sideric",
+    "Pixlish",
+    "Dissonant",
+    "Ryliath",
+    "Lyric",
+    "SIGNAL",
+    "Clysmic",
+    "Solari",
+    "Promean",
+    "Astronian",
+    "Laika",
+    "Bortuun",
+    "Boru",
+    "Volcar",
+    "Magmari",
+    "Raizo",
+    "Clawderan",
+    "Jozza",
+    "Murexian",
+    "Selash",
+    "Saurian",
+    "Tekal",
+    "Zoic",
+    "Yoggoth",
+    "Marsoom",
+    "Zeticulan",
+    "Anitron",
+    "Isotron",
+    "Terminox",
+    "Morlith",
+    "Bitling",
+    "Navili",
+    "Flambego",
+    "Glowblin",
+    "Poggle",
+    "Chroma",
+    "Sethreen",
+    "Amanite",
+    "Gorgonite",
+    "Pakku",
+    "Shensaati",
+    "Zamani",
+    "Shensi",
+    "Sleema",
+    "Greeble",
+    "Nematoan",
+    "Oozoid",
+    "Zephursa",
+    "Aetheron",
+    "Rangor",
+    "Uthen",
+    "Benthos",
+    "Nilari",
+    "Skettik",
+    "Zorbrak",
+    "Ossik",
+    "Zartoga",
+    "Dathu",
+    "Motlien",
+    "Cygnian",
+    "Jenovan",
+    "Oculok",
+    "Varg",
+    "Phytoss",
+    "Nimboo",
+    "Khora"
   ],
   "skills": [
-    "Acrobatics", "Animal Handling", "Arcana", "Athletics", "Computers",
-    "Deception", "History", "Insight", "Intimidation", "Investigation",
-    "Medicine", "Nature", "Perception", "Performance", "Persuasion",
-    "Religion", "Sleight of Hand", "Stealth", "Survival", "Technology"
+    "Acrobatics",
+    "Animal Handling",
+    "Arcana",
+    "Athletics",
+    "Computers",
+    "Deception",
+    "History",
+    "Insight",
+    "Intimidation",
+    "Investigation",
+    "Medicine",
+    "Nature",
+    "Perception",
+    "Performance",
+    "Persuasion",
+    "Religion",
+    "Sleight of Hand",
+    "Stealth",
+    "Survival",
+    "Technology"
   ],
-  "armor_proficiencies": ["Light", "Medium", "Heavy", "Shields"],
-  "weapon_proficiencies": ["Simple weapons", "Martial weapons"],
+  "armor_proficiencies": [
+    "Light",
+    "Medium",
+    "Heavy",
+    "Shields"
+  ],
+  "weapon_proficiencies": [
+    "Simple weapons",
+    "Martial weapons"
+  ],
   "weapons": {
-    "simple_melee": ["Combat Baton", "Combat Knife", "Combat Staff", "Hatchet", "Hook Blade", "Power Cudgel", "Shock Sap", "Shock Knuckles", "Throwing Hammer", "Throwing Spear", "Vibro Claw", "Vibro Spear"],
-    "simple_ranged": ["Throwing Blade", "Laser Carbine", "Light Laser Pistol", "Light Pistol", "Heavy Laser Pistol", "Heavy Pistol", "Submachine Gun"],
-    "martial_melee": ["Breaker Axe", "Breaker Sword", "Combat Axe", "Combat Sword", "Combat Hammer", "Concussion Maul", "Dueling Blade", "Filament Whip", "Mag Flail", "Nano-Edge Spear", "Pole Axe", "Power Fist", "Power Glaive", "Quickblade", "Saber", "Vibro Pike", "Shock Lance"],
-    "martial_ranged": ["Assault Rifle", "Breach Rifle", "Pulse Cannon", "Hand Cannon", "Heavy Laser Rifle", "Laser Rifle", "Light Machine Gun", "Plasma Pistol", "Plasma Rifle", "Repeating Laser", "Scatterblast", "Shotgun", "Sniper Rifle"]
+    "simple_melee": [
+      "Combat Baton",
+      "Combat Knife",
+      "Combat Staff",
+      "Hatchet",
+      "Hook Blade",
+      "Power Cudgel",
+      "Shock Sap",
+      "Shock Knuckles",
+      "Throwing Hammer",
+      "Throwing Spear",
+      "Vibro Claw",
+      "Vibro Spear"
+    ],
+    "simple_ranged": [
+      "Throwing Blade",
+      "Laser Carbine",
+      "Light Laser Pistol",
+      "Light Pistol",
+      "Heavy Laser Pistol",
+      "Heavy Pistol",
+      "Submachine Gun"
+    ],
+    "martial_melee": [
+      "Breaker Axe",
+      "Breaker Sword",
+      "Combat Axe",
+      "Combat Sword",
+      "Combat Hammer",
+      "Concussion Maul",
+      "Dueling Blade",
+      "Filament Whip",
+      "Mag Flail",
+      "Nano-Edge Spear",
+      "Pole Axe",
+      "Power Fist",
+      "Power Glaive",
+      "Quickblade",
+      "Saber",
+      "Vibro Pike",
+      "Shock Lance"
+    ],
+    "martial_ranged": [
+      "Assault Rifle",
+      "Breach Rifle",
+      "Pulse Cannon",
+      "Hand Cannon",
+      "Heavy Laser Rifle",
+      "Laser Rifle",
+      "Light Machine Gun",
+      "Plasma Pistol",
+      "Plasma Rifle",
+      "Repeating Laser",
+      "Scatterblast",
+      "Shotgun",
+      "Sniper Rifle"
+    ]
   },
   "tools": [
-    "Artist's Supplies", "Brewing Supplies", "Chef's Utensils", "Chemist's Supplies",
-    "Construction Tools", "Electronics Tools", "Engineer's Tools", "Jewelry Tools",
-    "Medical Tools", "Musician's Instrument", "Navigation Tools", "Smith's Tools",
-    "Spiking Deck", "Tinker's Tools", "Veterinarian Tools"
+    "Artist's Supplies",
+    "Brewing Supplies",
+    "Chef's Utensils",
+    "Chemist's Supplies",
+    "Construction Tools",
+    "Electronics Tools",
+    "Engineer's Tools",
+    "Jewelry Tools",
+    "Medical Tools",
+    "Musician's Instrument",
+    "Navigation Tools",
+    "Smith's Tools",
+    "Spiking Deck",
+    "Tinker's Tools",
+    "Veterinarian Tools"
   ],
-  "lifestyles": ["Poor", "Modest", "Comfortable", "Wealthy", "Corporate", "Aristocratic"]
+  "lifestyles": [
+    "Poor",
+    "Modest",
+    "Comfortable",
+    "Wealthy",
+    "Corporate",
+    "Aristocratic"
+  ],
+  "language_groups": [
+    {
+      "name": "Galactic & Realm Languages",
+      "languages": [
+        "Common",
+        "Common Sign Language",
+        "Smuggler's Slang",
+        "Hadalic",
+        "Sideric",
+        "Pixlish",
+        "Dissonant",
+        "Ryliath",
+        "Lyric",
+        "SIGNAL",
+        "Clysmic"
+      ]
+    },
+    {
+      "name": "World Languages",
+      "languages": [
+        "Solari",
+        "Promean",
+        "Astronian",
+        "Laika",
+        "Bortuun",
+        "Boru",
+        "Volcar",
+        "Magmari",
+        "Raizo",
+        "Clawderan",
+        "Jozza",
+        "Murexian",
+        "Selash",
+        "Saurian",
+        "Tekal",
+        "Zoic",
+        "Yoggoth",
+        "Marsoom",
+        "Zeticulan",
+        "Anitron",
+        "Isotron",
+        "Terminox",
+        "Morlith",
+        "Bitling",
+        "Navili",
+        "Flambego",
+        "Glowblin",
+        "Poggle",
+        "Chroma",
+        "Sethreen",
+        "Amanite",
+        "Gorgonite",
+        "Pakku",
+        "Shensaati",
+        "Zamani",
+        "Shensi",
+        "Sleema",
+        "Greeble",
+        "Nematoan",
+        "Oozoid",
+        "Zephursa",
+        "Aetheron",
+        "Rangor",
+        "Uthen",
+        "Benthos",
+        "Nilari",
+        "Skettik",
+        "Zorbrak",
+        "Ossik",
+        "Zartoga",
+        "Dathu",
+        "Motlien",
+        "Cygnian",
+        "Jenovan",
+        "Oculok",
+        "Varg",
+        "Phytoss",
+        "Nimboo",
+        "Khora"
+      ]
+    }
+  ]
 }

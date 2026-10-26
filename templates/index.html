@@ -256,13 +256,19 @@
                 <summary>Equipamiento y Competencias</summary>
                 <div class="section">
                     <label>Equipment<input type="text" name="Equipment" placeholder="Objetos que llevas"></label>
-                    <label>Languages
-                        <select name="Languages" multiple size="4">
-                            {% for lang in game_data.get('languages', []) %}
-                            <option value="{{ lang }}">{{ lang }}</option>
-                            {% endfor %}
-                        </select>
-                    </label>
+                    <div class="field-block">
+                        <span class="field-label">Languages</span>
+                        {% for group in game_data.get('language_groups', []) %}
+                        <div class="weapon-group">
+                            <h5>{{ group.get('name', 'Languages') }}</h5>
+                            <div class="checkbox-table">
+                                {% for lang in group.get('languages', []) %}
+                                <label class="checkbox-label"><input type="checkbox" name="Languages" value="{{ lang }}"><span class="cb-text">{{ lang }}</span></label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                     <div class="field-block">
                         <span class="field-label">Feats and Professions</span>
                         <div class="checkbox-table">
