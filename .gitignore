@@ -27,3 +27,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Flask secret key (local dev)
+.flask_secret

@@ -25,14 +25,31 @@ logger = logging.getLogger("neon_odyssey")
 # ---------------------------------------------------------------------------
 app = Flask(__name__)
 
-# Secret key — used for CSRF token signing. In production set via env var.
-app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY", secrets.token_hex(32))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Secret key — used for CSRF token signing. Persisted to disk so that
+# restarting the server does NOT invalidate tokens already issued to open
+# browser tabs. Override with FLASK_SECRET_KEY in production.
+SECRET_KEY_PATH = os.path.join(BASE_DIR, ".flask_secret")
+if os.environ.get("FLASK_SECRET_KEY"):
+    _secret_key = os.environ["FLASK_SECRET_KEY"]
+elif os.path.isfile(SECRET_KEY_PATH):
+    with open(SECRET_KEY_PATH, "r", encoding="utf-8") as _f:
+        _secret_key = _f.read().strip()
+else:
+    _secret_key = secrets.token_hex(32)
+    try:
+        with open(SECRET_KEY_PATH, "w", encoding="utf-8") as _f:
+            _f.write(_secret_key)
+    except OSError as _exc:
+        logger.warning("Could not persist secret key to %s: %s", SECRET_KEY_PATH, _exc)
+
+app.config["SECRET_KEY"] = _secret_key
 app.config["WTF_CSRF_ENABLED"] = True
-app.config["WTF_CSRF_TIME_LIMIT"] = 3600  # 1 hour
+app.config["WTF_CSRF_TIME_LIMIT"] = 86400  # 24 hours
 
 csrf = CSRFProtect(app)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PDF = os.path.join(BASE_DIR, "template.pdf")
 
 MAX_NAME_LENGTH = 64
