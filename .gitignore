@@ -30,3 +30,8 @@ Thumbs.db
 
 # Flask secret key (local dev)
 .flask_secret
+
+# Test PDFs
+cb_test*.pdf
+*_test.pdf
+skills_fix.pdf
