@@ -14,6 +14,7 @@ bug_test.pdf
 game_data_test.pdf
 cookies.txt
 *.png
+temp/
 
 # OS
 .DS_Store

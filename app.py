@@ -4,8 +4,10 @@ import logging
 import os
 import re
 import secrets
+import uuid
+from datetime import datetime, timezone
 
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, abort
 from flask_wtf import CSRFProtect
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import BooleanObject
@@ -51,6 +53,9 @@ app.config["WTF_CSRF_TIME_LIMIT"] = 86400  # 24 hours
 csrf = CSRFProtect(app)
 
 TEMPLATE_PDF = os.path.join(BASE_DIR, "template.pdf")
+
+# Directory for storing generated preview PDFs (for the preview endpoint)
+TEMP_DIR = os.path.join(BASE_DIR, "temp")
 
 MAX_NAME_LENGTH = 64
 
@@ -210,8 +215,48 @@ def generate():
 
     logger.info("Generated sheet for '%s' (%d bytes)", char_name, output.getbuffer().nbytes)
 
+    # --- Save preview PDF to temp directory ---------------------------------
+    os.makedirs(TEMP_DIR, exist_ok=True)
+    preview_name = f"{uuid.uuid4().hex}_Neon_Odyssey.pdf"
+    preview_path = os.path.join(TEMP_DIR, preview_name)
+    with open(preview_path, "wb") as f:
+        f.write(output.getvalue())
+
+    logger.info("Generated sheet for '%s' (%d bytes)", char_name, os.path.getsize(preview_path))
+
+    # --- Show preview page ---------------------------------------------------
+    return render_template(
+        "preview.html",
+        pdf_filename=preview_name,
+        char_name=char_name,
+        now_utc=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+    )
+
+
+# ---------------------------------------------------------------------------
+# PDF preview endpoints
+# ---------------------------------------------------------------------------
+@app.route("/preview/<filename>")
+def preview(filename):
+    """Serve a preview PDF inline (for the iframe)."""
+    if ".." in filename or "/" in filename or "\\" in filename:
+        abort(404)
+    filepath = os.path.join(TEMP_DIR, filename)
+    if not os.path.isfile(filepath):
+        abort(404)
+    return send_file(filepath, mimetype="application/pdf", as_attachment=False)
+
+
+@app.route("/download/<filename>")
+def download(filename):
+    """Trigger a download of a previously generated sheet."""
+    if ".." in filename or "/" in filename or "\\" in filename:
+        abort(404)
+    filepath = os.path.join(TEMP_DIR, filename)
+    if not os.path.isfile(filepath):
+        abort(404)
     return send_file(
-        output,
+        filepath,
         mimetype="application/pdf",
         as_attachment=True,
         download_name=filename,

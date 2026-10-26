@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista previa — {{ char_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="theme-neon">
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav">
+        <a href="/">← Volver al formulario</a>
+    </nav>
+
+    <main class="preview-container">
+        <header>
+            <h1>Vista previa del personaje</h1>
+            <p class="muted">
+                Personaje: <strong>{{ char_name }}</strong>
+                · Generado el {{ now_utc }}
+            </p>
+        </header>
+
+        <div class="preview-card">
+            <div class="preview-toolbar">
+                <a class="btn btn-primary" href="{{ url_for('download', filename=pdf_filename) }}">
+                    Descargar PDF
+                </a>
+                <a class="btn btn-secondary" href="/">
+                    ← Nuevo personaje
+                </a>
+            </div>
+
+            <div class="preview-frame">
+                <iframe
+                    src="{{ url_for('preview', filename=pdf_filename) }}"
+                    title="Vista previa del PDF"
+                    width="100%"
+                    height="600"
+                    style="border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card);"
+                ></iframe>
+            </div>
+
+            <p class="hint">
+                ✅ La hoja se generó correctamente. Usa el botón de arriba para descargarla.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const iframe = document.querySelector("iframe");
+            iframe.onload = () => {
+                iframe.style.borderColor = "var(--accent)";
+            };
+        });
+    </script>
+</body>
+</html>
