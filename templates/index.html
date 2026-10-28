@@ -400,6 +400,15 @@
             <div class="submit-section">
                 <button type="submit" class="btn-generate" id="submitBtn">GENERAR PDF</button>
                 <button type="button" class="btn-clear" id="clearDraft">Limpiar borrador</button>
+                <div class="export-import">
+                    <label class="checkbox-label">
+                        <input type="button" class="btn-import" id="exportBtn" value="Exportar JSON">
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="file" id="importFile" accept=".json" style="display:none">
+                        <input type="button" class="btn-import" id="importBtn" value="Importar JSON">
+                    </label>
+                </div>
                 <span id="draftIndicator" class="draft-indicator"></span>
             </div>
 
@@ -931,6 +940,99 @@
                 });
             });
         });
+        // --- Export / Import JSON ---
+        (function() {
+            const form = document.getElementById('sheetForm');
+
+            function exportCharacter() {
+                const data = {};
+                const formData = new FormData(form);
+                for (const [key, value] of formData.entries()) {
+                    const checkbox = form.querySelector(`[name="${key}"]`);
+                    if (checkbox && checkbox.type === 'checkbox') {
+                        data[key] = checkbox.checked;
+                    } else {
+                        data[key] = value;
+                    }
+                }
+                const charName = form.querySelector('[name="Character Name"]')?.value || 'character';
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${charName.replace(/[^a-zA-Z0-9_-]/g, '_')}_Neon_Odyssey.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('Personaje exportado: ' + a.download);
+            }
+
+            function importCharacter(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (typeof data !== 'object' || data === null) {
+                            throw new Error('El archivo no contiene datos JSON válidos.');
+                        }
+                        for (const [key, value] of Object.entries(data)) {
+                            const checkbox = form.querySelector(`[name="${key}"]`);
+                            if (checkbox && checkbox.type === 'checkbox') {
+                                checkbox.checked = !!value;
+                            } else if (checkbox) {
+                                checkbox.value = value;
+                            } else {
+                                const input = form.querySelector(`[name="${key}"]`);
+                                if (input) {
+                                    input.value = value;
+                                }
+                            }
+                        }
+                        showToast('Personaje importado correctamente.');
+                    } catch (err) {
+                        showToast('Error al importar: ' + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            function showToast(message) {
+                let toast = document.getElementById('toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'toast';
+                    toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;padding:10px 20px;border-radius:6px;font-size:0.9rem;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,0.3);';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = message;
+                toast.style.opacity = '1';
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            const exportBtn = document.getElementById('exportBtn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', exportCharacter);
+            }
+
+            const importFile = document.getElementById('importFile');
+            const importBtn = document.getElementById('importBtn');
+            if (importBtn) {
+                importBtn.addEventListener('click', () => importFile.click());
+            }
+            if (importFile) {
+                importFile.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        importCharacter(file);
+                        e.target.value = '';
+                    }
+                });
+            }
+        })();
     </script>
 </body>
 </html>
