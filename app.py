@@ -209,6 +209,23 @@ def generate():
         ), 500
     output.seek(0)
 
+    # --- Apply PDF flattening if requested -----------------------------------
+    if request.form.get("flattenPDF") == "/Yes":
+        # Fill and bake form fields using pymupdf to produce a non-editable PDF
+        pdf_bytes = output.getvalue()
+        doc = pymupdf.open(stream=pdf_bytes, filetype="pdf")
+        for page in doc:
+            for widget in page.widgets():
+                try:
+                    widget.update()
+                except Exception as exc:
+                    logger.warning("Widget update failed: %s", exc)
+        doc.bake(widgets=True, annots=True)
+        flat_output = doc.tobytes()
+        doc.close()
+        output = BytesIO(flat_output)
+        output.seek(0)
+
     # --- Build download filename --------------------------------------------
     safe_name = _safe_filename(char_name)
     filename = f"{safe_name}_Neon_Odyssey.pdf"
