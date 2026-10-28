@@ -36,7 +36,7 @@ Asumir un personaje de **Neon Odyssey** y generar una hoja de personaje en PDF, 
 | Seguridad | Flask-WTF (CSRF), validación de input |
 | Estilo | 4 temas visuales inspirados en el arte de los libros |
 | Tests | pytest (40 tests) |
-| Documentación | Obsidian (vault `D:/Obsidian/MemVault/100_Proyectos/NeonCharacterSheet/`) |
+| Documentación | Obsidian (vault personal) |
 
 ## 📁 Estructura del repositorio
 
@@ -61,7 +61,7 @@ NeonCharacters/
 ## 🚀 Instalación y Ejecución
 
 ```bash
-cd "C:/Users/edmax/Desktop/NeonCharacters/NeonCharacterSheet"
+cd "path/to/NeonCharacterSheet"
 pip install -r requirements.txt
 python app.py
 ```
@@ -128,8 +128,7 @@ python -m pytest tests/ -v
 ## 🔗 Enlaces
 
 - GitHub: https://github.com/EdMaxt/NeonRPG
-- Repositorio local: `C:\Users\edmax\Desktop\NeonCharacters\NeonCharacterSheet`
-- Obsidian Vault: `D:/Obsidian/MemVault/100_Proyectos/NeonCharacterSheet/`
+- Obsidian Vault: `vault personal`
 
 ## 📜 Licencia
 
