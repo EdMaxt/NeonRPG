@@ -397,14 +397,12 @@
                 </div>
             </details>
 
-            <div class="submit-section">
-                <button type="submit" class="btn-generate" id="submitBtn">GENERAR PDF</button>
-                <button type="button" class="btn-clear" id="clearDraft">Limpiar borrador</button>
-                <div class="export-import">
-                    <input type="button" class="btn-import" id="exportBtn" value="Exportar JSON">
-                    <input type="button" class="btn-import" id="importBtn" value="Importar JSON">
+                <div class="field-block">
+                    <label class="checkbox-label" style="display:flex;align-items:center;gap:8px;">
+                        <input type="checkbox" id="flattenPDF" value="/Yes">
+                        <span style="font-size:0.85rem;color:var(--text-muted);">Generar PDF sin editar (aplanado)</span>
+                    </label>
                 </div>
-                <span id="draftIndicator" class="draft-indicator"></span>
             </div>
 
         </form>

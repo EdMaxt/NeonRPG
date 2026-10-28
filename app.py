@@ -12,6 +12,8 @@ from flask_wtf import CSRFProtect
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import BooleanObject
 from pypdf.errors import PdfReadError
+from io import BytesIO
+import pymupdf  # PDF flattening: fill and bake form fields
 
 # ---------------------------------------------------------------------------
 # Logging
