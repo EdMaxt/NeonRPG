@@ -571,6 +571,37 @@ textarea {
     padding: 30px 0;
 }
 
+.submit-section .export-import {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.submit-section .export-import .btn-import {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 10px 20px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s;
+}
+
+.submit-section .export-import .btn-import:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(0, 240, 255, 0.05);
+}
+
+.submit-section .export-import input[type="file"] {
+    display: none;
+}
+
 .btn-generate {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.1rem;
