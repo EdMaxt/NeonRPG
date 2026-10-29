@@ -1,4 +1,0 @@
-flask>=3.0
-pypdf>=5.0
-flask-wtf>=1.2
-PyMuPDF==1.28.2
