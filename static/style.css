@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
 /* ===== THEME: NEON CYBER (default) ===== */
-:root, .theme-neon {
+.theme-neon {
     --bg: #0a0a0f;
     --bg-card: #12121a;
     --bg-input: #1a1a25;
@@ -15,6 +15,11 @@
     --glow2: 0 0 10px rgba(255, 0, 170, 0.3);
     --gradient: linear-gradient(135deg, #00f0ff, #ff00aa);
     --gradient-bg: linear-gradient(180deg, #0a0a1a 0%, #1a0a2a 100%);
+    background-image: url('/static/assets/Neon Rain in the Cyberpunk City.png');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    background-color: var(--bg);
 }
 
 /* ===== THEME: COSMIC CODEX ===== */
@@ -31,7 +36,12 @@
     --glow: 0 0 10px rgba(168, 85, 247, 0.4);
     --glow2: 0 0 10px rgba(236, 72, 153, 0.3);
     --gradient: linear-gradient(135deg, #a855f7, #ec4899);
-    --gradient-bg: linear-gradient(180deg, #0d0518 0%, #1a0a2e 50%, #0d0518 100%);
+    --gradient-bg: linear-gradient(180deg, #0d0518 0%, #1a0f2e 100%);
+    background-image: url('/static/assets/Purple and Teal Nebula Void.png');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    background-color: var(--bg);
 }
 
 /* ===== THEME: OUTRUNNER ===== */
@@ -48,7 +58,12 @@
     --glow: 0 0 10px rgba(244, 114, 182, 0.4);
     --glow2: 0 0 10px rgba(34, 211, 238, 0.3);
     --gradient: linear-gradient(135deg, #f472b6, #22d3ee);
-    --gradient-bg: linear-gradient(180deg, #0f0515 0%, #1a0a25 50%, #0f0515 100%);
+    --gradient-bg: linear-gradient(180deg, #0f0515 0%, #1a0a25 100%);
+    background-image: url('/static/assets/Neon Highway to Solstice City.png');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    background-color: var(--bg);
 }
 
 /* ===== THEME: OVERDRIVE (Synthwave Sunset) ===== */
@@ -66,6 +81,11 @@
     --glow2: 0 0 10px rgba(244, 63, 94, 0.3);
     --gradient: linear-gradient(135deg, #fb923c, #f43f5e);
     --gradient-bg: linear-gradient(180deg, #1a0a0a 0%, #2a1010 50%, #1a0a0a 100%);
+    background-image: url('/static/assets/Neon Sunset Over a Futuristic Skyline.png');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    background-color: var(--bg);
 }
 
 * {
