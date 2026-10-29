@@ -18,8 +18,8 @@
     background-image: url('/static/assets/Neon Rain in the Cyberpunk City.png');
     background-size: cover;
     background-position: center;
-    background-blend-mode: overlay;
     background-color: var(--bg);
+    background: var(--bg) url('/static/assets/Neon Rain in the Cyberpunk City.png') center/cover no-repeat;
 }
 
 /* ===== THEME: COSMIC CODEX ===== */
@@ -40,8 +40,8 @@
     background-image: url('/static/assets/Purple and Teal Nebula Void.png');
     background-size: cover;
     background-position: center;
-    background-blend-mode: overlay;
     background-color: var(--bg);
+    background: var(--bg) url('/static/assets/Purple and Teal Nebula Void.png') center/cover no-repeat;
 }
 
 /* ===== THEME: OUTRUNNER ===== */
@@ -62,8 +62,8 @@
     background-image: url('/static/assets/Neon Highway to Solstice City.png');
     background-size: cover;
     background-position: center;
-    background-blend-mode: overlay;
     background-color: var(--bg);
+    background: var(--bg) url('/static/assets/Neon Highway to Solstice City.png') center/cover no-repeat;
 }
 
 /* ===== THEME: OVERDRIVE (Synthwave Sunset) ===== */
@@ -84,8 +84,8 @@
     background-image: url('/static/assets/Neon Sunset Over a Futuristic Skyline.png');
     background-size: cover;
     background-position: center;
-    background-blend-mode: overlay;
     background-color: var(--bg);
+    background: var(--bg) url('/static/assets/Neon Sunset Over a Futuristic Skyline.png') center/cover no-repeat;
 }
 
 * {
