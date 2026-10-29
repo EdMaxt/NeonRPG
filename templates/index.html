@@ -737,28 +737,79 @@
         }
         classSelect.addEventListener('change', updateSubclasses);
 
-        // ===== HOMEWORLD INFO PANEL =====
-        const worlds = {{ game_data.get('worlds', []) | tojson }};
-        const homeworldSelect = document.getElementById('homeworldSelect');
-        const homeworldInfo = document.getElementById('homeworldInfo');
+        // ===== FEATS FILTER BY HOMEWORLD =====
 
-        function updateHomeworldInfo() {
-            const name = homeworldSelect.value;
-            const w = worlds.find(x => x.name === name);
+        function parsePrerequisite(prereq) {
+            // Split by "or" and ","
+            const parts = prereq.split(/\s+(?:or|,)\s+/i);
+            const tags = [];
+            for (const p of parts) {
+                // Remove "Homeworld" suffix
+                const tag = p.replace(/homeworld/i, '').trim();
+                if (tag) tags.push(tag);
+            }
+            return tags;
+        }
+
+        function matchesHomeworld(prereq, homeworldTags) {
+            const featTags = parsePrerequisite(prereq);
+            for (const tag of featTags) {
+                if (homeworldTags.includes(tag)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function filterFeats() {
+            const homeworldSelect = document.getElementById('homeworldSelect');
+            const homeworldInfo = document.getElementById('homeworldInfo');
+            const featsContainer = document.querySelector('.field-block:has(.field-label:contains("Feats and Professions"))') ||
+                                  document.querySelector('.field-block:contains("Feats and Professions")');
+
+            if (!homeworldSelect || !featsContainer) return;
+
+            const selected = homeworldSelect.value;
+            const w = worlds.find(x => x.name === selected);
+
             if (!w) {
-                homeworldInfo.innerHTML = '';
-                homeworldInfo.classList.remove('visible');
+                // Show all feats if no homeworld selected
+                featsContainer.querySelectorAll('.checkbox-label').forEach(el => {
+                    el.style.display = '';
+                });
+                homeworldInfo.innerHTML = '<span class="hw-detail">Filtro de feats: — Seleccionar —</span>';
                 return;
             }
-            homeworldInfo.innerHTML = `
-                <strong>${w.name}</strong>
-                <span class="hw-tags">${w.tags.join(' · ')}</span>
-                <span class="hw-detail">Homeworld of: ${w.homeworld_of}</span>
-                <span class="hw-detail">Faction: ${w.faction}</span>
-            `;
+
+            const homeworldTags = w.tags || [];
+            const featLabels = featsContainer.querySelectorAll('.checkbox-label');
+
+            let visibleCount = 0;
+            featLabels.forEach((el, idx) => {
+                // Get the prerequisite from the title attribute
+                const prereq = el.title || '';
+                const matches = matchesHomeworld(prereq, homeworldTags);
+                el.style.display = matches ? '' : 'none';
+                if (matches) visibleCount++;
+            });
+
+            // Update the homeworld info panel
+            let html = `<strong>${w.name}</strong>\n`;
+            html += `<span class="hw-tags">${w.tags.join(' · ')}</span>\n`;
+            html += `<span class="hw-detail">Homeworld of: ${w.homeworld_of}</span>\n`;
+            if (w.faction) {
+                html += `<span class="hw-detail">Faction: ${w.faction}</span>\n`;
+            }
+            html += `<span class="hw-detail">Feats visibles: ${visibleCount} de ${featLabels.length}</span>`;
+            homeworldInfo.innerHTML = html;
             homeworldInfo.classList.add('visible');
         }
-        if (homeworldSelect) homeworldSelect.addEventListener('change', updateHomeworldInfo);
+
+        if (homeworldSelect) {
+            homeworldSelect.addEventListener('change', filterFeats);
+            // Initial filter
+            filterFeats();
+        }
 
         // ===== UX IMPROVEMENTS =====
 
