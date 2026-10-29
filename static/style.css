@@ -20,7 +20,7 @@
     background-size: cover;
     background-position: center;
     background-color: var(--bg);
-    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 30%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.12) 100%), var(--bg) url('static/assets/Neon Rain in the Cyberpunk City.png') center/cover no-repeat;
+    background: var(--bg) url('static/assets/Neon Rain in the Cyberpunk City.png') center/cover no-repeat;
 }
 
 /* ===== THEME: COSMIC CODEX ===== */
@@ -43,7 +43,7 @@
     background-size: cover;
     background-position: center;
     background-color: var(--bg);
-    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 30%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.12) 100%), var(--bg) url('static/assets/Purple and Teal Nebula Void.png') center/cover no-repeat;
+    background: var(--bg) url('static/assets/Purple and Teal Nebula Void.png') center/cover no-repeat;
 }
 
 /* ===== THEME: OUTRUNNER ===== */
@@ -88,7 +88,7 @@
     background-size: cover;
     background-position: center;
     background-color: var(--bg);
-    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 30%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.12) 100%), var(--bg) url('static/assets/Neon Sunset Over a Futuristic Skyline.png') center/cover no-repeat;
+    background: var(--bg) url('static/assets/Neon Sunset Over a Futuristic Skyline.png') center/cover no-repeat;
 }
 
 * {
