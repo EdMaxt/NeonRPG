@@ -2,17 +2,17 @@
 
 /* ===== THEME: NEON CYBER (default) ===== */
 .theme-neon {
-    --bg: #0a0a0f;
-    --bg-card: #12121a;
-    --bg-input: #1a1a25;
+    --bg: #12121a;
+    --bg-card: #1a1a2a;
+    --bg-input: #222233;
     --border: #2a2a3a;
     --accent: #00f0ff;
     --accent2: #ff00aa;
     --accent3: #ffcc00;
     --text: #e0e0e0;
-    --text-muted: #888;
-    --glow: 0 0 10px rgba(0, 240, 255, 0.3);
-    --glow2: 0 0 10px rgba(255, 0, 170, 0.3);
+    --text-muted: #999;
+    --glow: 0 0 10px rgba(0, 240, 255, 0.5);
+    --glow2: 0 0 10px rgba(255, 0, 170, 0.5);
     --gradient: linear-gradient(135deg, #00f0ff, #ff00aa);
     --gradient-bg: linear-gradient(180deg, #0a0a1a 0%, #1a0a2a 100%);
     background-image: url('/static/assets/Neon Rain in the Cyberpunk City.png');
@@ -24,7 +24,7 @@
 
 /* ===== THEME: COSMIC CODEX ===== */
 .theme-cosmic {
-    --bg: #0d0518;
+    --bg: #0d0a18;
     --bg-card: #1a0f2e;
     --bg-input: #251540;
     --border: #3d2a5c;
@@ -32,11 +32,11 @@
     --accent2: #ec4899;
     --accent3: #fbbf24;
     --text: #e8e0f0;
-    --text-muted: #9a8ab0;
-    --glow: 0 0 10px rgba(168, 85, 247, 0.4);
-    --glow2: 0 0 10px rgba(236, 72, 153, 0.3);
+    --text-muted: #999;
+    --glow: 0 0 10px rgba(168, 85, 247, 0.5);
+    --glow2: 0 0 10px rgba(236, 72, 153, 0.5);
     --gradient: linear-gradient(135deg, #a855f7, #ec4899);
-    --gradient-bg: linear-gradient(180deg, #0d0518 0%, #1a0f2e 100%);
+    --gradient-bg: linear-gradient(180deg, #0d0a18 0%, #1a0f2e 100%);
     background-image: url('/static/assets/Purple and Teal Nebula Void.png');
     background-size: cover;
     background-position: center;
@@ -46,7 +46,7 @@
 
 /* ===== THEME: OUTRUNNER ===== */
 .theme-outrunner {
-    --bg: #0f0515;
+    --bg: #0f0815;
     --bg-card: #1a0a25;
     --bg-input: #251035;
     --border: #3a1a4a;
@@ -54,11 +54,11 @@
     --accent2: #22d3ee;
     --accent3: #fb923c;
     --text: #f0e8f5;
-    --text-muted: #a08098;
-    --glow: 0 0 10px rgba(244, 114, 182, 0.4);
-    --glow2: 0 0 10px rgba(34, 211, 238, 0.3);
+    --text-muted: #999;
+    --glow: 0 0 10px rgba(244, 114, 182, 0.5);
+    --glow2: 0 0 10px rgba(34, 211, 238, 0.5);
     --gradient: linear-gradient(135deg, #f472b6, #22d3ee);
-    --gradient-bg: linear-gradient(180deg, #0f0515 0%, #1a0a25 100%);
+    --gradient-bg: linear-gradient(180deg, #0f0815 0%, #1a0a25 100%);
     background-image: url('/static/assets/Neon Highway to Solstice City.png');
     background-size: cover;
     background-position: center;
@@ -68,19 +68,19 @@
 
 /* ===== THEME: OVERDRIVE (Synthwave Sunset) ===== */
 .theme-overdrive {
-    --bg: #1a0a0a;
-    --bg-card: #2a1010;
-    --bg-input: #3a1515;
-    --border: #5c2a2a;
+    --bg: #1a0a1a;
+    --bg-card: #2a101a;
+    --bg-input: #3a1525;
+    --border: #5c2a3a;
     --accent: #fb923c;
     --accent2: #f43f5e;
     --accent3: #fbbf24;
     --text: #f5e8e0;
-    --text-muted: #b09080;
-    --glow: 0 0 10px rgba(251, 146, 60, 0.4);
-    --glow2: 0 0 10px rgba(244, 63, 94, 0.3);
+    --text-muted: #999;
+    --glow: 0 0 10px rgba(251, 146, 60, 0.5);
+    --glow2: 0 0 10px rgba(244, 63, 94, 0.5);
     --gradient: linear-gradient(135deg, #fb923c, #f43f5e);
-    --gradient-bg: linear-gradient(180deg, #1a0a0a 0%, #2a1010 50%, #1a0a0a 100%);
+    --gradient-bg: linear-gradient(180deg, #1a0a1a 0%, #2a101a 100%);
     background-image: url('/static/assets/Neon Sunset Over a Futuristic Skyline.png');
     background-size: cover;
     background-position: center;
