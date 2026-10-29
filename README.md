@@ -2,10 +2,28 @@
 
 > **NeonRPG** — Aplicación web que genera hojas de personaje en PDF para **Neon Odyssey**, variante de D&D (playtest **v0.1.1**).
 
-[![Status](https://img.shields.io/badge/status-Development%20activa-orange)]()
-[![Version](https://img.shields.io/badge/version-v0.1.1-blue)]()
+> [![Status](https://img.shields.io/badge/status-Development%20activa-orange)]()
+> [![Version](https://img.shields.io/badge/version-v0.1.1-blue)]()
 
-## 📖 Descripción
+<h2 id="quick-nav">📋 Quick Nav</h2>
+
+| Sección | Descripción |
+|---------|-------------|
+| 🎯 Objetivo | Objetivos del proyecto |
+| 📜 Derechos IP | Derechos de autor y marco legal |
+| ⚠️ Aviso Legal | Advertencias legales |
+| 🏗️ Stack | Tecnologías utilizadas |
+| 🚀 GitHub Pages | Guía de despliegue |
+
+<p align="center">
+  <img src="static/assets/Neon Rain in the Cyberpunk City.png" alt="Neon Odyssey Background" width="100%" style="margin-bottom:12px;">
+  <h1 align="center">Neon Odyssey Character Sheet Generator</h1>
+  <p align="center">
+    <sub><strong>NeonRPG</strong> — Aplicación web que genera hojas de personaje en PDF para <strong>Neon Odyssey</strong>, variante de D&D (playtest <strong>v0.1.1</strong>).</sub><br>
+    <sub>Hospedada en <a href="https://EdMaxt.github.io/NeonRPG/">EdMaxt.github.io/NeonRPG</a></sub>
+  </p>
+
+
 
 App que toma los datos ingresados en un formulario web y los escribe directamente en los campos de un PDF template, generando una hoja de personaje lista para imprimir o usar digitalmente.
 
@@ -132,3 +150,24 @@ NeonCharacters/
 5. Los cálculos automáticos se actualizan en tiempo real (AC, atributos, iniciativa, PB, etc.)
 6. Descarga la **plantilla PDF** (`template.pdf`) y rellénala en cualquier viewer PDF
 7. Usa la plantilla rellena para imprimir o usar digitalmente
+
+---
+
+## 📜 Derechos de Propiedad Intelectual — Resumen
+
+> **Wizards of the Coast LLC**  
+> © 2024. Todos los derechos reservados.  
+> "Dungeons & Dragons", "D&D", y el símbolo del dragón son propiedad de Wizards of the Coast LLC.
+
+> **Avantris Entertainment / Legends of Avantris**  
+> © 2024. Todos los derechos reservados.  
+> "Neon Odyssey", "Avantris", "Legends of Avantris" y "The Crooked Moon" son propiedad de Avantris Entertainment.
+
+> **Aviso importante:**  
+> Este proyecto es **no oficial** y **sin fines de lucro**. Es un trabajo independiente que utiliza el **OGL de D&D 5e** y los materiales de **Avantris Entertainment** únicamente a efectos de fan content y educación.  
+> El uso de la IP de Avantris es **a tu propio riesgo**. Avantris conserva el derecho de detener o restringir el uso de su IP en cualquier tiempo.  
+> Si eres dueño de los derechos de los materiales aquí mencionados, por favor contacta al autor para solicitar la remoción o licencia.
+
+---
+
+*Neon Odyssey Character Sheet Generator v0.1.1 — Hecho con ❤️ por Ed (Zelda).*
