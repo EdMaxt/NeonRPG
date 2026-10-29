@@ -65,7 +65,7 @@
     background-size: cover;
     background-position: center;
     background-color: var(--bg);
-    background: var(--bg) url('static/assets/Neon Highway to Solstice City.png') center/cover no-repeat;
+    background: var(--bg) url('static/assets/Neon Highway to Solstice City.png') center / cover no-repeat;
 }
 
 /* ===== THEME: OVERDRIVE (Synthwave Sunset) ===== */
