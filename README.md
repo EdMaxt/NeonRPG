@@ -20,6 +20,64 @@ App que toma los datos ingresados en un formulario web y los escribe directament
 ## 🎯 Objetivo
 
 Asumir un personaje de **Neon Odyssey** y generar una hoja de personaje en PDF, con un enfoque en:
+- Usabilidad (formulario intuitivo, cálculos automáticos)
+- Accesibilidad (4 temas visuales, diseño responsive)
+- Funcionalidad (PDF editable y versión aplanada para imprimir)
+- Mantenibilidad (documentación clara, tests, estructura modular)
+
+## 📜 Derechos de Propiedad Intelectual
+
+### 🛡 Dungeons & Dragons (D&D)
+> © **Wizards of the Coast LLC**. All Rights Reserved.
+
+- **Marco legal:** La campaña base de D&D 5e está protegida bajo el **OGL (Open Gaming License)** de Wizards of the Coast.
+- **Qué está protegido:**
+  - Personajes, clases, razas, armas, habilidades, hechizos, criaturas, magias, etc.
+  - El nombre "Dungeons & Dragons", "D&D", "Wizards of the Coast", el dragón ampersand, y todos los demás nombres de productos.
+- **Exenciones aplicables:**
+  - El **OGL permite** el uso interno y comercial no masivo de la mecánica de juego (lo que constituye "sistema de juego funcional").
+  - **No está permitido** usar los logotipos de Wizards of the Coast, indicar alianzas, ni vender versiones modificadas que puedan confundirse con la original.
+- **Ley aplicable:** © 2024 Wizards of the Coast LLC. Todos los derechos reservados. Los personajes y sus apariencias distintivas son propiedad de Wizards of the Coast.
+
+### 🌙 Neon Odyssey (Avantris Entertainment)
+> © **Avantris Entertainment / Legends of Avantris**. All Rights Reserved.
+
+- **Marco legal:** Neon Odyssey es un universo creativo (Space Opera) desarrollado por **Avantris Entertainment (Legends of Avantris)**.
+- **Qué está protegido:**
+  - Personajes, criaturas, mundos, antecedentes, escenas, arte, diseños, audio, música, texto escrito, contenido mediático, y otros materiales.
+  - Los logotipos/trademarks: "Avantris", "Avantris LLC", "Legends of Avantris", "Neon Odyssey", "The Crooked Moon".
+- **Guía de contenido para fans (resumen):**
+  - El contenido **no comercial** creado por fans está permitido para su visualización dentro de la comunidad.
+  - **No se permite** vender material que contenga IP de Avantris como parte de un negocio a gran escala sin permiso.
+  - No se pueden usar los logotipos/trademarks de Avantris (incluyendo "Neon Odyssey") en productos similares a los de Avantris.
+- **Nota legal:** El uso de la IP de Avantris es **a tu propio riesgo**. Avantris conserva el derecho de detener o restringir el uso de su IP en cualquier momento.
+
+---
+
+## ⚠️ Aviso Legal
+
+> **ADVERTENCIA DE USO DE IP**  
+> Este proyecto es **no oficial** y se basa en el marco del **OGL de D&D 5e** y en los **derechos de autor de Avantris Entertainment (Neon Odyssey)**.
+>
+> - El uso de la IP de Avantris es **a tu propio riesgo**.
+> - No vendas versiones modificadas ni indices alianzas con Wizards of the Coast o Avantris.
+> - Si eres dueño de los derechos de los materiales aquí mencionados, por favor contacta al autor.
+> - Este proyecto es **sin fines de lucro** y es un trabajo independiente.
+
+---
+
+## 📚 Fuentes de referencia
+
+| Fuente | URL |
+|--------|-----|
+| Wizards of the Coast | https://www.wizards.com/ |
+| D&D Licensing | https://www.dungeonsanddragons.com/licensing/ |
+| Avantris Entertainment (fan content guidelines) | https://avantris.com/en-gb/pages/fan-content-guidelines |
+| GitHub DMCA - Wizards of the Coast | https://github.com/github/dmca/blob/master/2024/08/2024-08-07-wizards-of-the-coast.md |
+
+
+
+Asumir un personaje de **Neon Odyssey** y generar una hoja de personaje en PDF, con un enfoque en:
 
 - Usabilidad (formulario intuitivo, cálculos automáticos)
 - Accesibilidad (4 temas visuales, diseño responsive)
