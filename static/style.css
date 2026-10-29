@@ -95,7 +95,7 @@
 }
 
 body {
-    background: var(--gradient-bg);
+    background: var(--bg);
     color: var(--text);
     font-family: 'Rajdhani', sans-serif;
     font-size: 16px;
