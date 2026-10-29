@@ -20,7 +20,7 @@
     background-size: cover;
     background-position: center;
     background-color: var(--bg);
-    background: var(--bg) url('static/assets/Neon Rain in the Cyberpunk City.png') center/cover no-repeat;
+    background: var(--bg) url('static/assets/Neon Rain in the Cyberpunk City.png') center / cover no-repeat;
 }
 
 /* ===== THEME: COSMIC CODEX ===== */
@@ -43,7 +43,7 @@
     background-size: cover;
     background-position: center;
     background-color: var(--bg);
-    background: var(--bg) url('static/assets/Purple and Teal Nebula Void.png') center/cover no-repeat;
+    background: var(--bg) url('static/assets/Purple and Teal Nebula Void.png') center / cover no-repeat;
 }
 
 /* ===== THEME: OUTRUNNER ===== */
