@@ -4,12 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vista previa — Neon Odyssey</title>
-    <meta http-equiv="refresh" content="0; url=templates/preview.html">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="icon" href="static/assets/Neon Rain in the Cyberpunk City.png" type="image/png">
 </head>
-<body>
-    <p>Redirigiendo a <a href="templates/preview.html">la vista previa</a>...</p>
+<body class="theme-neon">
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav">
+        <a href="/">← Volver al formulario</a>
+    </nav>
+
+    <main class="preview-container">
+        <header>
+            <h1>Vista previa del personaje</h1>
+            <p class="muted">
+                Personaje: <strong>cargado desde JSON</strong>
+                · Generado con el generador en el navegador
+            </p>
+        </header>
+
+        <div class="preview-card">
+            <div class="preview-toolbar">
+                <a class="btn btn-primary" href="static/template.pdf" download>
+                    Descargar plantilla PDF
+                </a>
+                <a class="btn btn-secondary" href="/">
+                    ← Nuevo personaje
+                </a>
+            </div>
+
+            <div class="preview-frame">
+                <iframe
+                    src="static/template.pdf"
+                    title="Vista previa del PDF"
+                    width="100%"
+                    height="600"
+                    style="border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card);"
+                ></iframe>
+            </div>
+
+            <p class="hint">
+                ✅ Plantilla de PDF cargada. Usa el formulario para rellenar los datos,
+                luego descarga la plantilla y rellena los campos.
+            </p>
+        </div>
+    </main>
+
     <script>
-        window.location.href = "templates/preview.html";
+        document.addEventListener("DOMContentLoaded", () => {
+            const iframe = document.querySelector("iframe");
+            iframe.onload = () => {
+                iframe.style.borderColor = "var(--accent)";
+            };
+        });
     </script>
 </body>
 </html>

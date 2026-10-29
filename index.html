@@ -4,12 +4,337 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neon Odyssey — Character Sheet Generator</title>
-    <meta http-equiv="refresh" content="0; url=templates/index.html">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="icon" href="static/assets/Neon Rain in the Cyberpunk City.png" type="image/png">
 </head>
 <body>
-    <p>Redirigiendo a <a href="templates/index.html">el formulario</a>...</p>
-    <script>
-        window.location.href = "templates/index.html";
-    </script>
+    <div class="container">
+        <header>
+            <h1>NEON ODYSSEY</h1>
+            <p class="subtitle">Character Sheet Generator</p>
+            <div class="theme-selector">
+                <label for="themeSelect">Tema:</label>
+                <select id="themeSelect" onchange="setTheme(this.value)">
+                    <option value="theme-neon">Neon Cyber</option>
+                    <option value="theme-cosmic">Cosmic Codex</option>
+                    <option value="theme-outrunner">Outrunner</option>
+                    <option value="theme-overdrive">Overdrive</option>
+                </select>
+                <label class="autocalc-toggle" for="autocalcToggle">
+                    <input type="checkbox" id="autocalcToggle" checked>
+                    <span>Cálculo automático</span>
+                </label>
+            </div>
+        </header>
+
+        <!-- Sticky Navigation -->
+        <nav class="sticky-nav">
+            <a href="#section-basic">Básica</a>
+            <a href="#section-abilities">Habilidades</a>
+            <a href="#section-skills">Skills</a>
+            <a href="#section-saves">Salvación</a>
+            <a href="#section-exhaustion">Agotamiento</a>
+            <a href="#section-attacks">Ataques</a>
+            <a href="#section-factions">Facciones</a>
+            <a href="#section-magic">Objetos</a>
+            <a href="#section-equipment">Equipo</a>
+            <a href="#section-spells">Conjuros</a>
+            <a href="#section-notes">Notas</a>
+        </nav>
+
+        <!-- FORM -->
+        <form id="sheetForm">
+            <!-- BASIC INFO -->
+            <details open id="section-basic">
+                <summary>Información Básica</summary>
+                <div class="section">
+                    <div class="grid-2">
+                        <label>Character Name<input type="text" name="Character Name" placeholder="Nombre del personaje" required></label>
+                        <label>Player<input type="text" name="Player" placeholder="Tu nombre"></label>
+                        <label>Class
+                            <select name="Class" id="classSelect">
+                                <option value="">— Seleccionar —</option>
+                            </select>
+                        </label>
+                        <label>Subclass
+                            <select name="Subclass" id="subclassSelect">
+                                <option value="">— Seleccionar clase primero —</option>
+                            </select>
+                        </label>
+                        <label>Species
+                            <select name="Species" id="speciesSelect">
+                                <option value="">— Seleccionar —</option>
+                            </select>
+                        </label>
+                        <label>Homeworld
+                            <select name="Homeworld" id="homeworldSelect">
+                                <option value="">— Seleccionar —</option>
+                            </select>
+                        </label>
+                        <div id="homeworldInfo" class="homeworld-info"></div>
+                        <label>Level<input type="number" name="Level" placeholder="1" min="1" max="20"></label>
+                        <div class="autocalc-badge" id="profBonusBadge" title="Proficiency Bonus — calculado desde el nivel">
+                            <span class="ac-label">Proficiency Bonus</span>
+                            <strong id="profBonusValue">+2</strong>
+                        </div>
+                        <label>XP<input type="number" name="XP" placeholder="0" min="0"></label>
+                        <label>Size<input type="text" name="Size" placeholder="Medium"></label>
+                        <label>Speed<input type="text" name="Speed" placeholder="30 ft"></label>
+                        <label>Armor Type
+                            <select name="Armor Type" id="armorTypeSelect">
+                                <option value="">— Seleccionar —</option>
+                            </select>
+                        </label>
+                        <label>Armor Class<input type="text" name="Armor" placeholder="10" data-autocalc="ac" title="Base armor + DEX modifier (+ shield)"></label>
+                        <label>Initiative<input type="text" name="Initiative" placeholder="+0" data-autocalc="initiative"></label>
+                        <label class="checkbox-label"><input type="checkbox" id="shieldCheck" name="Shield" value="/Yes"> Shield (+2 AC)</label>
+                        <label>HP Max<input type="number" name="HP Max" placeholder="0" min="0" data-autocalc="hp"></label>
+                        <label>HP Temp<input type="number" name="HP Temp" placeholder="0" min="0"></label>
+                        <label>HD Max<input type="text" name="HD Max" placeholder="1d8"></label>
+                        <label>HD Spent<input type="text" name="HD Spent" placeholder="0"></label>
+                        <label>Resistances<input type="text" name="Resistances" placeholder="Resistencias"></label>
+                        <label>Features and Traits<input type="text" name="Features and Traits" placeholder="Rasgos"></label>
+                    </div>
+                </div>
+            </details>
+
+            <!-- ABILITY SCORES -->
+            <details id="section-abilities">
+                <summary>Puntuaciones de Habilidad</summary>
+                <div class="section">
+                    <div class="ability-grid">
+                        <div class="ability-box">
+                            <h4>STR</h4>
+                            <label>Score<input type="number" name="Score STR" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod STR" placeholder="+0" data-autocalc="mod" data-from="Score STR"></label>
+                            <label>Save<input type="text" name="Save STR" placeholder="+0" data-autocalc="save" data-mod="Mod STR" data-prof="Ability Save STR"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save STR" value="/Yes"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>DEX</h4>
+                            <label>Score<input type="number" name="Score DEX" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod DEX" placeholder="+0" data-autocalc="mod" data-from="Score DEX"></label>
+                            <label>Save<input type="text" name="Save DEX" placeholder="+0" data-autocalc="save" data-mod="Mod DEX" data-prof="Ability Save DEX"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save DEX" value="/Yes"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>CON</h4>
+                            <label>Score<input type="number" name="Score CON" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod CON" placeholder="+0" data-autocalc="mod" data-from="Score CON"></label>
+                            <label>Save<input type="text" name="Save CON" placeholder="+0" data-autocalc="save" data-mod="Mod CON" data-prof="Ability Save CON"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save CON" value="/Yes"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>INT</h4>
+                            <label>Score<input type="number" name="Score INT" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod INT" placeholder="+0" data-autocalc="mod" data-from="Score INT"></label>
+                            <label>Save<input type="text" name="Save INT" placeholder="+0" data-autocalc="save" data-mod="Mod INT" data-prof="Ability Save INT"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save INT" value="/Yes"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>WIS</h4>
+                            <label>Score<input type="number" name="Score WIS" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod WIS" placeholder="+0" data-autocalc="mod" data-from="Score WIS"></label>
+                            <label>Save<input type="text" name="Save WIS" placeholder="+0" data-autocalc="save" data-mod="Mod WIS" data-prof="Ability Save WIS"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save WIS" value="/Yes"> Save Prof</label>
+                        </div>
+                        <div class="ability-box">
+                            <h4>CHA</h4>
+                            <label>Score<input type="number" name="Score CHA" placeholder="10"></label>
+                            <label>Mod<input type="text" name="Mod CHA" placeholder="+0" data-autocalc="mod" data-from="Score CHA"></label>
+                            <label>Save<input type="text" name="Save CHA" placeholder="+0" data-autocalc="save" data-mod="Mod CHA" data-prof="Ability Save CHA"></label>
+                            <label class="checkbox-label"><input type="checkbox" name="Ability Save CHA" value="/Yes"> Save Prof</label>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- SKILLS -->
+            <details id="section-skills">
+                <summary>Habilidades (Skills)</summary>
+                <div class="section">
+                    <div class="grid-3">
+                    </div>
+                    <label style="margin-top:12px;display:block;">Skill Notes<input type="text" name="Skill" placeholder="Notas de habilidades"></label>
+                </div>
+            </details>
+
+            <!-- SAVING THROWS / DEATH SAVES -->
+            <details id="section-saves">
+                <summary>Tiradas de Salvación y Muerte</summary>
+                <div class="section">
+                    <h4 style="margin-top:0;">Death Saves</h4>
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 1" value="/Yes"> Success 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 2" value="/Yes"> Success 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 3" value="/Yes"> Success 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 4" value="/Yes"> Fail 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 5" value="/Yes"> Fail 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Death Save 6" value="/Yes"> Fail 3</label>
+                    </div>
+                    <label class="checkbox-label" style="margin-top:12px;"><input type="checkbox" name="Heroic Inspiration" value="/Yes"> Heroic Inspiration</label>
+                </div>
+            </details>
+
+            <!-- EXHAUSTION -->
+            <details id="section-exhaustion">
+                <summary>Agotamiento (Exhaustion)</summary>
+                <div class="section">
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 1" value="/Yes"> Level 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 2" value="/Yes"> Level 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 3" value="/Yes"> Level 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 4" value="/Yes"> Level 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 5" value="/Yes"> Level 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Exhaustion 6" value="/Yes"> Level 6</label>
+                    </div>
+                </div>
+            </details>
+
+            <!-- ATTACKS -->
+            <details id="section-attacks">
+                <summary>Ataques</summary>
+                <div class="section">
+                    <div id="attacks-container"></div>
+                </div>
+            </details>
+
+            <!-- FACTIONS -->
+            <details id="section-factions">
+                <summary>Facciones</summary>
+                <div class="section">
+                    <div id="factions-container"></div>
+                </div>
+            </details>
+
+            <!-- MAGIC ITEMS -->
+            <details id="section-magic">
+                <summary>Objetos Mágicos</summary>
+                <div class="section">
+                    <div id="magic-items-container"></div>
+                    <h4 style="margin-top:16px;">Attunement</h4>
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 1" value="/Yes"> Slot 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 2" value="/Yes"> Slot 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 3" value="/Yes"> Slot 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 4" value="/Yes"> Slot 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 5" value="/Yes"> Slot 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Magic Item Attunement 6" value="/Yes"> Slot 6</label>
+                    </div>
+                </div>
+            </details>
+
+            <!-- EQUIPMENT & PROFICIENCIES -->
+            <details id="section-equipment">
+                <summary>Equipamiento y Competencias</summary>
+                <div class="section">
+                    <label>Equipment<input type="text" name="Equipment" placeholder="Objetos que llevas"></label>
+                    <div class="field-block">
+                        <span class="field-label">Languages</span>
+                        <div class="checkbox-table">
+                        </div>
+                    </div>
+                    <div class="field-block">
+                        <span class="field-label">Feats and Professions</span>
+                        <div class="checkbox-table">
+                        </div>
+                    </div>
+                    <div class="field-block">
+                        <span class="field-label">Weapon Proficiencies</span>
+                        <div class="checkbox-table">
+                        </div>
+                    </div>
+                    <div class="field-block">
+                        <span class="field-label">Tool Proficiencies</span>
+                        <div class="checkbox-table">
+                        </div>
+                    </div>
+                    <label>Lifestyle
+                        <select name="Lifestyle">
+                            <option value="">— Seleccionar —</option>
+                        </select>
+                    </label>
+                    <h4 style="margin-top:16px;">Armor Proficiencies</h4>
+                    <div class="grid-2">
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 1" value="/Yes"> Light</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 2" value="/Yes"> Medium</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 3" value="/Yes"> Heavy</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Armor Proficiency 4" value="/Yes"> Shields</label>
+                    </div>
+                </div>
+            </details>
+
+            <!-- SPELLCASTING -->
+            <details id="section-spells">
+                <summary>Conjuros</summary>
+                <div class="section">
+                    <div class="grid-3">
+                        <label>Spell Attack Bonus<input type="text" name="Spell Attack Bonus" placeholder="+0" data-autocalc="spell-atk" title="Proficiency Bonus + Spellcasting Modifier"></label>
+                        <label>Spell Save DC<input type="text" name="Spell Save DC" placeholder="10" data-autocalc="spell-dc" title="8 + Proficiency Bonus + Spellcasting Modifier"></label>
+                        <label>Spellcasting Modifier<input type="text" name="Spellcasting Modifier" placeholder="+0" data-autocalc-src="casting-mod" title="El modifier de tu habilidad de conjuro (INT/WIS/CHA)"></label>
+                    </div>
+                    <label class="checkbox-label" style="margin-top:8px;"><input type="checkbox" name="Spellcasting Ability 1" value="/Yes"> Spellcasting Ability</label>
+                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 2" value="/Yes"> Ability 2</label>
+                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 3" value="/Yes"> Ability 3</label>
+
+                    <h4 style="margin-top:16px;">Spell Slots</h4>
+                    <div class="grid-3">
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 1" value="/Yes"> Slot 1</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 2" value="/Yes"> Slot 2</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 3" value="/Yes"> Slot 3</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 4" value="/Yes"> Slot 4</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 5" value="/Yes"> Slot 5</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 6" value="/Yes"> Slot 6</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 7" value="/Yes"> Slot 7</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 9" value="/Yes"> Slot 9</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 10" value="/Yes"> Slot 10</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 11" value="/Yes"> Slot 11</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 13" value="/Yes"> Slot 13</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 14" value="/Yes"> Slot 14</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 15" value="/Yes"> Slot 15</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 16" value="/Yes"> Slot 16</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 17" value="/Yes"> Slot 17</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 18" value="/Yes"> Slot 18</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 19" value="/Yes"> Slot 19</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 20" value="/Yes"> Slot 20</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 25" value="/Yes"> Slot 25</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 26" value="/Yes"> Slot 26</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 27" value="/Yes"> Slot 27</label>
+                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 28" value="/Yes"> Slot 28</label>
+                    </div>
+
+                    <h4 style="margin-top:16px;">Spells</h4>
+                    <div id="spells-container"></div>
+                </div>
+            </details>
+
+            <!-- NOTES -->
+            <details id="section-notes">
+                <summary>Notas</summary>
+                <div class="section">
+                    <label>Notes<textarea name="Notes" rows="4" placeholder="Notas del personaje"></textarea></label>
+                    <label>Galactic Notes<textarea name="Galactic Notes" rows="4" placeholder="Notas galacticas"></textarea></label>
+                </div>
+            </details>
+
+            <div class="field-block">
+                <label class="checkbox-label" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" id="flattenPDF" value="/Yes">
+                    <span style="font-size:0.85rem;color:var(--text-muted);">Generar PDF sin editar (aplanado)</span>
+                </label>
+                <div class="field-block">
+                    <button type="button" id="exportBtn" class="btn btn-primary">Exportar JSON</button>
+                    <button type="button" id="importBtn" class="btn btn-secondary">Importar JSON</button>
+                    <input type="file" id="importFile" accept=".json" style="display:none;">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
+
+    <!-- Scripts -->
+    <script src="static/app.js"></script>
 </body>
 </html>
