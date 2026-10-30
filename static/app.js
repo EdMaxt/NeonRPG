@@ -44,6 +44,96 @@ const appState = {
   draftKey: 'neonOdysseyDraft',
 };
 
+const AutoCalc = {
+  proficiency(level) {
+    const bonuses = [0,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,8];
+    return bonuses[level] || 0;
+  },
+  mod(value) {
+    return Math.floor((value - 10) / 2);
+  },
+  recalc() {
+    const form = document.getElementById('sheetForm');
+    if (!form) return;
+    const level = parseInt(form.querySelector('[name="Level"]')?.value || 1, 10);
+    const pb = AutoCalc.proficiency(level);
+
+    const getVal = (name) => {
+      const el = form.querySelector(`[name="${name}"]`);
+      return el ? parseInt(el.value, 10) || 0 : 0;
+    };
+
+    const setVal = (name, val) => {
+      const el = form.querySelector(`[name="${name}"]`);
+      if (el) el.value = (val < 0 ? val : '+' + val);
+    };
+
+    const abilities = ['STR','DEX','CON','INT','WIS','CHA'];
+    abilities.forEach(ab => {
+      const modInput = form.querySelector(`[name="Mod ${ab}"]`);
+      if (modInput) {
+        const scoreVal = getVal(`Score ${ab}`);
+        modInput.value = AutoCalc.mod(scoreVal);
+      }
+      const saveInput = form.querySelector(`[name="Save ${ab}"]`);
+      if (saveInput) {
+        const modInput = form.querySelector(`[name="Mod ${ab}"]`);
+        let mod = 0;
+        if (modInput) mod = parseInt(modInput.value, 10) || 0;
+        let total = mod;
+        const profCheckbox = form.querySelector(`[name="Ability Save ${ab}"]`);
+        if (profCheckbox && profCheckbox.checked) {
+          total += prof;
+        }
+        total = (total < 0 ? total : '+' + total);
+        saveInput.value = total;
+      }
+    });
+
+    const acInput = form.querySelector('[name="Armor"]');
+    if (acInput) {
+      const dexMod = AutoCalc.mod(getVal('Score DEX'));
+      let ac = 10 + dexMod;
+      const shield = form.querySelector('[name="Shield"]');
+      if (shield && shield.checked) ac += 2;
+      acInput.value = (ac < 0 ? ac : '+' + ac);
+    }
+
+    const initInput = form.querySelector('[name="Initiative"]');
+    if (initInput) {
+      const dexMod = AutoCalc.mod(getVal('Score DEX'));
+      initInput.value = (dexMod < 0 ? dexMod : '+' + dexMod);
+    }
+
+    const hpInput = form.querySelector('[name="HP Max"]');
+    if (hpInput) {
+      const level = parseInt(form.querySelector('[name="Level"]')?.value || 1, 10);
+      const conMod = AutoCalc.mod(getVal('Score CON'));
+      const hp = level * 8 + conMod;
+      hpInput.value = (hp < 0 ? hp : '+' + hp);
+    }
+
+    const spellAtk = form.querySelector('[name="Spell Attack Bonus"]');
+    if (spellAtk) {
+      const chaMod = AutoCalc.mod(getVal('Score CHA'));
+      spellAtk.value = (chaMod + pb < 0 ? (chaMod + pb) : '+' + (chaMod + pb));
+    }
+
+    const spellDC = form.querySelector('[name="Spell Save DC"]');
+    if (spellDC) {
+      const chaMod = AutoCalc.mod(getVal('Score CHA'));
+      const dc = 8 + prof + chaMod;
+      spellDC.value = (dc < 0 ? dc : '+' + dc);
+    }
+
+    const spellMod = form.querySelector('[name="Spellcasting Modifier"]');
+    if (spellMod) {
+      const chaMod = AutoCalc.mod(getVal('Score CHA'));
+      spellMod.value = (chaMod < 0 ? chaMod : '+' + chaMod);
+    }
+  }
+};
+
 // ============================================================
 // UTILIDADES
 // ============================================================
