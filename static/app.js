@@ -385,7 +385,7 @@ function setupEventListeners() {
     classSelect.addEventListener('change', () => {
       applyClassProficiencies();
       AutoCalc.recalc();
-      filterFeats();
+      window.filterFeats();
     });
   }
 
@@ -400,8 +400,8 @@ function setupEventListeners() {
   // Cambio de homeworld
   const homeworldSelect = document.getElementById('homeworldSelect');
   if (homeworldSelect) {
-    homeworldSelect.addEventListener('change', filterFeats);
-    filterFeats();
+    homeworldSelect.addEventListener('change', window.filterFeats);
+    window.filterFeats();
   }
 
   // Cambio de subcase
@@ -435,11 +435,9 @@ function setupEventListeners() {
 
 // Botones de generación de PDF y limpieza de borrador
 document.addEventListener('DOMContentLoaded', () => {
-  const generatePDF = document.getElementById('generatePDF');
-  if (generatePDF) {
-    generatePDF.addEventListener('click', () => {
-      generatePDF();
-    });
+  const generatePdfBtn = document.getElementById('generatePDF');
+  if (generatePdfBtn) {
+    generatePdfBtn.addEventListener('click', generatePDF);
   }
 
   const clearDraft = document.getElementById('clearDraft');
@@ -869,20 +867,10 @@ function setupFeatsFilter() {
   const featsContainer = getFieldBlockByLabel('Feats and Professions');
   if (!featsContainer) return;
 
-  function parsePrerequisite(prereq) {
-    const parts = prereq.split(/\s+(?:or|,)\s+/i);
-    const tags = [];
-    for (const p of parts) {
-      const tag = p.replace(/homeworld/i, '').trim();
-      if (tag) tags.push(tag);
-    }
-    return tags;
-  }
-
-  function matchesHomeworld(prereq, homeworldTags) {
-    const featTags = parsePrerequisite(prereq);
-    return featTags.some(tag => homeworldTags.includes(tag));
-  }
+  // Asignar a variables globales para que filterFeats pueda acceder
+  window._homeworldSelect = homeworldSelect;
+  window._homeworldInfo = homeworldInfo;
+  window._featsContainer = featsContainer;
 
   function filterFeats() {
     const selected = homeworldSelect.value;
@@ -923,6 +911,9 @@ function setupFeatsFilter() {
       homeworldInfo.classList.add('visible');
     }
   }
+
+  // Exponer filterFeats globalmente (setupEventListeners no puede acceder al scope local)
+  window.filterFeats = filterFeats;
 
   homeworldSelect.addEventListener('change', filterFeats);
   filterFeats();
