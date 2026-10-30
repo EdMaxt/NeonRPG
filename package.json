@@ -1,0 +1,25 @@
+{
+  "name": "neoncharactersheet",
+  "version": "1.0.0",
+  "description": "> **NeonRPG** — Aplicación web que genera hojas de personaje en PDF para **Neon Odyssey**, variante de D&D (playtest **v0.1.1**).",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdMaxt/NeonRPG.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/EdMaxt/NeonRPG/issues"
+  },
+  "homepage": "https://github.com/EdMaxt/NeonRPG#readme",
+  "dependencies": {
+    "pdf-lib": "^1.11.0"
+  }
+}

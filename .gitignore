@@ -36,3 +36,11 @@ Thumbs.db
 cb_test*.pdf
 *_test.pdf
 skills_fix.pdf
+
+# Experiment test files (node scripts, probes, fills, appears, maps)
+_*.js
+_*.py
+test_*.*.pdf
+template_save_test.pdf
+.bug_test.pdf
+.pytest_cache/

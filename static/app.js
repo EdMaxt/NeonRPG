@@ -65,7 +65,11 @@ const AutoCalc = {
 
     const setVal = (name, val) => {
       const el = form.querySelector(`[name="${name}"]`);
-      if (el) el.value = (val < 0 ? val : '+' + val);
+      if (el) {
+        // No añadir el prefijo '+' a los campos type="number"
+        const displayVal = el.type === 'number' ? val : (val < 0 ? val : '+' + val);
+        el.value = displayVal;
+      }
     };
 
     const abilities = ['STR','DEX','CON','INT','WIS','CHA'];
@@ -83,7 +87,7 @@ const AutoCalc = {
         let total = mod;
         const profCheckbox = form.querySelector(`[name="Ability Save ${ab}"]`);
         if (profCheckbox && profCheckbox.checked) {
-          total += prof;
+          total += pb;
         }
         total = (total < 0 ? total : '+' + total);
         saveInput.value = total;
@@ -110,7 +114,7 @@ const AutoCalc = {
       const level = parseInt(form.querySelector('[name="Level"]')?.value || 1, 10);
       const conMod = AutoCalc.mod(getVal('Score CON'));
       const hp = level * 8 + conMod;
-      hpInput.value = (hp < 0 ? hp : '+' + hp);
+      hpInput.value = hp;
     }
 
     const spellAtk = form.querySelector('[name="Spell Attack Bonus"]');
@@ -122,7 +126,7 @@ const AutoCalc = {
     const spellDC = form.querySelector('[name="Spell Save DC"]');
     if (spellDC) {
       const chaMod = AutoCalc.mod(getVal('Score CHA'));
-      const dc = 8 + prof + chaMod;
+      const dc = 8 + pb + chaMod;
       spellDC.value = (dc < 0 ? dc : '+' + dc);
     }
 
@@ -428,6 +432,48 @@ function setupEventListeners() {
     });
   });
 }
+
+// Botones de generación de PDF y limpieza de borrador
+document.addEventListener('DOMContentLoaded', () => {
+  const generatePDF = document.getElementById('generatePDF');
+  if (generatePDF) {
+    generatePDF.addEventListener('click', () => {
+      generatePDF();
+    });
+  }
+
+  const clearDraft = document.getElementById('clearDraft');
+  if (clearDraft) {
+    clearDraft.addEventListener('click', () => {
+      localStorage.removeItem('neonOdysseyDraft');
+      showToast('Borrador eliminado.');
+      // En teoría deberíamos also resetear el formulario aquí
+    });
+  }
+
+  // Exportar/Importar JSON
+  const exportBtn = document.getElementById('exportBtn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', exportCharacter);
+  }
+
+  const importBtn = document.getElementById('importBtn');
+  if (importBtn) {
+    importBtn.addEventListener('click', () => {
+      const importFile = document.getElementById('importFile');
+      if (importFile) importFile.click();
+    });
+  }
+
+  const importFile = document.getElementById('importFile');
+  if (importFile) {
+    importFile.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        importCharacter(e.target.files[0]);
+      }
+    });
+  }
+});
 
 // ============================================================
 // TEMA Y ESTILOS
@@ -1038,13 +1084,119 @@ function showToast(message) {
   }, 3000);
 }
 
-// ============================================================
-// GENERACIÓN DE PDF (CLIENT-SIDE)
-// ============================================================
+// Generación de PDF usando pdf-lib (acceso directo desde el botón)
+async function generatePDF() {
+  const form = document.getElementById('sheetForm');
+  if (!form) {
+    showError('No se encontró el formulario #sheetForm.');
+    return;
+  }
 
-// Nota: La generación de PDF con pdf-lib se debe incluir
-// en un archivo aparte o hacer referencia a una CDN.
-// Ver PDFGeneration.js para la implementación completa.
+  // 1) Recopila los valores del formulario (checkboxes agrupados por nombre)
+  const values = {};
+  for (const el of form.elements) {
+    if (!el.name) continue;
+    if (el.type === 'checkbox') {
+      if (el.checked) {
+        (values[el.name] = values[el.name] || []).push(el.value);
+      }
+    } else if (el.type === 'radio') {
+      if (el.checked) values[el.name] = el.value;
+    } else if (el.type === 'select-multiple') {
+      values[el.name] = Array.from(el.selectedOptions, (o) => o.value);
+    } else {
+      values[el.name] = el.value;
+    }
+  }
+
+  // 2) Carga la plantilla PDF
+  let templateBytes;
+  try {
+    const res = await fetch(CONFIG.templatePdf);
+    if (!res.ok) throw new Error(`HTTP ${res.status} al cargar ${CONFIG.templatePdf}`);
+    templateBytes = await res.arrayBuffer();
+  } catch (err) {
+    showError(`No se pudo cargar la plantilla PDF: ${err.message}`);
+    return;
+  }
+
+  try {
+    const pdfLib = window.pdfLib;
+    if (!pdfLib) {
+      showError('pdf-lib no está cargado. Verifica tu conexión a internet.');
+      return;
+    }
+
+    // 3) Carga la plantilla y rellena los campos AcroForm
+    const pdfDoc = await pdfLib.PDFDocument.load(templateBytes);
+    const formPdf = pdfDoc.getForm();
+    const fields = formPdf.getFields();
+
+    // Mapeo de campos del formulario -> campos de la plantilla (excepciones)
+    const fieldMap = {
+      'Player': 'Player 1',
+      'Speed': 'Speed 1',
+      'Ability Save STR': 'Ability Save',
+    };
+
+    const fillField = (field, formName) => {
+      const raw = values[formName];
+      if (raw === undefined || raw === null) return;
+      if (field instanceof pdfLib.PDFCheckBox) {
+        const isChecked = Array.isArray(raw) ? raw.some(v => v === '/Yes' || v === 'true' || v === 'on' || v) : !!raw;
+        isChecked ? field.check() : field.uncheck();
+      } else if (field instanceof pdfLib.PDFTextField) {
+        const str = Array.isArray(raw) ? raw.join(', ') : String(raw);
+        if (str !== '') field.setText(str);
+      }
+    };
+
+    for (const field of fields) {
+      const tmplName = field.getName();
+      if (!tmplName) continue;
+      // Busca el campo del formulario que corresponde a este campo de la plantilla
+      const formName = Object.keys(values).find(name => (fieldMap[name] || name) === tmplName);
+      if (!formName) continue; // campo de plantilla sin correspondiente en el formulario (herencia/legacy)
+      fillField(field, formName);
+    }
+
+    // 4) Genera las apariencias (mejor esfuerzo; no rompe si falla)
+    try {
+      const helvetica = await pdfDoc.embedFont(pdfLib.StandardFonts.Helvetica);
+      for (const field of fields) {
+        if (field instanceof pdfLib.PDFTextField && !field.isRichFormatted()) {
+          field.defaultUpdateAppearances(helvetica);
+        } else if (field instanceof pdfLib.PDFCheckBox) {
+          field.defaultUpdateAppearances();
+        }
+      }
+    } catch (e) {
+      console.warn('No se pudieron actualizar todas las apariencias:', e.message);
+    }
+
+    // 5) Serializa el PDF (con updateFieldAppearances:false para evitar la
+    //    actualización automática que falla con campos rich-text de la plantilla)
+    const pdfBytes = await pdfDoc.save({ updateFieldAppearances: false });
+
+    // 6) Descarga el archivo
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const charName = values['Character Name'] || CONFIG.defaultCharName;
+    const safeName = charName.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 80);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${safeName}_Neon_Odyssey.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast(`PDF generado: ${a.download}`);
+  } catch (err) {
+    console.error('Error generando el PDF:', err);
+    showError(`Error generando el PDF: ${err.message}`);
+  }
+}
 
 // ============================================================
 // INICIALIZACIÓN
