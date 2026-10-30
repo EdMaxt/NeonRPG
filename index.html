@@ -90,7 +90,7 @@
                         <label class="checkbox-label"><input type="checkbox" id="shieldCheck" name="Shield" value="/Yes"> Shield (+2 AC)</label>
                         <label>HP Max<input type="number" name="HP Max" placeholder="0" min="0" data-autocalc="hp"></label>
                         <label>HP Temp<input type="number" name="HP Temp" placeholder="0" min="0"></label>
-                        <label>HD Max<input type="text" name="HD Max" placeholder="1d8"></label>
+                        <label>HD Max<input type="text" name="HD Max" id="hdMax" placeholder="1d8" readonly></label>
                         <label>HD Spent<input type="text" name="HD Spent" placeholder="0"></label>
                         <label>Resistances<input type="text" name="Resistances" placeholder="Resistencias"></label>
                         <label>Features and Traits<input type="text" name="Features and Traits" placeholder="Rasgos"></label>
@@ -273,34 +273,20 @@
                         <label>Spell Save DC<input type="text" name="Spell Save DC" placeholder="10" data-autocalc="spell-dc" title="8 + Proficiency Bonus + Spellcasting Modifier"></label>
                         <label>Spellcasting Modifier<input type="text" name="Spellcasting Modifier" placeholder="+0" data-autocalc-src="casting-mod" title="El modifier de tu habilidad de conjuro (INT/WIS/CHA)"></label>
                     </div>
-                    <label class="checkbox-label" style="margin-top:8px;"><input type="checkbox" name="Spellcasting Ability 1" value="/Yes"> Spellcasting Ability</label>
-                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 2" value="/Yes"> Ability 2</label>
-                    <label class="checkbox-label"><input type="checkbox" name="Spellcasting Ability 3" value="/Yes"> Ability 3</label>
+                    <label class="checkbox-label" style="margin-top:8px;">
+                        <span style="text-transform:none;letter-spacing:0;font-weight:400;">Spellcasting Ability</span>
+                        <select name="Spellcasting Ability" id="spellcastingAbilitySelect" style="margin-left:8px;min-width:140px;">
+                            <option value="">— Seleccionar —</option>
+                            <option value="INT">Intelligence</option>
+                            <option value="WIS">Wisdom</option>
+                            <option value="CHA" selected>Charisma</option>
+                        </select>
+                    </label>
 
                     <h4 style="margin-top:16px;">Spell Slots</h4>
-                    <div class="grid-3">
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 1" value="/Yes"> Slot 1</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 2" value="/Yes"> Slot 2</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 3" value="/Yes"> Slot 3</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 4" value="/Yes"> Slot 4</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 5" value="/Yes"> Slot 5</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 6" value="/Yes"> Slot 6</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 7" value="/Yes"> Slot 7</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 9" value="/Yes"> Slot 9</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 10" value="/Yes"> Slot 10</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 11" value="/Yes"> Slot 11</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 13" value="/Yes"> Slot 13</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 14" value="/Yes"> Slot 14</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 15" value="/Yes"> Slot 15</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 16" value="/Yes"> Slot 16</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 17" value="/Yes"> Slot 17</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 18" value="/Yes"> Slot 18</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 19" value="/Yes"> Slot 19</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 20" value="/Yes"> Slot 20</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 25" value="/Yes"> Slot 25</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 26" value="/Yes"> Slot 26</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 27" value="/Yes"> Slot 27</label>
-                        <label class="checkbox-label"><input type="checkbox" name="Spell Expended 28" value="/Yes"> Slot 28</label>
+                    <div class="spell-slots-controls">
+                        <button type="button" id="addSpellBtn" class="btn btn-secondary">+ Add Spell</button>
+                        <div id="spells-container"></div>
                     </div>
 
                     <h4 style="margin-top:16px;">Spells</h4>

@@ -135,6 +135,13 @@ const AutoCalc = {
       const chaMod = AutoCalc.mod(getVal('Score CHA'));
       spellMod.value = (chaMod < 0 ? chaMod : '+' + chaMod);
     }
+
+    // Actualizar profBonusValue
+    const pbEl = document.getElementById('profBonusValue');
+    if (pbEl) pbEl.textContent = '+' + pb;
+
+    // Actualizar HD Max
+    updateHDMax(appState.gameData, document.getElementById('classSelect')?.value || '');
   }
 };
 
@@ -213,6 +220,45 @@ function getFieldBlockByLabel(labelText) {
   return null;
 }
 
+/**
+ * Obtiene el tamaño de dado (hit die) de una clase
+ * @param {string} className - Nombre de la clase
+ * @returns {string|null} Ejemplo: 'D8', 'D10', 'D12'
+ */
+function getClassHitDie(className) {
+  const data = appState.gameData;
+  if (!data) return null;
+  const cls = (data.classes || []).find(c => c.name === className);
+  return cls ? cls.hit_die : null;
+}
+
+/**
+ * Actualiza el campo HD Max basado en el nivel y la clase seleccionada
+ */
+function updateHDMax(data, className) {
+  const hdMaxEl = document.getElementById('hdMax');
+  if (!hdMaxEl) return;
+
+  const levelEl = document.querySelector('[name="Level"]');
+  if (!levelEl) return;
+
+  const level = parseInt(levelEl.value, 10) || 1;
+  const hitDie = getClassHitDie(className);
+
+  if (hitDie) {
+    hdMaxEl.value = level + 'd' + hitDie;
+    hdMaxEl.readOnly = appState.autoCalc;
+  } else {
+    hdMaxEl.value = '';
+    hdMaxEl.readOnly = false;
+  }
+}
+
+// ============================================================
+// POBLADO DE SKILLS
+// ============================================================
+
+
 // ============================================================
 // CARGA DE DATOS
 // ============================================================
@@ -268,6 +314,9 @@ function initializeForm() {
   generateFactionSlots(data);
   generateMagicItemSlots(data);
   generateSpellSlots(data);
+
+  // Poblar la sección de skills (competencias de la clase)
+  populateSkills(data);
 
   // Configura el submenú de subcases
   setupSubclassDropdown(data);
@@ -387,6 +436,8 @@ function setupEventListeners() {
       AutoCalc.recalc();
       window.filterFeats();
     });
+    // Aplicar competencias iniciales
+    applyClassProficiencies();
   }
 
   // Cambio de tipo de armadura
@@ -416,6 +467,12 @@ function setupEventListeners() {
 
   // Auto-guardar borrador
   form.addEventListener('input', debounce(saveDraft, 300));
+
+  // Botón Add Spell
+  const addSpellBtn = document.getElementById('addSpellBtn');
+  if (addSpellBtn) {
+    addSpellBtn.addEventListener('click', addSpellSlot);
+  }
 
   // Redirección de navegación suave
   document.querySelectorAll('.sticky-nav a').forEach(link => {
@@ -559,7 +616,7 @@ function populateFeats(data) {
   if (!checkboxTable) return;
 
   checkboxTable.innerHTML = '';
-  (data.homeworldFeats || []).forEach(feat => {
+  (data.homeworld_feats || []).forEach(feat => {
     const label = document.createElement('label');
     label.className = 'checkbox-label';
     label.title = feat.prerequisite || '';
@@ -593,6 +650,8 @@ function populateWeaponProficiencies(data) {
 
   const checkboxTable = container.querySelector('.checkbox-table');
   if (!checkboxTable) return;
+
+  checkboxTable.innerHTML = '';
 
   weaponGroups.forEach(group => {
     const h5 = document.createElement('h5');
@@ -662,14 +721,16 @@ function populateLanguageGroups(data) {
   const checkboxTable = container.querySelector('.checkbox-table');
   if (!checkboxTable) return;
 
-  const languageGroups = data.languageGroups || [];
+  checkboxTable.innerHTML = '';
+
+  const languageGroups = data.language_groups || [];
   languageGroups.forEach(group => {
     const h5 = document.createElement('h5');
     h5.textContent = group.name || 'Languages';
     checkboxTable.appendChild(h5);
 
     const div = document.createElement('div');
-    div.className = 'weapon-group';
+    div.className = 'language-group';
 
     (group.languages || []).forEach(lang => {
       const label = document.createElement('label');
@@ -689,6 +750,98 @@ function populateLanguageGroups(data) {
     checkboxTable.appendChild(div);
   });
 }
+
+/**
+ * Llena la sección de skills con los opcionales de la clase seleccionada
+ * @param {object} data - Datos del juego
+ */
+function populateSkills(data) {
+  const classSelect = document.getElementById('classSelect');
+  const skillsContainer = document.querySelector('#section-skills .grid-3');
+  if (!skillsContainer || !classSelect) return;
+
+  skillsContainer.innerHTML = '';
+  const selectedClass = classSelect.value;
+  const classProf = data.class_proficiencies && data.class_proficiencies[selectedClass];
+  const allSkills = data.skills || [];
+  const skillOptions = classProf && Array.isArray(classProf.skill_options) ? classProf.skill_options : [];
+  const skillChoose = classProf ? classProf.skill_choose : 2;
+  const skillAny = classProf ? !!classProf.skill_any : false;
+
+  // Determinar qué skills están disponibles
+  let availableSkills = allSkills;
+  if (skillOptions.length > 0) {
+    availableSkills = allSkills.filter(s => skillOptions.includes(s));
+  }
+
+  // Determinar qué skills están marcados como proficientes
+  const checkedSkills = new Set();
+  if (skillAny) {
+    // Para clases con skill_any (ej: Icon): el jugador elige cuáles son proficientes
+    for (let i = 0; i < Math.min(skillChoose, availableSkills.length); i++) {
+      checkedSkills.add(availableSkills[i]);
+    }
+  } else if (skillOptions.length > 0) {
+    // Los primeros skill_choose de skill_options son proficientes
+    for (let i = 0; i < Math.min(skillChoose, skillOptions.length); i++) {
+      checkedSkills.add(skillOptions[i]);
+    }
+  }
+
+  availableSkills.forEach(skill => {
+    const label = document.createElement('label');
+    label.className = 'checkbox-label skill-option';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.name = 'Skill Proficiency';
+    cb.value = skill;
+    cb.checked = checkedSkills.has(skill);
+    const span = document.createElement('span');
+    span.className = 'cb-text';
+    span.textContent = skill;
+    label.appendChild(cb);
+    label.appendChild(span);
+    skillsContainer.appendChild(label);
+  });
+}
+
+// ============================================================
+// APLICACIÓN DE COMPETENCIAS DE CLASE
+// ============================================================
+
+function applyClassProficiencies() {
+  const data = appState.gameData;
+  if (!data) return;
+
+  const classSelect = document.getElementById('classSelect');
+  const subclassSelect = document.getElementById('subclassSelect');
+  const skillsContainer = document.querySelector('#section-skills .grid-3');
+  const saveCheckboxes = document.querySelectorAll('[name^="Ability Save "]');
+
+  const selectedClass = classSelect ? classSelect.value : '';
+  const selectedSubclass = subclassSelect ? subclassSelect.value : '';
+  const classProf = data.class_proficiencies && data.class_proficiencies[selectedClass];
+
+  // Actualizar checkboxes de salvación
+  saveCheckboxes.forEach(cb => {
+    const ab = cb.name.split(' ')[2];
+    cb.checked = !!(classProf && Array.isArray(classProf.saves) && classProf.saves.includes(ab));
+  });
+
+  // Actualizar skills
+  if (skillsContainer) {
+    populateSkills(data);
+  }
+
+  // Actualizar HD Max
+  updateHDMax(data, selectedClass);
+
+  // Si hay subclass, actualizar habilidades de la subclass (si aplica)
+  if (selectedSubclass && data.subclasses && data.subclasses[selectedClass]) {
+    // Subclass mechanics can augment skills here
+  }
+}
+
 
 /**
  * Llena las opciones de estilo de vida
@@ -791,30 +944,36 @@ function generateMagicItemSlots(data) {
 /**
  * Genera los slots de hechizos
  */
+function addSpellSlot() {
+  const container = document.getElementById('spells-container');
+  if (!container) return;
+
+  const count = container.querySelectorAll('.spell-row').length + 1;
+  const row = document.createElement('div');
+  row.className = 'spell-row';
+  row.innerHTML = `
+    <h5>Spell ${count}</h5>
+    <div class="grid-4">
+      <label>Name<input type="text" name="Spell Name ${count}" placeholder="Nombre"></label>
+      <label>Level<input type="text" name="Spell Level ${count}" placeholder="0"></label>
+      <label>Casting Time<input type="text" name="Spell Casting Time ${count}" placeholder="1 action"></label>
+      <label>Range<input type="text" name="Spell Range ${count}" placeholder="60 ft"></label>
+      <label>Features<input type="text" name="Spell Features ${count}" placeholder="Efectos"></label>
+      <label>School<input type="text" name="Spell School ${count}" placeholder="Evocación"></label>
+      <label>Notes<input type="text" name="Spell Notes ${count}" placeholder="Notas"></label>
+      <label>Page<input type="text" name="Spell Page ${count}" placeholder="Pág."></label>
+    </div>
+  `;
+  container.appendChild(row);
+}
+
 function generateSpellSlots() {
   const container = document.getElementById('spells-container');
   if (!container) return;
 
   container.innerHTML = '';
-  for (let i = 0; i < CONFIG.maxSpells; i++) {
-    const suffix = i === 0 ? ' 1' : ` ${i+1}`;
-    const row = document.createElement('div');
-    row.className = 'spell-row';
-    row.innerHTML = `
-      <h5>Spell ${i+1}</h5>
-      <div class="grid-4">
-        <label>Name<input type="text" name="Spell Name${suffix}" placeholder="Nombre"></label>
-        <label>Level<input type="text" name="Spell Level${suffix}" placeholder="0"></label>
-        <label>Casting Time<input type="text" name="Spell Casting Time${suffix}" placeholder="1 action"></label>
-        <label>Range<input type="text" name="Spell Range${suffix}" placeholder="60 ft"></label>
-        <label>Features<input type="text" name="Spell Features${suffix}" placeholder="Efectos"></label>
-        <label>School<input type="text" name="Spell School${suffix}" placeholder="Evocación"></label>
-        <label>Notes<input type="text" name="Spell Notes${suffix}" placeholder="Notas"></label>
-        <label>Page<input type="text" name="Spell Page${suffix}" placeholder="Pág."></label>
-      </div>
-    `;
-    container.appendChild(row);
-  }
+  // Inicializar con un único slot
+  addSpellSlot();
 }
 
 // ============================================================
