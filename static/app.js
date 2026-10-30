@@ -89,6 +89,36 @@ function fieldId(base) {
   return `${base}_${generateId()}`;
 }
 
+/**
+ * Muestra un mensaje de error en el área de notificaciones.
+ * @param {string} message - El mensaje de error a mostrar.
+ */
+function showError(message) {
+  const toast = document.getElementById('toast');
+  if (toast) {
+    toast.textContent = message;
+    toast.style.display = 'block';
+  } else {
+    console.error('showError: No se encontró el elemento #toast');
+  }
+}
+
+/**
+ * Busca un bloque de campo por su etiqueta de texto.
+ * @param {string} labelText - Etiqueta de texto a buscar.
+ * @returns {HTMLElement|null} El bloque de campo encontrado o null.
+ */
+function getFieldBlockByLabel(labelText) {
+  const fieldBlocks = document.querySelectorAll('.field-block');
+  for (const block of fieldBlocks) {
+    const label = block.querySelector('.field-label');
+    if (label && label.textContent.trim() === labelText) {
+      return block;
+    }
+  }
+  return null;
+}
+
 // ============================================================
 // CARGA DE DATOS
 // ============================================================
@@ -388,7 +418,7 @@ function populateSelects(data) {
  * @param {object} data - Datos del juego
  */
 function populateFeats(data) {
-  const featsContainer = document.querySelector('.field-block:has(.field-label:contains("Feats and Professions"))');
+  const featsContainer = getFieldBlockByLabel('Feats and Professions');
   if (!featsContainer) return;
 
   const checkboxTable = featsContainer.querySelector('.checkbox-table');
@@ -424,7 +454,7 @@ function populateWeaponProficiencies(data) {
     { title: 'Martial Ranged', key: 'martial_ranged' },
   ];
 
-  const container = document.querySelector('.field-block:has(.field-label:contains("Weapon Proficiencies"))');
+  const container = getFieldBlockByLabel('Weapon Proficiencies');
   if (!container) return;
 
   const checkboxTable = container.querySelector('.checkbox-table');
@@ -463,7 +493,7 @@ function populateWeaponProficiencies(data) {
  * @param {object} data - Datos del juego
  */
 function populateToolProficiencies(data) {
-  const container = document.querySelector('.field-block:has(.field-label:contains("Tool Proficiencies"))');
+  const container = getFieldBlockByLabel('Tool Proficiencies');
   if (!container) return;
 
   const checkboxTable = container.querySelector('.checkbox-table');
@@ -492,7 +522,7 @@ function populateToolProficiencies(data) {
  * @param {object} data - Datos del juego
  */
 function populateLanguageGroups(data) {
-  const container = document.querySelector('.field-block:has(.field-label:contains("Languages"))');
+  const container = getFieldBlockByLabel('Languages');
   if (!container) return;
 
   const checkboxTable = container.querySelector('.checkbox-table');
@@ -700,7 +730,7 @@ function setupFeatsFilter() {
   if (!homeworldSelect) return;
 
   const homeworldInfo = document.getElementById('homeworldInfo');
-  const featsContainer = document.querySelector('.field-block:has(.field-label:contains("Feats and Professions"))');
+  const featsContainer = getFieldBlockByLabel('Feats and Professions');
   if (!featsContainer) return;
 
   function parsePrerequisite(prereq) {
