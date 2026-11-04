@@ -1004,30 +1004,19 @@ function generateAttackSlots() {
   // Generar 4 slots iniciales
   const initialSlots = 4;
   for (let i = 0; i < initialSlots; i++) {
-    addAttackSlot(i);
+    addAttackSlot(i, false); // false = no agregar botón todavía
   }
 
-  // Botón para agregar más ataques
-  const addBtn = document.createElement('button');
-  addBtn.type = 'button';
-  addBtn.className = 'btn-secondary';
-  addBtn.textContent = '+ Agregar Ataque';
-  addBtn.addEventListener('click', () => {
-    const count = container.querySelectorAll('.attack-row').length;
-    if (count < CONFIG.maxAttacks) {
-      addAttackSlot(count);
-    } else {
-      showToast(`Máximo ${CONFIG.maxAttacks} ataques`, 'warning');
-    }
-  });
-  container.appendChild(addBtn);
+  // Botón para agregar más ataques (crear después de los slots)
+  createAddButton(container, 'attacks', CONFIG.maxAttacks);
 }
 
 /**
  * Agrega un slot de ataque individual
  * @param {number} index - Índice del ataque
+ * @param {boolean} appendBtn - Si debe incluir botón "Agregar" después
  */
-function addAttackSlot(index) {
+function addAttackSlot(index, appendBtn = false) {
   const container = document.getElementById('attacks-container');
   if (!container) return;
 
@@ -1043,13 +1032,7 @@ function addAttackSlot(index) {
       <button type="button" class="btn-small" onclick="this.parentElement.parentElement.remove(); return false;">✕ Clear</button>
     </div>
   `;
-  // Insertar antes del botón de agregar
-  const addBtn = container.querySelector('button');
-  if (addBtn) {
-    container.insertBefore(row, addBtn);
-  } else {
-    container.appendChild(row);
-  }
+  container.appendChild(row);
 }
 
 /**
@@ -1077,19 +1060,7 @@ function generateFactionSlots(data) {
   }
 
   // Botón para agregar más facciones
-  const addBtn = document.createElement('button');
-  addBtn.type = 'button';
-  addBtn.className = 'btn-secondary';
-  addBtn.textContent = '+ Agregar Facción';
-  addBtn.addEventListener('click', () => {
-    const count = container.querySelectorAll('.faction-row').length;
-    if (count < CONFIG.maxFactions) {
-      addFactionSlot(count);
-    } else {
-      showToast(`Máximo ${CONFIG.maxFactions} facciones`, 'warning');
-    }
-  });
-  container.appendChild(addBtn);
+  createAddButton(container, 'factions', CONFIG.maxFactions);
 }
 
 /**
@@ -1110,13 +1081,34 @@ function addFactionSlot(index) {
       <button type="button" class="btn-small" onclick="this.parentElement.parentElement.remove(); return false;">✕ Clear</button>
     </div>
   `;
-  // Insertar antes del botón de agregar
-  const addBtn = container.querySelector('button');
-  if (addBtn) {
-    container.insertBefore(row, addBtn);
-  } else {
-    container.appendChild(row);
-  }
+  container.appendChild(row);
+}
+
+/**
+ * Crea un botón "Agregar" genérico para contenedores dinámicos
+ * @param {HTMLElement} container - Contenedor donde agregar el botón
+ * @param {string} type - Tipo: 'attacks' o 'factions'
+ * @param {number} maxItems - Máximo de items permitidos
+ */
+function createAddButton(container, type, maxItems) {
+  const isAttack = type === 'attacks';
+  const btnText = isAttack ? '+ Agregar Ataque' : '+ Agregar Facción';
+  const rowClass = isAttack ? '.attack-row' : '.faction-row';
+  const addFn = isAttack ? addAttackSlot : addFactionSlot;
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn-secondary';
+  btn.textContent = btnText;
+  btn.addEventListener('click', () => {
+    const count = container.querySelectorAll(rowClass).length;
+    if (count < maxItems) {
+      addFn(count);
+    } else {
+      showToast(`Máximo ${maxItems} ${type}`, 'warning');
+    }
+  });
+  container.appendChild(btn);
 }
 
 /**
