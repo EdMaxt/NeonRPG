@@ -432,8 +432,9 @@ input.autocalc-locked:focus {
 
 /* Skill options available for the selected class */
 .grid-3 > .checkbox-label.skill-option {
-    color: var(--accent);
-    font-weight: 600;
+    color: var(--text-muted);
+    font-weight: 400;
+    opacity: 0.6;
 }
 
 .grid-3 > .checkbox-label.skill-option::before {
@@ -442,8 +443,18 @@ input.autocalc-locked:focus {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--text-muted);
     margin-right: 6px;
+}
+
+.grid-3 > .checkbox-label.skill-option.skill-allowed {
+    color: var(--accent);
+    font-weight: 600;
+    opacity: 1;
+}
+
+.grid-3 > .checkbox-label.skill-option.skill-allowed::before {
+    background: var(--accent);
     box-shadow: var(--glow);
 }
 

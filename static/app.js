@@ -110,11 +110,13 @@ const AutoCalc = {
     }
 
     const hpInput = form.querySelector('[name="HP Max"]');
-    if (hpInput) {
+    if (hpInput && appState.autoCalc) {
       const level = parseInt(form.querySelector('[name="Level"]')?.value || 1, 10);
       const conMod = AutoCalc.mod(getVal('Score CON'));
-      const hp = level * 8 + conMod;
-      hpInput.value = hp;
+      const className = form.querySelector('[name="Class"]')?.value || '';
+      const hitDie = getClassHitDie(className) || 8;
+      const hp = (level - 1) * Math.ceil(hitDie / 2) + hitDie + conMod * level;
+      hpInput.value = hp > 0 ? hp : 1;
     }
 
     const spellAtk = form.querySelector('[name="Spell Attack Bonus"]');
@@ -776,36 +778,18 @@ function populateSkills(data) {
   const allSkills = data.skills || [];
   const skillOptions = classProf && Array.isArray(classProf.skill_options) ? classProf.skill_options : [];
   const skillChoose = classProf ? classProf.skill_choose : 2;
-  const skillAny = classProf ? !!classProf.skill_any : false;
 
-  // Determinar qué skills están disponibles
-  let availableSkills = allSkills;
-  if (skillOptions.length > 0) {
-    availableSkills = allSkills.filter(s => skillOptions.includes(s));
-  }
-
-  // Determinar qué skills están marcados como proficientes
-  const checkedSkills = new Set();
-  if (skillAny) {
-    // Para clases con skill_any (ej: Icon): el jugador elige cuáles son proficientes
-    for (let i = 0; i < Math.min(skillChoose, availableSkills.length); i++) {
-      checkedSkills.add(availableSkills[i]);
-    }
-  } else if (skillOptions.length > 0) {
-    // Los primeros skill_choose de skill_options son proficientes
-    for (let i = 0; i < Math.min(skillChoose, skillOptions.length); i++) {
-      checkedSkills.add(skillOptions[i]);
-    }
-  }
-
-  availableSkills.forEach(skill => {
+  // Mostrar todos los skills, pero resaltar los disponibles para la clase
+  allSkills.forEach(skill => {
+    const isAvailable = skillOptions.length === 0 || skillOptions.includes(skill);
     const label = document.createElement('label');
-    label.className = 'checkbox-label skill-option';
+    label.className = `checkbox-label skill-option ${isAvailable ? 'skill-allowed' : ''}`;
+    label.title = isAvailable ? `Disponible para ${selectedClass}` : 'No disponible para esta clase';
     const cb = document.createElement('input');
     cb.type = 'checkbox';
     cb.name = 'Skill Proficiency';
     cb.value = skill;
-    cb.checked = checkedSkills.has(skill);
+    cb.checked = false; // Nunca auto-selecciona
     const span = document.createElement('span');
     span.className = 'cb-text';
     span.textContent = skill;
@@ -875,32 +859,67 @@ function populateLifestyle(data) {
 // ============================================================
 
 /**
- * Genera los slots de ataques
+ * Genera los slots de ataques (4 iniciales, dinámico)
  */
 function generateAttackSlots() {
   const container = document.getElementById('attacks-container');
   if (!container) return;
 
   container.innerHTML = '';
-  for (let i = 0; i < CONFIG.maxAttacks; i++) {
-    const suffix = i === 0 ? '' : ` ${i}`;
-    const suffix1 = i === 0 ? ' 1' : ` ${i+1}`;
-    const row = document.createElement('div');
-    row.className = 'attack-row';
-    row.innerHTML = `
-      <div class="grid-4">
-        <label>Name<input type="text" name="Attack Name${suffix}" placeholder="Nombre"></label>
-        <label>Bonus<input type="text" name="Attack Bonus${suffix}" placeholder="+0"></label>
-        <label>Damage<input type="text" name="Attack Damage${suffix}" placeholder="1d8"></label>
-        <label>Notes<input type="text" name="Attack Notes${suffix}" placeholder="Notas"></label>
-      </div>
-    `;
+
+  // Generar 4 slots iniciales
+  const initialSlots = 4;
+  for (let i = 0; i < initialSlots; i++) {
+    addAttackSlot(i);
+  }
+
+  // Botón para agregar más ataques
+  const addBtn = document.createElement('button');
+  addBtn.type = 'button';
+  addBtn.className = 'btn-secondary';
+  addBtn.textContent = '+ Agregar Ataque';
+  addBtn.addEventListener('click', () => {
+    const count = container.querySelectorAll('.attack-row').length;
+    if (count < CONFIG.maxAttacks) {
+      addAttackSlot(count);
+    } else {
+      showToast(`Máximo ${CONFIG.maxAttacks} ataques`, 'warning');
+    }
+  });
+  container.appendChild(addBtn);
+}
+
+/**
+ * Agrega un slot de ataque individual
+ * @param {number} index - Índice del ataque
+ */
+function addAttackSlot(index) {
+  const container = document.getElementById('attacks-container');
+  if (!container) return;
+
+  const suffix = index === 0 ? '' : ` ${index}`;
+  const row = document.createElement('div');
+  row.className = 'attack-row';
+  row.innerHTML = `
+    <div class="grid-4">
+      <label>Name<input type="text" name="Attack Name${suffix}" placeholder="Nombre"></label>
+      <label>Bonus<input type="text" name="Attack Bonus${suffix}" placeholder="+0"></label>
+      <label>Damage<input type="text" name="Attack Damage${suffix}" placeholder="1d8"></label>
+      <label>Notes<input type="text" name="Attack Notes${suffix}" placeholder="Notas"></label>
+      <button type="button" class="btn-small" onclick="this.parentElement.parentElement.remove(); return false;">✕ Clear</button>
+    </div>
+  `;
+  // Insertar antes del botón de agregar
+  const addBtn = container.querySelector('button');
+  if (addBtn) {
+    container.insertBefore(row, addBtn);
+  } else {
     container.appendChild(row);
   }
 }
 
 /**
- * Genera los slots de facciones
+ * Genera los slots de facciones (3 iniciales, dinámico)
  * @param {object} data - Datos del juego
  */
 function generateFactionSlots(data) {
@@ -917,16 +936,51 @@ function generateFactionSlots(data) {
   });
   container.appendChild(datalist);
 
-  for (let i = 0; i < CONFIG.maxFactions; i++) {
-    const suffix = i === 0 ? '' : ` ${i}`;
-    const row = document.createElement('div');
-    row.className = 'faction-row';
-    row.innerHTML = `
-      <div class="grid-2">
-        <label>Faction Name<input type="text" name="Faction${suffix}" list="factionList" placeholder="Facción"></label>
-        <label>Score<input type="number" name="Faction Score${suffix}" placeholder="0"></label>
-      </div>
-    `;
+  // Generar 3 slots iniciales
+  const initialSlots = 3;
+  for (let i = 0; i < initialSlots; i++) {
+    addFactionSlot(i);
+  }
+
+  // Botón para agregar más facciones
+  const addBtn = document.createElement('button');
+  addBtn.type = 'button';
+  addBtn.className = 'btn-secondary';
+  addBtn.textContent = '+ Agregar Facción';
+  addBtn.addEventListener('click', () => {
+    const count = container.querySelectorAll('.faction-row').length;
+    if (count < CONFIG.maxFactions) {
+      addFactionSlot(count);
+    } else {
+      showToast(`Máximo ${CONFIG.maxFactions} facciones`, 'warning');
+    }
+  });
+  container.appendChild(addBtn);
+}
+
+/**
+ * Agrega un slot de facción individual
+ * @param {number} index - Índice de la facción
+ */
+function addFactionSlot(index) {
+  const container = document.getElementById('factions-container');
+  if (!container) return;
+
+  const suffix = index === 0 ? '' : ` ${index}`;
+  const row = document.createElement('div');
+  row.className = 'faction-row';
+  row.innerHTML = `
+    <div class="grid-2">
+      <label>Faction Name<input type="text" name="Faction${suffix}" list="factionList" placeholder="Facción"></label>
+      <label>Score<input type="number" name="Faction Score${suffix}" placeholder="0"></label>
+      <button type="button" class="btn-small" onclick="this.parentElement.parentElement.remove(); return false;">✕ Clear</button>
+    </div>
+  `;
+  // Insertar antes del botón de agregar
+  const addBtn = container.querySelector('button');
+  if (addBtn) {
+    container.insertBefore(row, addBtn);
+  } else {
     container.appendChild(row);
   }
 }
@@ -1321,10 +1375,10 @@ async function generatePDF() {
     const fillField = (field, formName) => {
       const raw = values[formName];
       if (raw === undefined || raw === null) return;
-      if (field instanceof pdfLib.PDFCheckBox) {
+      if (field instanceof PDFLib.PDFCheckBox) {
         const isChecked = Array.isArray(raw) ? raw.some(v => v === '/Yes' || v === 'true' || v === 'on' || v) : !!raw;
         isChecked ? field.check() : field.uncheck();
-      } else if (field instanceof pdfLib.PDFTextField) {
+      } else if (field instanceof PDFLib.PDFTextField) {
         const str = Array.isArray(raw) ? raw.join(', ') : String(raw);
         if (str !== '') field.setText(str);
       }
@@ -1341,11 +1395,11 @@ async function generatePDF() {
 
     // 4) Genera las apariencias (mejor esfuerzo; no rompe si falla)
     try {
-      const helvetica = await pdfDoc.embedFont(pdfLib.StandardFonts.Helvetica);
+      const helvetica = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
       for (const field of fields) {
-        if (field instanceof pdfLib.PDFTextField && !field.isRichFormatted()) {
+        if (field instanceof PDFLib.PDFTextField && !field.isRichFormatted()) {
           field.defaultUpdateAppearances(helvetica);
-        } else if (field instanceof pdfLib.PDFCheckBox) {
+        } else if (field instanceof PDFLib.PDFCheckBox) {
           field.defaultUpdateAppearances();
         }
       }
