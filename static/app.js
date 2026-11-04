@@ -1300,14 +1300,14 @@ async function generatePDF() {
   }
 
   try {
-    const pdfLib = window.pdfLib;
-    if (!pdfLib) {
+    const PDFLib = window.PDFLib;
+    if (!PDFLib) {
       showError('pdf-lib no está cargado. Verifica tu conexión a internet.');
       return;
     }
 
     // 3) Carga la plantilla y rellena los campos AcroForm
-    const pdfDoc = await pdfLib.PDFDocument.load(templateBytes);
+    const pdfDoc = await PDFLib.PDFDocument.load(templateBytes);
     const formPdf = pdfDoc.getForm();
     const fields = formPdf.getFields();
 
