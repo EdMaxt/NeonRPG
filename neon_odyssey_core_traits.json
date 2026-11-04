@@ -1,0 +1,145 @@
+{
+  "Cryptist": {
+    "Primary_Ability": "Choose 1: Intelligence or Charisma",
+    "Hit_Point_Die": "D8",
+    "Saving_Throw_Proficiencies": "Wisdom and your Primary Ability",
+    "Skill_Proficiencies": "Choose 2: Arcana, Deception, History, Intimidation, Investigation, Nature, Perception, or Religion",
+    "Weapon_Proficiencies": "Simple weapons",
+    "Tool_Proficiencies": null,
+    "Armor_Training": "Light armor",
+    "Starting_Equipment_A": "Light Armor, Combat Knife, Light Pistol, 20 Bullets, Power Cell, Datapad (occult lore), Magazine, Occult Focus (crystal), Academic's Pack",
+    "Starting_Equipment_B": "$4,000"
+  },
+  "Disciple": {
+    "Primary_Ability": "Dexterity and Wisdom",
+    "Hit_Point_Die": "D8",
+    "Saving_Throw_Proficiencies": "Strength and Dexterity",
+    "Skill_Proficiencies": "Choose 2: Acrobatics, Arcana, Athletics, History, Insight, Investigation, Religion, or Stealth",
+    "Weapon_Proficiencies": "Simple weapons and Martial weapons that have the Light property",
+    "Tool_Proficiencies": "Choose one type of Crafter's Tools or Musician's Instrument",
+    "Armor_Training": "None",
+    "Starting_Equipment_A": "Combat Knife, Combat Staff, 2 Power Cells, Crafter's Tools or Musician's Instrument chosen for the tool proficiency above, Datapad (philosophy), Outrunner's Pack",
+    "Starting_Equipment_B": "$3,000"
+  },
+  "Enforcer": {
+    "Primary_Ability": "Strength and Charisma",
+    "Hit_Point_Die": "D10",
+    "Saving_Throw_Proficiencies": "Wisdom and Charisma",
+    "Skill_Proficiencies": "Choose 2: Athletics, Insight, Intimidation, Medicine, Persuasion, Religion, or Technology",
+    "Weapon_Proficiencies": "Simple and Martial weapons",
+    "Tool_Proficiencies": null,
+    "Armor_Training": "Light, Medium, and Heavy armor and Shields",
+    "Starting_Equipment_A": "Heavy Armor, Shield, Combat Sword, Shotgun, Power Cell, 20 Shells, Magazine, Cosmic Symbol or Hypertech Component Pack, Outrunner's Pack",
+    "Starting_Equipment_B": "$9,000"
+  },
+  "Esper": {
+    "Primary_Ability": "Choose 1: Intelligence or Charisma",
+    "Hit_Point_Die": "D6",
+    "Saving_Throw_Proficiencies": "Constitution and your Primary Ability",
+    "Skill_Proficiencies": "Choose 2: Arcana, Deception, History, Insight, Intimidation, or Persuasion",
+    "Weapon_Proficiencies": "Simple weapons",
+    "Tool_Proficiencies": null,
+    "Armor_Training": "None",
+    "Starting_Equipment_A": "Combat Knife, Light Laser Pistol, 2 Power Cells, Occult Focus (crystal), Outrunner's Pack",
+    "Starting_Equipment_B": "$3,000"
+  },
+  "Gridrunner": {
+    "Primary_Ability": "Intelligence",
+    "Hit_Point_Die": "D6",
+    "Saving_Throw_Proficiencies": "Intelligence and Wisdom",
+    "Skill_Proficiencies": "Choose 2: Arcana, Computers, History, Insight, Investigation, or Technology",
+    "Weapon_Proficiencies": "Simple weapons",
+    "Tool_Proficiencies": "Spiking Deck",
+    "Armor_Training": "None",
+    "Starting_Equipment_A": "Combat Knife, Light Laser Pistol, 2 Power Cells, Spiking Deck, Hyperpad, Technician's Pack",
+    "Starting_Equipment_B": "$320"
+  },
+  "Icon": {
+    "Primary_Ability": "Charisma",
+    "Hit_Point_Die": "D8",
+    "Saving_Throw_Proficiencies": "Dexterity and Charisma",
+    "Skill_Proficiencies": "Choose any 3 skills",
+    "Weapon_Proficiencies": "Simple weapons",
+    "Tool_Proficiencies": "Choose one type of Musician's Instrument or Artist's Supplies",
+    "Armor_Training": "Light armor",
+    "Starting_Equipment_A": "Light Armor, Combat Knife, Light Laser Pistol, 2 Power Cells, Artist's Supplies or Musician's Instrument or Hypertech Component Pack",
+    "Starting_Equipment_B": "$5,500"
+  },
+  "Juggernaut": {
+    "Primary_Ability": "Strength",
+    "Hit_Point_Die": "D12",
+    "Saving_Throw_Proficiencies": "Strength and Constitution",
+    "Skill_Proficiencies": "Choose 2: Athletics, History, Intimidation, Medicine, Perception, or Survival",
+    "Weapon_Proficiencies": "Simple and Martial weapons",
+    "Tool_Proficiencies": null,
+    "Armor_Training": "Light and Medium armor and Shields",
+    "Starting_Equipment_A": "Concussion Maul, Hand Cannon, 20 Shells, Power Cell, Magazine, Outrunner's Pack",
+    "Starting_Equipment_B": "$6,500"
+  },
+  "Machinist": {
+    "Primary_Ability": "Intelligence",
+    "Hit_Point_Die": "D8",
+    "Saving_Throw_Proficiencies": "Dexterity and Intelligence",
+    "Skill_Proficiencies": "Choose 2: Arcana, Computers, History, Investigation, Perception, Sleight of Hand, or Technology",
+    "Weapon_Proficiencies": "Simple weapons",
+    "Tool_Proficiencies": "Mechanic's Tools or choose one type of Crafter's Tools",
+    "Armor_Training": "Light armor",
+    "Starting_Equipment_A": "Combat Knife, Laser Carbine, 2 Power Cells, Bypass Tools, Mechanic's Tools or another type of Crafter's Tools, Technician's Pack",
+    "Starting_Equipment_B": "$320"
+  },
+  "Oracle": {
+    "Primary_Ability": "Wisdom",
+    "Hit_Point_Die": "D8",
+    "Saving_Throw_Proficiencies": "Wisdom and Charisma",
+    "Skill_Proficiencies": "Choose 2: History, Insight, Medicine, Persuasion, or Religion",
+    "Weapon_Proficiencies": "Simple weapons",
+    "Tool_Proficiencies": null,
+    "Armor_Training": "Light and Medium armor and Shields",
+    "Starting_Equipment_A": "Medium Armor Vest, Shield, Heavy Laser Pistol, Shock Sap, 2 Power Cells, Cosmic Symbol (relic)",
+    "Starting_Equipment_B": "Pharma Kit, Outrunner's Pack"
+  },
+  "Primalist": {
+    "Primary_Ability": "Wisdom",
+    "Hit_Point_Die": "D8",
+    "Saving_Throw_Proficiencies": "Intelligence and Wisdom",
+    "Skill_Proficiencies": "Choose 2: Arcana, Animal Handling, Insight, Medicine, Nature, Perception, Survival, or Technology",
+    "Weapon_Proficiencies": "Simple weapons",
+    "Tool_Proficiencies": null,
+    "Armor_Training": "Light and Medium armor",
+    "Starting_Equipment_A": "Hatchet, Laser Carbine, 2 Power Cells, Pharma Kit, Primal Focus (bone token)",
+    "Starting_Equipment_B": "Outrunner's Pack"
+  },
+  "Scoundrel": {
+    "Primary_Ability": "Dexterity",
+    "Hit_Point_Die": "D8",
+    "Saving_Throw_Proficiencies": "Dexterity and Intelligence",
+    "Skill_Proficiencies": "Choose 4: Acrobatics, Athletics, Computers, Deception, Insight, Intimidation, Investigation, Perception, Persuasion, Sleight of Hand, Stealth, or Technology",
+    "Weapon_Proficiencies": "Simple weapons, and Martial weapons that have the Finesse or Light property",
+    "Tool_Proficiencies": "Choose Bypass Tools or Spiking Deck",
+    "Armor_Training": "Light armor",
+    "Starting_Equipment_A": "Light Armor, 2 Combat Knives, Quickblade, Light Laser Pistol, Light Pistol, 20 Bullets, 4 Power Cells, Magazine, Bypass Tools or Spiking Deck chosen for the proficiency above, Intruder's Pack",
+    "Starting_Equipment_B": "$6,000"
+  },
+  "Soldier": {
+    "Primary_Ability": "Strength or Dexterity",
+    "Hit_Point_Die": "D10",
+    "Saving_Throw_Proficiencies": "Strength and Constitution",
+    "Skill_Proficiencies": "Choose 2: Acrobatics, Athletics, History, Insight, Medicine, Perception, Stealth, or Survival",
+    "Weapon_Proficiencies": "Simple and Martial weapons",
+    "Tool_Proficiencies": null,
+    "Armor_Training": "Light, Medium, and Heavy armor and Shields",
+    "Starting_Equipment_A": "Heavy Armor, Mag Flail, Assault Laser Rifle, 2 Power Cells, Magazine, Field Rations",
+    "Starting_Equipment_B": "$3,200"
+  },
+  "Tracer": {
+    "Primary_Ability": "Dexterity and Wisdom",
+    "Hit_Point_Die": "D10",
+    "Saving_Throw_Proficiencies": "Strength and Wisdom",
+    "Skill_Proficiencies": "Choose 2: Acrobatics, Animal Handling, Arcana, Athletics, History, Insight, Investigation, Nature, Perception, Stealth, or Survival",
+    "Weapon_Proficiencies": "Simple and Martial weapons",
+    "Tool_Proficiencies": null,
+    "Armor_Training": "Light and Medium armor",
+    "Starting_Equipment_A": "Light or Medium Armor (Composite Weave Module), Quickblade, Laser Rifle, Plasma Pistol, 3 Power Cells, Primal Focus (bone token) or Hypertech",
+    "Starting_Equipment_B": "Field Rations, Outrunner's Pack"
+  }
+}

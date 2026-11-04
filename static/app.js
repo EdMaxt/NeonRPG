@@ -276,7 +276,7 @@ function updateHDMax(data, className) {
 // ============================================================
 
 /**
- * Carga los datos del juego desde game_data.json
+ * Carga los datos del juego desde game_data.json y neon_odyssey_core_traits.json
  */
 async function loadGameData() {
   try {
@@ -293,6 +293,18 @@ async function loadGameData() {
         return null;
       });
 
+    // Cargar Core Traits (opcional, no bloquea si falla)
+    try {
+      appState.coreTraits = await fetch('neon_odyssey_core_traits.json')
+        .then(response => {
+          if (!response.ok) return null;
+          return response.json();
+        });
+    } catch (error) {
+      console.warn('Core Traits no disponibles, continuando sin ellos...');
+      appState.coreTraits = null;
+    }
+
     if (appState.gameData) {
       appState.loaded = true;
       initializeForm();
@@ -300,6 +312,9 @@ async function loadGameData() {
       setupEventListeners();
       calculateInitialStats();
       console.log('Game data loaded:', appState.gameData);
+      if (appState.coreTraits) {
+        console.log('Core Traits loaded');
+      }
     }
   } catch (error) {
     console.error('Error cargando datos:', error);
@@ -444,7 +459,9 @@ function setupEventListeners() {
   const classSelect = document.getElementById('classSelect');
   if (classSelect) {
     classSelect.addEventListener('change', () => {
+      const selectedClass = classSelect.value;
       applyClassProficiencies();
+      if (selectedClass) applyCoreTraits(selectedClass);
       AutoCalc.recalc();
       window.filterFeats();
     });
@@ -834,6 +851,123 @@ function applyClassProficiencies() {
   if (selectedSubclass && data.subclasses && data.subclasses[selectedClass]) {
     // Subclass mechanics can augment skills here
   }
+}
+
+/**
+ * Aplica Core Traits cuando se selecciona una clase
+ * @param {string} className - Nombre de la clase
+ */
+function applyCoreTraits(className) {
+  if (!appState.coreTraits || !className) return;
+
+  const traits = appState.coreTraits[className];
+  if (!traits) return;
+
+  populateWeaponProficiencies(traits);
+  populateToolProficiencies(traits);
+  populateArmorProficiencies(traits);
+  fillFirstAttacksWithEquipment(traits);
+}
+
+/**
+ * Auto-selecciona armas permitidas según los Core Traits
+ * @param {object} traits - Core Traits de la clase
+ */
+function populateWeaponProficiencies(traits) {
+  const weaponCheckboxes = document.querySelectorAll('input[name="Weapon Proficiency"]');
+  if (!weaponCheckboxes.length || !traits.Weapon_Proficiencies) return;
+
+  const prof = traits.Weapon_Proficiencies.toLowerCase();
+  const allowSimple = prof.includes('simple');
+  const allowMartial = prof.includes('martial');
+
+  weaponCheckboxes.forEach(cb => {
+    const weapon = cb.value;
+    let isAllowed = false;
+
+    if (allowSimple && (weapon === 'Simple weapons' ||
+        ['Combat Baton', 'Combat Knife', 'Combat Staff', 'Hatchet', 'Hook Blade',
+         'Power Cudgel', 'Shock Sap', 'Throwing Blade'].includes(weapon))) {
+      isAllowed = true;
+    }
+    if (allowMartial && weapon === 'Martial weapons') {
+      isAllowed = true;
+    }
+
+    cb.checked = isAllowed;
+  });
+}
+
+/**
+ * Auto-selecciona herramientas permitidas según los Core Traits
+ * @param {object} traits - Core Traits de la clase
+ */
+function populateToolProficiencies(traits) {
+  const toolCheckboxes = document.querySelectorAll('input[name="Tool Proficiency"]');
+  if (!toolCheckboxes.length || !traits.Tool_Proficiencies) return;
+
+  const toolProf = traits.Tool_Proficiencies;
+  const tools = toolProf.split(/,\s*or\s+/).map(t => t.trim());
+
+  toolCheckboxes.forEach(cb => {
+    cb.checked = tools.some(t => cb.value.includes(t) || t.includes(cb.value));
+  });
+}
+
+/**
+ * Auto-selecciona armaduras permitidas según los Core Traits
+ * @param {object} traits - Core Traits de la clase
+ */
+function populateArmorProficiencies(traits) {
+  const armorCheckboxes = document.querySelectorAll('input[name="Armor Proficiency"]');
+  if (!armorCheckboxes.length || !traits.Armor_Training) return;
+
+  const armorTrain = traits.Armor_Training.toLowerCase();
+
+  armorCheckboxes.forEach(cb => {
+    const armor = cb.value.toLowerCase();
+    cb.checked = armorTrain.includes(armor);
+  });
+}
+
+/**
+ * Auto-llena los primeros ataques con el equipo initial
+ * @param {object} traits - Core Traits de la clase
+ */
+function fillFirstAttacksWithEquipment(traits) {
+  if (!traits.Starting_Equipment_A) return;
+
+  const equipment = traits.Starting_Equipment_A;
+  const weapons = extractWeaponsFromEquipment(equipment);
+
+  const attackInputs = document.querySelectorAll('input[name^="Attack Name"]');
+  weapons.forEach((weapon, idx) => {
+    if (idx < attackInputs.length) {
+      attackInputs[idx].value = weapon;
+    }
+  });
+}
+
+/**
+ * Extrae armas del string Starting_Equipment_A
+ * @param {string} equipmentStr - String de equipo inicial
+ * @returns {array} Array de nombres de armas
+ */
+function extractWeaponsFromEquipment(equipmentStr) {
+  const allWeapons = [
+    'Combat Knife', 'Combat Staff', 'Combat Baton', 'Hatchet', 'Hook Blade',
+    'Power Cudgel', 'Shock Sap', 'Shock Knuckles', 'Throwing Hammer', 'Throwing Spear',
+    'Vibro Claw', 'Vibro Spear', 'Throwing Blade', 'Laser Carbine', 'Light Laser Pistol',
+    'Light Pistol', 'Heavy Laser Pistol', 'Heavy Pistol', 'Submachine Gun',
+    'Breaker Axe', 'Breaker Sword', 'Combat Axe', 'Combat Sword', 'Combat Hammer',
+    'Concussion Maul', 'Dueling Blade', 'Filament Whip', 'Mag Flail', 'Nano-Edge Spear',
+    'Pole Axe', 'Power Fist', 'Power Glaive', 'Quickblade', 'Saber', 'Vibro Pike',
+    'Shock Lance', 'Assault Rifle', 'Breach Rifle', 'Pulse Cannon', 'Hand Cannon',
+    'Heavy Laser Rifle', 'Laser Rifle', 'Light Machine Gun', 'Plasma Pistol', 'Plasma Rifle',
+    'Repeating Laser', 'Scatterblast', 'Shotgun', 'Sniper Rifle'
+  ];
+
+  return allWeapons.filter(weapon => equipmentStr.includes(weapon));
 }
 
 
