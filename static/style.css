@@ -536,21 +536,32 @@ input[type="checkbox"].autoset {
   margin: 0 0 6px 2px;
 }
 
-.weapon-group {
+.weapon-group,
+.language-group,
+.tool-group {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px 16px;
     margin-bottom: 10px;
 }
 
-.weapon-group:last-child {
+.weapon-group:last-child,
+.language-group:last-child,
+.tool-group:last-child {
     margin-bottom: 0;
 }
 
-.weapon-group h5 {
+.weapon-group h5,
+.language-group h5,
+.tool-group h5 {
     font-family: 'Orbitron', sans-serif;
     font-size: 0.7rem;
     color: var(--accent2);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin: 0 0 6px 2px;
+    grid-column: 1 / -1;
 }
 
 @media (max-width: 768px) {

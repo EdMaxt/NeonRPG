@@ -195,13 +195,23 @@ function fieldId(base) {
  * @param {string} message - El mensaje de error a mostrar.
  */
 function showError(message) {
-  const toast = document.getElementById('toast');
-  if (toast) {
-    toast.textContent = message;
-    toast.style.display = 'block';
-  } else {
-    console.error('showError: No se encontró el elemento #toast');
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = `
+      position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+      background:#ff4444;color:#fff;padding:10px 20px;border-radius:6px;
+      font-size:0.9rem;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,0.3);
+    `;
+    document.body.appendChild(toast);
   }
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
 }
 
 /**
@@ -1014,6 +1024,25 @@ function setupSubclassDropdown(data) {
 // ============================================================
 // FILTRO DE FEATS POR HOMEWORLD
 // ============================================================
+
+/**
+ * Determina si un feat cumple el prerequisito de homeworld
+ * @param {string} prereq - Prerequisito (ej: "Rocky Homeworld", "Luminous or Starry Homeworld")
+ * @param {array} homeworldTags - Tags del homeworld seleccionado
+ * @returns {boolean} true si el feat es visible para este homeworld
+ */
+function matchesHomeworld(prereq, homeworldTags) {
+  if (!prereq || !prereq.trim()) return true;
+  if (!homeworldTags || homeworldTags.length === 0) return true;
+
+  const cleanPrereq = prereq.replace(/\s+Homeworld$/i, '');
+  const requiredTags = cleanPrereq
+    .split(/\s+or\s+|,\s*/)
+    .map(tag => tag.trim())
+    .filter(tag => tag.length > 0);
+
+  return requiredTags.some(tag => homeworldTags.includes(tag));
+}
 
 /**
  * Configura el filtro de feats por homeworld
