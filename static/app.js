@@ -863,71 +863,53 @@ function applyCoreTraits(className) {
   const traits = appState.coreTraits[className];
   if (!traits) return;
 
-  populateWeaponProficiencies(traits);
-  populateToolProficiencies(traits);
-  populateArmorProficiencies(traits);
+  if (traits.Weapon_Proficiencies) autoProficiencies('Weapon', traits.Weapon_Proficiencies, isWeaponAllowed);
+  if (traits.Tool_Proficiencies) autoProficiencies('Tool', traits.Tool_Proficiencies);
+  if (traits.Armor_Training) autoProficiencies('Armor', traits.Armor_Training);
   fillFirstAttacksWithEquipment(traits);
 }
 
 /**
- * Auto-selecciona armas permitidas según los Core Traits
- * @param {object} traits - Core Traits de la clase
+ * Auto-selecciona proficiencias permitidas (genérica)
+ * @param {string} type - Tipo: 'Weapon', 'Tool', 'Armor'
+ * @param {string} proficiencies - String de proficiencias
+ * @param {function} customMatcher - Función personalizada de matching (opcional)
  */
-function populateWeaponProficiencies(traits) {
-  const weaponCheckboxes = document.querySelectorAll('input[name="Weapon Proficiency"]');
-  if (!weaponCheckboxes.length || !traits.Weapon_Proficiencies) return;
+function autoProficiencies(type, proficiencies, customMatcher) {
+  const checkboxes = document.querySelectorAll(`input[name="${type} Proficiency"]`);
+  if (!checkboxes.length) return;
 
-  const prof = traits.Weapon_Proficiencies.toLowerCase();
+  checkboxes.forEach(cb => {
+    if (customMatcher) {
+      cb.checked = customMatcher(cb.value, proficiencies);
+    } else {
+      // Para Tool y Armor: simple substring match
+      const profList = proficiencies.split(/,\s*or\s+/).map(t => t.trim());
+      cb.checked = profList.some(t => cb.value.includes(t) || t.includes(cb.value));
+    }
+  });
+}
+
+/**
+ * Matcher personalizado para armas
+ */
+function isWeaponAllowed(weapon, proficiencies) {
+  const prof = proficiencies.toLowerCase();
   const allowSimple = prof.includes('simple');
   const allowMartial = prof.includes('martial');
 
-  weaponCheckboxes.forEach(cb => {
-    const weapon = cb.value;
-    let isAllowed = false;
+  if (weapon === 'Simple weapons') return allowSimple;
+  if (weapon === 'Martial weapons') return allowMartial;
 
-    if (allowSimple && (weapon === 'Simple weapons' ||
-        ['Combat Baton', 'Combat Knife', 'Combat Staff', 'Hatchet', 'Hook Blade',
-         'Power Cudgel', 'Shock Sap', 'Throwing Blade'].includes(weapon))) {
-      isAllowed = true;
-    }
-    if (allowMartial && weapon === 'Martial weapons') {
-      isAllowed = true;
-    }
+  // Armas simples típicas
+  const simpleWeapons = ['Combat Baton', 'Combat Knife', 'Combat Staff', 'Hatchet',
+    'Hook Blade', 'Power Cudgel', 'Shock Sap', 'Throwing Blade', 'Light Laser Pistol',
+    'Light Pistol', 'Laser Carbine'];
 
-    cb.checked = isAllowed;
-  });
-}
+  if (allowSimple && simpleWeapons.includes(weapon)) return true;
+  if (allowMartial) return true; // Si permite martial, permite todo
 
-/**
- * Auto-selecciona herramientas permitidas según los Core Traits
- * @param {object} traits - Core Traits de la clase
- */
-function populateToolProficiencies(traits) {
-  const toolCheckboxes = document.querySelectorAll('input[name="Tool Proficiency"]');
-  if (!toolCheckboxes.length || !traits.Tool_Proficiencies) return;
-
-  const toolProf = traits.Tool_Proficiencies;
-  const tools = toolProf.split(/,\s*or\s+/).map(t => t.trim());
-
-  toolCheckboxes.forEach(cb => {
-    cb.checked = tools.some(t => cb.value.includes(t) || t.includes(cb.value));
-  });
-}
-
-/**
- * Auto-selecciona armaduras permitidas según los Core Traits
- * @param {object} traits - Core Traits de la clase
- */
-function populateArmorProficiencies(traits) {
-  const armorCheckboxes = document.querySelectorAll('input[name="Armor Proficiency"]');
-  if (!armorCheckboxes.length || !traits.Armor_Training) return;
-
-  const armorTrain = traits.Armor_Training.toLowerCase();
-
-  armorCheckboxes.forEach(cb => {
-    const armor = cb.value.toLowerCase();
-    cb.checked = armorTrain.includes(armor);
-  });
+  return false;
 }
 
 /**
@@ -951,23 +933,28 @@ function fillFirstAttacksWithEquipment(traits) {
 /**
  * Extrae armas del string Starting_Equipment_A
  * @param {string} equipmentStr - String de equipo inicial
- * @returns {array} Array de nombres de armas
+ * @returns {array} Array de nombres de armas (máx 3)
  */
 function extractWeaponsFromEquipment(equipmentStr) {
-  const allWeapons = [
-    'Combat Knife', 'Combat Staff', 'Combat Baton', 'Hatchet', 'Hook Blade',
-    'Power Cudgel', 'Shock Sap', 'Shock Knuckles', 'Throwing Hammer', 'Throwing Spear',
-    'Vibro Claw', 'Vibro Spear', 'Throwing Blade', 'Laser Carbine', 'Light Laser Pistol',
-    'Light Pistol', 'Heavy Laser Pistol', 'Heavy Pistol', 'Submachine Gun',
-    'Breaker Axe', 'Breaker Sword', 'Combat Axe', 'Combat Sword', 'Combat Hammer',
-    'Concussion Maul', 'Dueling Blade', 'Filament Whip', 'Mag Flail', 'Nano-Edge Spear',
-    'Pole Axe', 'Power Fist', 'Power Glaive', 'Quickblade', 'Saber', 'Vibro Pike',
-    'Shock Lance', 'Assault Rifle', 'Breach Rifle', 'Pulse Cannon', 'Hand Cannon',
-    'Heavy Laser Rifle', 'Laser Rifle', 'Light Machine Gun', 'Plasma Pistol', 'Plasma Rifle',
-    'Repeating Laser', 'Scatterblast', 'Shotgun', 'Sniper Rifle'
-  ];
+  // Usar datos del game_data si está disponible
+  const allWeapons = [];
+  if (appState.gameData?.weapons) {
+    Object.values(appState.gameData.weapons).forEach(category => {
+      if (Array.isArray(category)) allWeapons.push(...category);
+    });
+  }
 
-  return allWeapons.filter(weapon => equipmentStr.includes(weapon));
+  // Si no hay datos, usar lista fallback (simplificada)
+  if (!allWeapons.length) {
+    allWeapons.push(
+      'Combat Knife', 'Combat Staff', 'Hatchet', 'Laser Carbine', 'Light Laser Pistol',
+      'Combat Sword', 'Shotgun', 'Hand Cannon', 'Quickblade', 'Plasma Pistol',
+      'Light Machine Gun', 'Assault Rifle', 'Laser Rifle', 'Concussion Maul'
+    );
+  }
+
+  // Filtrar armas encontradas, limitar a 3 primeras
+  return allWeapons.filter(w => equipmentStr.includes(w)).slice(0, 3);
 }
 
 
